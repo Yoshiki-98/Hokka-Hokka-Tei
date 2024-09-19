@@ -260,13 +260,14 @@ export default function MentList() {
               className="mb-[100px] mx-auto"
               width={855}
             >
-              <Typography className="text-2xl text-black whitespace-nowrap" gutterBottom>
+              <Typography sx={{fontSize: '24px'}} className="text-black whitespace-nowrap" gutterBottom>
                 <LocationOnIcon fontSize="small" />
                 ご利用の都道府県でお選びください
               </Typography>
               <FormControl fullWidth>
                 <CustomSelect
-                  className="w-[353px] h-[30px] bg-white rounded-[10px]"
+                  sx={{borderRadius: '10px'}}
+                  className="w-[353px] h-[30px] bg-white"
                   value={selectedPrefCode}
                   onChange={(e: any) => {
                     setSelectedPrefCode(e.target.value);
@@ -303,18 +304,37 @@ export default function MentList() {
               className="mx-auto"
               width={855}
             >
-              <Typography className="text-2xl text-black mb-2 whitespace-nowrap">アレルギー物質から絞り込む</Typography>
-              <Box className="mx-auto text-black mb-3 flex justify-center items-center">
+              <Typography
+                sx={{fontSize: '24px', marginBottom: 2}}
+                className="text-black whitespace-nowrap"
+              >
+                アレルギー物質から絞り込む
+              </Typography>
+              <Box
+                sx={{marginBottom: 3}}
+                className="mx-auto text-black flex justify-center items-center"
+              >
                 <Box
                   height={133}
-                  className="mb-8 flex justify-between items-start bg-white p-[25px] rounded-[10px] border border-black shadow-lg"
+                  sx={{
+                    marginBottom: 8,
+                    padding: '25px',
+                    borderRadius: '10px',
+                  }}
+                  className="flex justify-between items-start bg-white  border border-black shadow-lg"
                 >
                   <Box className="whitespace-nowrap">
-                    <Box className="mb-[20px]">
-                      <Typography className="text-md mb-1">除去したい品目を選択して下さい</Typography>
+                    <Box sx={{marginBottom: '20px'}}>
                       <Typography
-                        className="text-xs text-shadow"
-                        sx={{ textShadow: '0px 4px 4px rgba(0,0,0,0.3)' }}
+                        sx={{marginBottom: 1, fontSize: '14px' }}
+                      >
+                        除去したい品目を選択して下さい
+                      </Typography>
+                      <Typography
+                        sx={{
+                          fontSize: '12px',
+                          textShadow: '0px 4px 4px rgba(0,0,0,0.3)'
+                        }}
                       >
                         ※絞込み条件は特定原材料（8品目）のみとなっております
                       </Typography>
@@ -326,11 +346,13 @@ export default function MentList() {
                           key={allergen.id}
                         >
                           <Checkbox
-                            className="w-2.5 h-2.5 mr-2"
                             id={String(allergen.id)}
                             checked={selectedAllergens.includes(allergen.id)}
                             onChange={async () => await handleSelectAllergens(allergen.id)}
                             sx={{
+                              marginRight: 2,
+                              width: 2.5,
+                              height: 2.5,
                               '& .MuiSvgIcon-root': {
                                 fontSize: 14,  // アイコンのサイズを変更
                               },
@@ -366,7 +388,8 @@ export default function MentList() {
                 {tabs.map((tab, index) => (
                   <StraightBottomButton
                     key={index}
-                    className={`mx-[50px] my-1 text-black text-2xl`}
+                    sx={{fontSize: '24px', margin: '4px 50px'}}
+                    className={'text-black'}
                     onClick={async () => await handleTabClick(index)}
                     style={activeTab === index ? activeTabStyle : tabStyle}
                   >
@@ -380,15 +403,24 @@ export default function MentList() {
               </Box>
             </Box>
             <Box
-              className="menu-wrapper w-full flex flex-wrap items-center gap-[0px] mb-[100px]"
+              className="menu-wrapper w-full flex flex-wrap items-center"
               sx={{ 
                 width: '1319px',  // (393px * 3) + (70px * 2) = 1319px
                 maxWidth: '100%',
                 margin: '0 auto',
+                marginBottom: '100px',
+                gap: 0
               }}
             >
               {menuItems && menuItems.map((item, index) => (
-                <Box className="w-[380px] max-w-full relative" key={index}>
+                <Box
+                  key={index}
+                  sx={{
+                    width: '380px',
+                    maxWidth: '100%',
+                    position: 'relative'
+                  }}
+                >
                   <StyledLink href={`/menu/${item.id}`}>
                     <Card className="flex flex-col bg-transparent border-none shadow-none">
                       <SVGContainer>
@@ -407,9 +439,20 @@ export default function MentList() {
                           />
                         </svg>
                       </SVGContainer>
-                      <CardContent className="absolute left-[-4px] top-52 grow">
+                      <CardContent
+                        className="grow"
+                        sx={{
+                          position: 'absolute',
+                          left: -1,
+                          top: 52
+                        }}
+                      >
                         <Typography
-                          className="inline-block px-1 text-2xl text-white font-bold bg-[#EE0026] whitespace-nowrap"
+                          className="inline-block text-white font-bold bg-[#EE0026] whitespace-nowrap"
+                          sx={{
+                            px: 1,
+                            fontSize: '24px'
+                          }}
                           gutterBottom
                         >
                           {item.name}
