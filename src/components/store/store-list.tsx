@@ -144,7 +144,7 @@ export default function StoreList() {
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
         <Header/>
-        <Container sx={{ width: '100%', marginTop: '100px', marginBottom: '100px', minWidth: '85%'}}>
+        <Container sx={{ width: '100%', marginTop: '100px', marginBottom: '100px', minWidth: '90%'}}>
           <Box className="flex justify-center items-center">
             <Image
               src={'/images/store-title.png'}
@@ -154,7 +154,7 @@ export default function StoreList() {
             />
           </Box>
           <Box
-            sx={{paddingRight: '15px', marginBottom: '27px'}}
+            sx={{paddingRight: '85px', marginBottom: '27px'}}
             className="flex justify-end"
           >
             <SearchByLocationButton
@@ -280,9 +280,9 @@ export default function StoreList() {
                 )}
               </Box>
               <Box
-                className="w-full max-w-full m-auto m-0 flex flex-wrap flex-start"
+                className="max-w-full m-auto m-0 flex flex-wrap flex-start"
                 sx={{ 
-                  width: '1300px', // (630px * 2) + (20px) = 1280px
+                  width: '100%', // (630px * 2) + (20px) = 1280px
                 }}
               >
                 {stores && stores.length > 0 && stores.map((store, index) => (
