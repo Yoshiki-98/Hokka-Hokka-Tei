@@ -1,0 +1,74 @@
+import React from 'react';
+import { Chip, Box } from '@mui/material';
+
+interface CustomChipProps {
+  allergen: {
+    nameEn: string;
+    name: string;
+  };
+  index: number;
+  array: any[];
+  menuItem?: {
+    allergens: number[];
+  };
+  iconButton: any;
+}
+
+const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuItem, iconButton }) => {
+  return (
+    <Chip
+      variant="outlined"
+      color="default"
+      label={
+        <Box
+          sx={{
+            position: 'relative',
+            width: '100%',
+            height: '100%',
+          }}
+        >
+          <Box
+            sx={{
+              position: 'absolute',
+              top: { xs: '15%', sm: '17.5%', md: '20%' },
+              left: '50%',
+              transform: 'translateX(-50%)',
+            }}
+          >
+            {iconButton}
+          </Box>
+          <Box
+            sx={{
+              position: 'absolute',
+              bottom: { xs: '20%', sm: '15%', md: '10%' },
+              left: '50%',
+              transform: 'translateX(-50%)',
+              fontSize: { xs: '0.6rem', sm: '0.75rem', md: '0.875rem' },
+              textAlign: 'center',
+              width: '90%',
+              whiteSpace: 'normal',
+              wordBreak: 'break-word',
+            }}
+          >
+            {allergen.name}
+          </Box>
+        </Box>
+      }
+      sx={{
+        mr: index !== array.length - 1 ? 1 : 0,
+        backgroundColor: '#FFF',
+        opacity: menuItem?.allergens.includes(index+1) ? 1 : 0.2,
+        borderRadius: '50%',
+        height: { xs: 40, sm: 50, md: 100 },
+        width: { xs: 40, sm: 50, md: 100 },
+        '& .MuiChip-label': {
+          padding: 0,
+          width: '100%',
+          height: '100%',
+        },
+      }}
+    />
+  );
+};
+
+export default AllergenChip;
