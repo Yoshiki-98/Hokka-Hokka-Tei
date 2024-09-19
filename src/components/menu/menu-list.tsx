@@ -310,18 +310,14 @@ export default function MentList() {
               >
                 アレルギー物質から絞り込む
               </Typography>
-              <Box
-                sx={{marginBottom: 3}}
-                className="mx-auto text-black flex justify-center items-center"
-              >
+              <Box className="mx-auto text-black flex justify-center items-center">
                 <Box
                   height={133}
                   sx={{
-                    marginBottom: 8,
                     padding: '25px',
                     borderRadius: '10px',
                   }}
-                  className="flex justify-between items-start bg-white  border border-black shadow-lg"
+                  className="flex justify-between items-start bg-white shadow-lg"
                 >
                   <Box className="whitespace-nowrap">
                     <Box sx={{marginBottom: '20px'}}>
@@ -350,7 +346,7 @@ export default function MentList() {
                             checked={selectedAllergens.includes(allergen.id)}
                             onChange={async () => await handleSelectAllergens(allergen.id)}
                             sx={{
-                              marginRight: 2,
+                              marginRight: 1,
                               width: 2.5,
                               height: 2.5,
                               '& .MuiSvgIcon-root': {
@@ -444,7 +440,7 @@ export default function MentList() {
                         sx={{
                           position: 'absolute',
                           left: -1,
-                          top: 52
+                          top: "200px"
                         }}
                       >
                         <Typography
