@@ -15,5 +15,14 @@ const config: Config = {
     },
   },
   plugins: [],
+  purge: {
+    enabled: process.env.NODE_ENV === 'production',
+    content: [
+      './src/**/*.{js,ts,jsx,tsx}',
+      './public/index.html',
+    ],
+  },
+  // JITモードを明示的に有効化（Tailwind CSS v3以降ではデフォルトだが、明示的に指定することで意図を明確にできる）
+  mode: 'jit',
 };
 export default config;

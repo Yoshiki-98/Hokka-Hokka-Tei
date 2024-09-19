@@ -142,9 +142,9 @@ export default function StoreList() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box className="min-h-full" sx={{ bgcolor: 'background.default' }}>
+      <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
         <Header/>
-        <Container className="container w-full mt-[100px] mb-[100px]" sx={{ minWidth: '85%'}}>
+        <Container sx={{ width: '100%', marginTop: '100px', marginBottom: '100px', minWidth: '85%'}}>
           <Box className="flex justify-center items-center">
             <Image
               src={'/images/store-title.png'}
@@ -153,7 +153,10 @@ export default function StoreList() {
               height={72.98}
             />
           </Box>
-          <Box className="flex justify-end pr-[70px] mb-[27px]">
+          <Box
+            sx={{paddingRight: '15px', marginBottom: '27px'}}
+            className="flex justify-end"
+          >
             <SearchByLocationButton
               className="shrink-0"
               onClick={async () => await handleSearchLocation()}
@@ -165,8 +168,9 @@ export default function StoreList() {
             </Dialog>
           </Box>
           <Box
-            className="w-full mb-[100px]"
             sx={{
+              width: '100%',
+              marginBottom: '100px',
               '& > div': {  // Wrapper に直接渡す
                 minHeight: '600px !important',
               }
@@ -182,12 +186,19 @@ export default function StoreList() {
             <Typography className="text-black" variant="h5" component="h2" gutterBottom>
               エリアから探す
             </Typography>
-            <Box className="flex items-center align-center justify-between mb-[100px]" alignItems="flex-end">
+            <Box
+              sx={{marginBottom: '100px'}}
+              className="flex items-center align-center justify-between" alignItems="flex-end">
               <Box className="flex justify-between">
-                <Box className="mr-[60px]">
+                <Box sx={{marginRight: '60px'}}>
                   <FormControl fullWidth>
                     <CustomSelect
-                      className="w-[353px] h-[30px] bg-white rounded-[10px]"
+                      sx={{
+                        width: '353px',
+                        height: '30px',
+                        borderRadius: '10px'
+                      }}
+                      className="bg-white"
                       value={selectedPrefCode}
                       onChange={(e: any) => setSelectedPrefCode(e.target.value)}
                       IconComponent={() => <DownArrowIcon className="mr-4"/>}
@@ -209,7 +220,12 @@ export default function StoreList() {
                 <Box>
                   <FormControl fullWidth>
                     <CustomSelect
-                      className="w-[353px] h-[30px] bg-white rounded-[10px]"
+                    sx={{
+                      width: '353px',
+                      height: '30px',
+                      borderRadius: '10px'
+                    }}
+                      className="bg-white"
                       value={selectedCityCode}
                       onChange={(e) => setSelectedCityCode(e.target.value as number)}
                       IconComponent={() =>
@@ -232,7 +248,9 @@ export default function StoreList() {
                   </FormControl>
                 </Box>
               </Box>
-              <Box className="flex justify-start w-full ml-[180px]">
+              <Box
+                sx={{width: '100%', marginLeft: '180px'}}
+                className="flex justify-start w-full ml-[180px]">
                 <LocationRetrievalButton
                   className="shrink-0"
                   onClick={() => {
@@ -248,7 +266,12 @@ export default function StoreList() {
             <Box className="text-black">
               <Box>
                 {stores && stores.length > 0 && (
-                  <Typography className="mb-4 text-black items-center align-center" variant="h5" gutterBottom>
+                  <Typography
+                    sx={{marginBottom: 4}}
+                    className="text-black items-center align-center"
+                    variant="h5"
+                    gutterBottom
+                  >
                     店舗一覧
                     {/* <Typography className="text-black flex justify-center" variant="h4" component="h3" gutterBottom>
                     {getPrefName(stores[0].prefCode)} {getCityName(stores[0].cityCode)} の検索結果
@@ -263,7 +286,10 @@ export default function StoreList() {
                 }}
               >
                 {stores && stores.length > 0 && stores.map((store, index) => (
-                  <Box key={index} className="max-w-full mt-[10px] mr-[10px] mb-[10px] relative">
+                  <Box
+                    key={index}
+                    sx={{maxWidth: '100%', marginTop: '10px', marginRight: '10px', marginBottom: '10px', position: 'relative'}}
+                  >
                     <StyledLink className="text-decoration-none" href={`/store/${store.id}`}>
                       <HexagonalBox
                         width={600} // 1440/1512 x 630 = 600
@@ -302,8 +328,15 @@ export default function StoreList() {
                                 </Box>
                               </Box>
                             </Box>
-                            <Box className="absolute top-0 right-0 shrink-0">
-                              <Box className="gap-1">
+                            <Box  
+                              sx={{
+                                position: 'absolute',
+                                top: 0,
+                                right: 0,
+                                flexShrink: 0
+                              }}
+                            >
+                              <Box sx={{gap: 1}}>
                                 {store?.deliveryServices && store.deliveryServices.length > 0 &&
                                   chunkArray(store.deliveryServices, 6).map((chunk, rowIndex) => {
                                     return (
