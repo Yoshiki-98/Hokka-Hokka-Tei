@@ -54,9 +54,10 @@ export default function StoreDetail() {
   const [store, setStore] = useState<Store|undefined>(undefined);
   const [marker, setMarker] = useState<MarkerConfig | undefined>(undefined);
   const [mapCenter, setMapCenter] = useState<any>(undefined);
-  const path = window.location.pathname;
-  const pathSegments = path.split('/');
-  const storeId = pathSegments[pathSegments.length - 1];
+
+  const windowPath = typeof window !== 'undefined' ? window.location.pathname : null;
+  const pathSegments = windowPath ? windowPath.split('/') : null;
+  const storeId = pathSegments ? pathSegments[pathSegments.length - 1] : null;
 
   const fetchStore = async (id: string) => {
     try {
@@ -86,8 +87,8 @@ export default function StoreDetail() {
   }
 
   useEffect(() => {
-    fetchStore(storeId);
-  }, []);
+    fetchStore(storeId!);
+  }, [storeId]);
 
   const infoItems = [
     { label: '営業時間', value: store?.businessHours },

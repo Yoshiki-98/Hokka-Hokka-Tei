@@ -120,6 +120,25 @@ export default function StoreList() {
     }
   }
 
+  const getQueryParam = (param: string) : string|null => {
+    const windowLocation = typeof window !== 'undefined' ? window.location.search : null;
+    const urlParams = windowLocation ? new URLSearchParams(windowLocation) : null;
+    const result = urlParams ? urlParams.get(param) : null;
+
+    return result;
+  }
+
+  // ソースパラメータを確認
+  const source = getQueryParam('source');
+
+  useEffect(() => {
+    if (source === 'qr') {
+      handleSearchLocation();
+      // ここでトラッキングや分析のためのコードを追加（例: Google Analytics にイベントを送信
+      // ga('send', 'event', 'User Source', 'QR Code');
+    }
+  }, []);
+
   useEffect(() => {
     fetchStores(selectedCityCode);
   }, []);
