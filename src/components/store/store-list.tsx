@@ -120,6 +120,22 @@ export default function StoreList() {
     }
   }
 
+  const getQueryParam = (param: string) : string|null => {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
+  }
+
+  // ソースパラメータを確認
+  const source = getQueryParam('source');
+
+  useEffect(() => {
+    if (source === 'qr') {
+      handleSearchLocation();
+      // ここでトラッキングや分析のためのコードを追加（例: Google Analytics にイベントを送信
+      // ga('send', 'event', 'User Source', 'QR Code');
+    }
+  }, []);
+
   useEffect(() => {
     fetchStores(selectedCityCode);
   }, []);
