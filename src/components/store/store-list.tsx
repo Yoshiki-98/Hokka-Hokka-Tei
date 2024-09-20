@@ -121,8 +121,11 @@ export default function StoreList() {
   }
 
   const getQueryParam = (param: string) : string|null => {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get(param);
+    const windowLocation = typeof window !== 'undefined' ? window.location.search : null;
+    const urlParams = windowLocation ? new URLSearchParams(windowLocation) : null;
+    const result = urlParams ? urlParams.get(param) : null;
+
+    return result;
   }
 
   // ソースパラメータを確認
