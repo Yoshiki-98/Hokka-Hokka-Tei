@@ -207,6 +207,8 @@ export default function StoreDetail() {
                                 <Link
                                   key={`service_0${deliveryServiceId}`}
                                   href={deliveryService?.url}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
                                 >
                                   <ButtonComponent />
                                 </Link>
