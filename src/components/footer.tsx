@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { AppBar, Box, Toolbar, Typography, Link, Container, Divider, IconButton } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Link, Container, Divider, IconButton, createTheme, useMediaQuery, useTheme } from '@mui/material';
 import FooterLogo from 'src/components/svg/logo/footer/site-logo';
 import CompanyLogo from 'src/components/svg/logo/footer/company-logo';
 import RightArrowIcon from 'src/components/svg/logo/main/right-arrow-icon';
@@ -22,9 +22,24 @@ const companyLinks = [
 ];
 
 const Footer: React.FC = () => {
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
-    <Box className="bg-white">
-      <Box sx={{ position: 'relative', width: '100%', height: '100px', maxHeight: '100px' }}>
+    <Box
+      className="bg-white"
+      sx={{paddingBottom: {xs: '20px', md: '0'} }}
+    >
+      <Box
+        sx={{
+          position: 'relative',
+          width: '100%',
+          height: {xs: '25px', sm: '37.5px', md: '50px'},
+          maxHeight: '100px'
+        }}
+      >
         <Image
           src='/images/hokatei-mask.png'
           alt='ほっかほっか亭のラベル'
@@ -34,7 +49,7 @@ const Footer: React.FC = () => {
         />
       </Box>
       <AppBar
-        className="mt-10"
+        className="mt-9"
         position="static"
         color="transparent"
         elevation={0}
@@ -45,39 +60,78 @@ const Footer: React.FC = () => {
           </IconButton>
         </Toolbar>
       </AppBar>
-      <Container sx={{minWidth: '100%'}} className="text-black">
+      <Container
+        sx={{ minWidth: '100%' }}
+        className="text-black"
+      >
         <Box className="flex justify-between items-center flex-wrap"
-          sx={{ py: 3}}
+          sx={{ py: 3 }}
         >
-          <Box className="flex flex-wrap"
-          sx={{
-            gap: 2,
-            flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
-            maxWidth: '80%'   // 最大幅を設定
-          }}>
-            {recruitmentLinks.map((item, index) => (
-              <Link 
-                key={index} 
-                href="#"
-                className="flex items-center"
-                color="inherit" 
-                underline="hover"
-                sx={{ gap: 0.5 }}
+          {
+            isSmUp ? (
+              <Box
+                className="flex flex-wrap"
+                sx={{
+                  gap: 2,
+                  flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
+                  maxWidth: '80%'   // 最大幅を設定
+                }}
               >
-                <RightArrowIcon className="mr-[1.71px] mb-2"/>
-                {item.label}
-              </Link>
-            ))}
-          </Box>
-          <Box
-            className="flex justify-end items-center"
-            sx={{
-              flex: '1 1 20%',  // フレックス成長と縮小を許可し、幅の40%を占める
-              maxWidth: '20%'   // 最大幅を設定
-            }}
-          >
-            <CompanyLogo/>
-          </Box>
+                {recruitmentLinks.map((item, index) => (
+                  <Link 
+                    key={index} 
+                    href="#"
+                    className="flex items-center"
+                    color="inherit" 
+                    underline="hover"
+                    sx={{ gap: 0.5 }}
+                  >
+                    <RightArrowIcon className="mr-[1.71px] mb-2"/>
+                    {item.label}
+                  </Link>
+                ))}
+              </Box>
+            ) : (
+              <Box
+                className="flex flex-wrap"
+                sx={{
+                  gap: 2,
+                  flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
+                  maxWidth: '80%'   // 最大幅を設定
+                }}
+              >
+                {recruitmentLinks.map((item, index) => (
+                  <Link 
+                    key={index} 
+                    href="#"
+                    className="flex items-center"
+                    color="inherit" 
+                    underline="hover"
+                    sx={{ 
+                      gap: 0.5,
+                      width: '100%', // 各アイテムが全幅を占めるように設定
+                    }}
+                  >
+                    <RightArrowIcon className="mr-[1.71px] mb-2"/>
+                    {item.label}
+                  </Link>
+                ))}
+              </Box>
+            )
+          }
+          {
+            isMdUp && (
+              <Box
+                className="flex justify-end items-center"
+                sx={{
+                  flex: '1 1 20%',  // フレックス成長と縮小を許可し、幅の40%を占める
+                  maxWidth: '20%'   // 最大幅を設定
+                }}
+              >
+                <CompanyLogo/>
+              </Box>
+            )
+          }
         </Box>
         <Divider className="my-2 w-{1431px}" color='#323232'/>
         <Box
@@ -85,7 +139,8 @@ const Footer: React.FC = () => {
           sx={{ py: 3 }}
         >
           <Box>
-            <Box className="flex flex-wrap"
+            <Box
+              className="flex flex-wrap"
               sx={{ gap: 3 }}
             >
               {companyLinks.map((item, index) => (
@@ -95,13 +150,27 @@ const Footer: React.FC = () => {
                   className="flex items-center text-sm"
                   color="inherit" 
                   underline="hover"
-                  sx={{ gap: 0.5 }}
+                  sx={{
+                    gap: 0.5,
+                    width: isSmDown ? '100%' : undefined
+                  }}
                 >
                   {item.label}
                 </Link>
               ))}
             </Box>
           </Box>
+          {isMdUp && (
+            <Typography
+              className="text-xs"
+              variant="body2"
+              color="text.secondary"
+            >
+              Copyright © 2024 HURXLEY CORPORATION All Rights Reserved.
+            </Typography>
+          )}
+        </Box>
+        {!isMdUp && (
           <Typography
             className="text-xs"
             variant="body2"
@@ -109,7 +178,7 @@ const Footer: React.FC = () => {
           >
             Copyright © 2024 HURXLEY CORPORATION All Rights Reserved.
           </Typography>
-        </Box>
+        )}
       </Container>
     </Box>
   );

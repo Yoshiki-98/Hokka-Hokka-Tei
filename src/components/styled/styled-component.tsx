@@ -6,6 +6,22 @@ import {
   SelectProps
 } from '@mui/material';
 
+const tabStyle = {
+  padding: 0,
+  color: '#323232',
+  cursor: 'pointer',
+  borderBottom: '2px solid transparent',
+};
+
+const activeTabStyle = {
+  ...tabStyle,
+};
+
+const activeTextStyle = {
+  fontWeight: 'bold',
+  borderBottom: '3px solid #EE0026',
+}
+
 const StyledSelect = styled(Select)(({ theme }) => ({
   minWidth: 200,
   marginRight: theme.spacing(2),
@@ -25,6 +41,8 @@ const StyledLink = styled(Link)(({ theme }) => ({
   '&:hover': {
     textDecoration: 'none',
   },
+  width: 'calc(33.333% - 16px)',
+  marginBottom: '24px',
 }));
 
 // カスタムセレクトコンポーネント
@@ -40,4 +58,20 @@ const CustomSelect = styled(Select)<SelectProps>(({ theme }) => ({
   },
 }));
 
-export { StyledSelect, StyledButton, StyledLink, CustomSelect }
+const StraightBottomButton = styled(Button)(({ theme }) => ({
+  flex: 1,
+  padding: theme.spacing(1),
+  whiteSpace: 'nowrap',
+  borderRadius: '0',
+}));
+
+export {
+  tabStyle,
+  activeTabStyle,
+  activeTextStyle,
+  StyledSelect,
+  StyledButton,
+  StyledLink,
+  CustomSelect,
+  StraightBottomButton
+}

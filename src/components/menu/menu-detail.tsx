@@ -5,18 +5,16 @@ import {
   Typography,
   Chip,
   Box,
-  ThemeProvider,
-  createTheme,
-  Container,
-  styled,
+  useMediaQuery,
 } from '@mui/material';
+import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Menu } from '@/types/menu';
 import axios from 'axios';
 import { getSecondaryAllergenById } from '@/utils/theme/secondary-allergen-utils';
 import { allergens } from '@/data/allergens';
 import Header from '../header';
 import Footer from '../footer';
-import InlineNutritionInfo from './nutrition-info';
+import NutritionInfo from './nutrition-info';
 import AllergenChip from './allergen-chip';
 import WheatIcon from 'src/components/svg/icon/allergen/wheat';
 import BuckWheatIcon from 'src/components/svg/icon/allergen/buckwheat';
@@ -26,6 +24,9 @@ import PeanutIcon from 'src/components/svg/icon/allergen/peanut';
 import WalnutIcon from 'src/components/svg/icon/allergen/walnut';
 import ShrimpIcon from 'src/components/svg/icon/allergen/shrimp';
 import CrabIcon from 'src/components/svg/icon/allergen/crab';
+import MenuContainer from '../svg/container/menu-container';
+import { Allergen } from '@/types/allergen';
+import { chunkArray } from '@/utils/array-utils';
 
 const theme = createTheme({
   palette: {
@@ -39,12 +40,6 @@ const theme = createTheme({
       main: '#323232',
     },
   },
-});
-
-const SVGContainer = styled(Box)({
-  width: '660px',
-  height: '440px',
-  overflow: 'hidden',
 });
 
 export default function MenuDetail() {
@@ -72,7 +67,7 @@ export default function MenuDetail() {
     fetchMenu();
   }, []);
 
-  const partsOfDesc = menuItem?.desc.split(/(?:<br\s*\/?>\s*|\n)/);
+  const partsOfDesc = menuItem?.desc?.split(/(?:<br\s*\/?>\s*|\n)/);
 
   const iconComponents = {
     WheatIcon,
@@ -85,60 +80,85 @@ export default function MenuDetail() {
     CrabIcon
   };
 
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
   return (
     <ThemeProvider theme={theme}>
       <Box className="flex flex-col text-black" sx={{ bgcolor: 'background.default' }}>
         <Header/>
-        <Container className="mb-[100px]">
+        <Box
+          className="mx-auto"
+          sx={{
+            width: '90%',
+            marginBottom: { xs: '50px', md: '100px'}
+          }}
+        >
           <Box className='grow flex justify-center items-center'>
-            <Box className="menu-info-wrapper mx-auto w-[1280px]">
-              <Box className="w-[1280px]">
-                <Box className="flex items-center align-center justify-between mb-[100px]">
-                  <Box className="mr-[50px]">
-                    <SVGContainer>
-                      <svg 
-                        width="100%" 
-                        height="100%" 
-                        viewBox="0 0 660 440" 
-                        preserveAspectRatio="xMidYMid meet" 
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <defs>
-                          <clipPath id="svgShape">
-                            <path d="M42.8285 2.93838C44.7046 1.05724 47.2522 0 49.909 0L608.802 0C611.407 0 613.91 1.01688 615.777 2.83418L656.975 42.9355C658.909 44.8181 660 47.4024 660 50.1014L659.999 385.847C659.999 388.495 658.948 391.034 657.079 392.909L613.039 437.062C611.163 438.943 608.616 440 605.959 440H51.452C48.6969 440 46.0638 438.863 44.1743 436.858L2.72229 392.87C0.973786 391.015 5.88707e-06 388.562 1.64577e-05 386.012L0.00140956 50.0142C0.00142053 47.3667 1.05132 44.8273 2.9209 42.9527L42.8285 2.93838Z" />
-                          </clipPath>
-                        </defs>
-                        <image
-                          href={menuItem?.images[0]}
-                          width="100%"
-                          height="100%"
-                          preserveAspectRatio="xMidYMid slice"
-                          clipPath="url(#svgShape)"
-                        />
-                      </svg>
-                    </SVGContainer>
+            <Box className="menu-info-wrapper mx-auto">
+              <Box>
+                <Box
+                  className="md:flex items-center align-center justify-between"
+                  sx={{
+                    margin: isSmUp ? '0 0 100px 0': '0 auto 100px auto',
+                    width: isSmUp ? '100%' : '90%'
+                  }}
+                >
+                  <Box
+                    sx={{
+                      display: 'flex',
+                      justifyContent: 'center',
+                      margin: '0 auto',
+                      marginRight: {sm: '50px'},
+                      marginBottom: {xs: '30px', md: 0}
+                    }}
+                  >
+                    <MenuContainer item={menuItem}/>
                   </Box>
-                  <Box className="mt-[-80px]">
-                    <Box className="flex items-center align-center justify-between">
-                      <Typography className="text-[#EE0026]">
-                        <span className="text-4xl font-bold whitespace-nowrap mr-[20px]">{menuItem?.name}</span>
+                  <Box
+                    sx={{
+                      marginTop: {md: '-80px'}
+                    }}
+                  >
+                    <Box className="flex items-center align-center justify-between mb-[10px]">
+                      <Typography
+                        className="text-[#EE0026]"
+                        sx={{
+                          fontSize: {xs: '24px', sm: '32px', md: '36px'},
+                          fontWeight: 'bold',
+                          marginRight: '20px',
+                          whitespace: 'nowrap'
+                        }}
+                      >
+                        {menuItem?.name}
                       </Typography>
-                      <Box className="grow bg-[#EE0026] p-[18px] mb-2"/>
+                      <Box
+                        className="grow bg-[#EE0026]"
+                        sx={{padding: {xs: '12px 0', sm: '16px 0', md: '18px 0'}}}
+                      />
                     </Box>
-                    <Typography className="leading-3" sx={{lineHeight: '30px', fontSize: '14px'}} component="div">
+                    <Typography
+                      className="leading-3"
+                      sx={{
+                        marginBottom: '20px',
+                        lineHeight: '30px',
+                        fontSize: '14px'
+                      }}
+                      component="div"
+                    >
                       {partsOfDesc && partsOfDesc.map((part, index) => (
-                        <Box 
-                          key={index} 
-                          sx={{ 
-                            marginTop: '10px', 
-                            marginBottom: '10px',
-                          }}
-                        >
+                        <Box key={index}>
                           {part.trim()}
                         </Box>
                       ))}
                     </Typography>
-                    <Box className="flex items-center align-center mb-[50px]">
+                    <Box
+                      className="flex items-center align-center mb-[50px]"
+                      sx={{
+                        marginBottom: {xs: '30px', md: '50px'}
+                      }}
+                    >
                       {menuItem?.isSideAloneOK && (
                         <Box className="mb-2 mr-[20px]">
                           <Chip
@@ -173,33 +193,56 @@ export default function MenuDetail() {
                     </Typography>
                   </Box>
                 </Box>
-                <Box className="mb-[100px]">
+                <Box
+                  sx={{
+                    margin: isSmUp ? '0 0 100px 0': '0 auto 100px auto',
+                    width: isSmUp ? '100%' : '90%'
+                  }}
+                >
                   <Box className="flex items-center align-center justify-between mb-9">
                     <Typography className="text-[#FFA600]">
                       <span className="text-2xl font-bold whitespace-nowrap mr-[20px]">アレルギー情報</span>
                     </Typography>
-                    <Box className="grow bg-[#FFA600] p-3 mb-2"/>
+                    <Box className="grow bg-[#FFA600] p-3"/>
                   </Box>
-                  <Box className="mb-[100px]">
-                    <Box className="mb-[50px]">
-                      {allergens.map((allergen: {id: number, name: string, nameEn: string, icon: string}, index, array) => {
-                        const ButtonComponent = iconComponents[allergen?.icon as keyof typeof iconComponents];
-
+                  <Box sx={{marginBottom: {xs: '50px', md: '100px'}}}>
+                    <Box
+                      className="flex flex-col gap-3"
+                      sx={{
+                        marginBottom: '50px',
+                        flexDirection: 'column'
+                      }}
+                    >
+                      {chunkArray(allergens, isMdUp ? 8 : 4).map((chunk, rowIndex) => {
                         return (
-                          <AllergenChip
-                            key={allergen.nameEn}
-                            allergen={allergen}
-                            index={index}
-                            array={array}
-                            menuItem={menuItem}
-                            iconButton={<ButtonComponent/>}
-                          />
-                        )
-                    })}
+                          <Box
+                            key={`row_${rowIndex}`}
+                            className="flex"
+                            sx={{
+                              gap: isLgUp? 2.5 : 1,
+                              margin: isMdUp ? undefined : '0 auto'
+                            }}
+                          >
+                            {chunk.map((allergen: Allergen, index, array) => {
+                              const ButtonComponent = iconComponents[allergen?.icon as keyof typeof iconComponents];
+
+                              return (
+                                <AllergenChip
+                                  key={allergen.nameEn}
+                                  allergen={allergen}
+                                  index={index}
+                                  array={array}
+                                  menuItem={menuItem}
+                                  iconButton={<ButtonComponent/>}
+                                />
+                              )
+                            })}
+                          </Box>
+                      )})}
                     </Box>
                     <Box className="mb-3">
                       <Typography variant="h6" gutterBottom>特定原材料に準ずるもの20品目（＋魚介類表示※1）</Typography>
-                      {menuItem?.secondaryAllergens.map((secondaryAllergen, index, array) => (
+                      {menuItem?.secondaryAllergens && menuItem?.secondaryAllergens.map((secondaryAllergen, index, array) => (
                         <React.Fragment key={secondaryAllergen}>
                           {getSecondaryAllergenById(secondaryAllergen)?.name}
                           {index !== array.length - 1 && ' / '}
@@ -208,40 +251,52 @@ export default function MenuDetail() {
                     </Box>
                   </Box>
                   <Box className="mb-3">
-                    <Typography sx={{ fontSize: '12px'}} className="mb-[20px]">
-                      ◆アレルギー物質の表示について <br/>
-                        ・表示している「アレルギー物質」の項目は、食品衛生法にて表示が義務付けられている特定原材料7品目
-                        「小麦、そば、卵、乳、落花生、えび、かに」と、表示が推奨されている特定原材料に準じる20品目
-                        「あわび、いか、いくら、オレンジ、カシューナッツ、キウイフルーツ、牛肉、くるみ、ごま、さけ、さば、大豆、鶏肉、バナナ、豚肉、まつたけ、もも、やまいも、りんご、ゼラチン」です。
-                        このアレルギー情報は商品の原材料を精査、確認したものです。なお、店舗では他のアレルギー物質を含む原材料と共有の設備で調理しております。
-                        本来その商品に使用しない食材が付着・混入する可能性があり、絶対的なものではありません。アレルギー物質に対する感受性は個人差がありますので、最終的なご購入につきましては専門医と相談のうえ、お客様ご自身で判断いただきますようお願い致します。
-                        ※1　魚介類表示は魚醤や魚介エキスなど無分別に網で捕獲した魚介を使用し、品目が特定できない場合に使用しています。<br/>
-                    </Typography>
-                    <Typography sx={{ fontSize: '12px'}} className="mb-[20px]">
-                      ◆栄養成分の表示について <br/>
-                        検査機関で分析した数値および「日本食品標準成分表」に基づき算出しております。
-                        ひとつひとつ手作りしているため、実際の商品は数値に誤差が出る場合がありますので、ご了承下さい。<br/>
-                    </Typography>
-                    <Typography sx={{ fontSize: '12px'}} className="mb-[20px]">
-                      ◆栄養成分・アレルギー物質情報は、商品の内容変更に伴い随時更新しておりますのでご注意下さい。
-                    </Typography>
+                    <Box className="mb-[20px]">
+                      <Typography sx={{ fontSize: '12px'}}>
+                        ◆アレルギー物質の表示について <br/>
+                          ・表示している「アレルギー物質」の項目は、食品衛生法にて表示が義務付けられている特定原材料7品目
+                          「小麦、そば、卵、乳、落花生、えび、かに」と、表示が推奨されている特定原材料に準じる20品目
+                          「あわび、いか、いくら、オレンジ、カシューナッツ、キウイフルーツ、牛肉、くるみ、ごま、さけ、さば、大豆、鶏肉、バナナ、豚肉、まつたけ、もも、やまいも、りんご、ゼラチン」です。
+                          このアレルギー情報は商品の原材料を精査、確認したものです。なお、店舗では他のアレルギー物質を含む原材料と共有の設備で調理しております。
+                          本来その商品に使用しない食材が付着・混入する可能性があり、絶対的なものではありません。アレルギー物質に対する感受性は個人差がありますので、最終的なご購入につきましては専門医と相談のうえ、お客様ご自身で判断いただきますようお願い致します。
+                          ※1　魚介類表示は魚醤や魚介エキスなど無分別に網で捕獲した魚介を使用し、品目が特定できない場合に使用しています。<br/>
+                      </Typography>
+                    </Box>
+                    <Box className="mb-[20px]">
+                      <Typography sx={{ fontSize: '12px'}} className="mb-[20px]">
+                        ◆栄養成分の表示について <br/>
+                          検査機関で分析した数値および「日本食品標準成分表」に基づき算出しております。
+                          ひとつひとつ手作りしているため、実際の商品は数値に誤差が出る場合がありますので、ご了承下さい。<br/>
+                      </Typography>
+                    </Box>
+                    <Box className="mb-[20px]">
+                      <Typography sx={{ fontSize: '12px'}} className="mb-[20px]">
+                        ◆栄養成分・アレルギー物質情報は、商品の内容変更に伴い随時更新しておりますのでご注意下さい。
+                      </Typography>
+                    </Box> 
                   </Box>
                 </Box>
                 <Box className="mb-[100px]">
-                  <Box className="flex items-center align-center justify-between">
+                  <Box
+                    className="flex items-center align-center justify-between"
+                    sx={{
+                      margin: isSmUp ? '0': '0 auto',
+                      width: isSmUp ? '100%' : '90%'
+                    }}
+                  >
                     <Typography className="text-[#FFA600]">
                       <span className="text-2xl text-[#FFA600] font-bold whitespace-nowrap mr-[20px]">栄養情報</span>
                     </Typography>
-                    <Box className="grow bg-[#FFA600] p-3 mb-2"/>
+                    <Box className="grow bg-[#FFA600] p-3"/>
                   </Box>
-                  <Box>
-                    {menuItem && <InlineNutritionInfo menuItem={menuItem} />}
+                  <Box className="flex justify-center">
+                    {menuItem && <NutritionInfo menuItem={menuItem} />}
                   </Box>
                 </Box>
               </Box>
             </Box>
           </Box>
-        </Container>
+        </Box>
         <Footer/>
       </Box>
     </ThemeProvider>

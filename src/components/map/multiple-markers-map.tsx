@@ -1,5 +1,9 @@
 import React, { useEffect, useRef } from 'react';
 import { MarkerConfig } from '@/types/map-marker';
+import { createRoot } from 'react-dom/client';
+import HokateiFlag from '../svg/icon/hokatei-flag';
+import SmallHokateiFlag from '../svg/icon/small-hokatei-flag';
+import { useTheme, useMediaQuery } from '@mui/material';
 
 interface MultipleMarkersMapProps {
   markers: MarkerConfig[];
@@ -16,6 +20,9 @@ const mapId = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_MAP_ID;
 export const MulipleMarkersMap: React.FC<MultipleMarkersMapProps> = ({ markers, mapCenter }) => {
   const mapRef = useRef(null);
 
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
   useEffect(() => {
     if (!mapRef.current || !window.google) return;
 
@@ -30,13 +37,18 @@ export const MulipleMarkersMap: React.FC<MultipleMarkersMapProps> = ({ markers, 
       });
 
       markers.forEach((marker, index) => {
-        const beachFlagImg = document.createElement('img');
-        beachFlagImg.src = '/images/flag.png';
+        // const beachFlagImg = document.createElement('img');
+        // beachFlagImg.src = '/images/flag.png';
+
+        const markerContent = document.createElement('div');
+        const root = createRoot(markerContent);
+        root.render(isSmUp ? <HokateiFlag/> : <SmallHokateiFlag />);
 
         new AdvancedMarkerElement({
           map,
           position: marker.position,
-          content: beachFlagImg,
+          // content: beachFlagImg,
+          content: markerContent,
           title: marker.title,
         }) as any;
       });
