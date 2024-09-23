@@ -118,9 +118,11 @@ export default function StoreDetail() {
             {store?.name}
           </Typography>
           <Box
-            className="mx-auto flex flex-wrap items-center align-center"
             sx={{
-              marginBottom: '50px',
+              display: 'flex',
+              flexWrap: 'wrap',
+              margin: '0 auto 50px auto',
+              alignItems: 'center',
               justifyContent: {xs: 'center', md: 'space-between'}
             }}
           >

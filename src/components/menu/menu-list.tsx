@@ -238,7 +238,7 @@ export default function MentList() {
                 className="text-black whitespace-nowrap"
                 gutterBottom
               >
-                ご利用の都道府県でお選び下さい
+                都道府県を選択する
               </Typography>
               <FormControl fullWidth>
                 <CustomSelect
