@@ -233,7 +233,7 @@ export default function StoreList() {
               }
             </Wrapper>
           </Box>
-          <Box>
+          <Box className="search-by-area-box">
             <Typography
               className="text-black"
               variant="h5"
@@ -244,12 +244,12 @@ export default function StoreList() {
               エリアから探す
             </Typography>
             <Box
+              className="flex justify-between"
               sx={{
                 marginBottom: '100px',
-                flexDirection: {xs: 'column', md: 'unset'}
+                flexDirection: {xs: 'column', md: 'unset'},
+                alignItems: {xs: 'center', md: 'flex-end'}
               }}
-              className="flex items-center align-center justify-between"
-              alignItems="flex-end"
             >
               <Box
                 sx={{
@@ -322,12 +322,13 @@ export default function StoreList() {
                 </Box>
               </Box>
               <Box
+                className="flex"
                 sx={{
                   width: '100%',
                   marginLeft: {md : '30px', lg: '150px'},
                   justifyContent: {xs: 'center', md: 'start'}
                 }}
-                className="flex">
+              >
                 <LocationRetrievalButton
                   className="shrink-0"
                   onClick={() => {
