@@ -307,7 +307,7 @@ export default function MentList() {
                   }}
                   className="flex justify-between items-start bg-white"
                 >
-                  <Box className="whitespace-nowrap">
+                  <Box className="whitespace-nowrap mb-4">
                     <Box sx={{ marginBottom: { xs: '10px', md: '20px' } }}>
                       <Typography
                         sx={{
@@ -382,7 +382,7 @@ export default function MentList() {
                   </Box>
                   <Box
                     sx={{margin: { xs: '0 auto', md: '0' }}}
-                    className="shrink-0 mt-4 md:mt-0"
+                    className="shrink-0"
                   >
                     <HandleFilterButton
                       className="shrink-0 w-full md:w-auto"
