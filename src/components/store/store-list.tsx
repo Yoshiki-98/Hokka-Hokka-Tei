@@ -372,7 +372,7 @@ export default function StoreList() {
                     key={index}
                     sx={{
                       maxWidth: '100%',
-                      margin: {xs: '10px', md: '10px, 10px 10px 0'},
+                      marginBottom: '10px',
                       position: 'relative',
                     }}
                   >
