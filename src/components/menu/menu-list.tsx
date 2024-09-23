@@ -225,7 +225,7 @@ export default function MentList() {
           <Box
             sx={{
               paddingBottom: { xs: '25px', md: '100px' },
-              textAlign: { xs: 'center', md: 'start' }
+              textAlign: { xs: 'start', sm: 'center', md: 'start' }
             }}
           >
             <Box
