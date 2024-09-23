@@ -30,7 +30,7 @@ import Header from '../header';
 import Footer from '../footer';
 import HandleFilterButton from '../svg/button/trigger/handle-filter';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
-import NoImageThumbnail from '../svg/icon/no-image-thumbnail';
+import MenuListContainer from '../svg/container/menu-list-container';
 
 const theme = createTheme({
   palette: {
@@ -445,7 +445,7 @@ export default function MentList() {
                 >
                   <StyledLink href={`/menu/${item.id}`}>
                     <Card className="flex flex-col bg-transparent border-none shadow-none">
-                      <NoImageThumbnail item={item}/>
+                      <MenuListContainer item={item}/>
                       <CardContent
                         className="grow"
                         sx={{

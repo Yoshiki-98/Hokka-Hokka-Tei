@@ -4,7 +4,7 @@ import {
   styled,
   useMediaQuery,
 } from '@mui/material';
-import { createTheme, useTheme } from '@mui/material/styles';
+import { useTheme } from '@mui/material/styles';
 
 const SVGContainer = styled(Box)({
   width: '660px',

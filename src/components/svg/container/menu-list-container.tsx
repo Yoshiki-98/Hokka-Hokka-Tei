@@ -1,17 +1,50 @@
-import React from 'react';
-
-import { Box, styled } from '@mui/material';
+import { ContainerProps } from '@/types/element-prop';
+import {
+  Box,
+  styled,
+  useMediaQuery,
+} from '@mui/material';
+import { useTheme } from '@mui/material/styles';
 import { Menu } from '@/types/menu';
+
+// const SVGContainer = styled(Box)({
+//   width: '380px',
+//   height: '311px',
+//   overflow: 'hidden'
+// });
 
 const SVGContainer = styled(Box)({
   maxWidth: '393px', // SVGの元の幅
+});
+
+const LgSVGContainer = styled(Box)({
+  width: '170x',
+  height: '163Zpx',
+  overflow: 'hidden',
+});
+
+const MdSVGContainer = styled(Box)({
+  width: '420px',
+  height: '280px',
+  overflow: 'hidden',
+});
+
+const SmSVGContainer = styled(Box)({
+  width: '353px',
+  height: '235.33px',
+  overflow: 'hidden',
 });
 
 interface ThumbnailProp {
   item: Menu;
 } 
 
-const NoImageThumbnail: React.FC<ThumbnailProp> = ({ item }) => {
+const MenuListContainer: React.FC<ThumbnailProp> = ({ item }) => {
+  const theme = useTheme();
+  const isLgDown = useMediaQuery(theme.breakpoints.down('lg'));
+  const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
+  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <SVGContainer>
       <svg width="100%" height="100%" viewBox="0 0 393 260" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
@@ -32,4 +65,4 @@ const NoImageThumbnail: React.FC<ThumbnailProp> = ({ item }) => {
   );
 };
 
-export default NoImageThumbnail;
+export default MenuListContainer;
