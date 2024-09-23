@@ -8,7 +8,8 @@ import {
   FormControl,
   Box,
   Dialog,
-  DialogContent
+  DialogContent,
+  useMediaQuery
 } from '@mui/material';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import axios from 'axios';
@@ -38,6 +39,7 @@ import DemaeKanIcon from '@/components/svg/icon/delivery/demae-kan';
 import WoltIcon from '@/components/svg/icon/delivery/wolt';
 import { Service } from '@/types/delivery-service';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
+import SmallHexaBox from './small-hexa-box';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -73,6 +75,10 @@ export default function StoreList() {
   const [mapCenter, setMapCenter] = useState<any>(undefined);
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   const handleSearchLocation = async () => {
     try {
@@ -163,18 +169,44 @@ export default function StoreList() {
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
         <Header/>
-        <Container sx={{ width: '100%', marginTop: '100px', marginBottom: '100px', minWidth: '90%'}}>
-          <Box className="flex justify-center items-center">
-            <Image
-              src={'/images/store-title.png'}
-              alt={'Menu Title'}
-              width={274.95}
-              height={72.98}
-            />
+        <Container
+          sx={{
+            width: '100%',
+            marginTop: {xs: '50px', md: '100px'},
+            marginBottom: '200px',
+            minWidth: '90%'
+          }}
+        >
+          <Box
+            sx={{marginBottom: '50px'}}
+            className="flex justify-center items-center"
+          >
+            {
+              isMdUp ? (
+                <Image
+                  src={'/images/store-title.png'}
+                  alt={'Menu Title'}
+                  width={274.95}
+                  height={72.98}
+                />
+              ) : (
+                <Image
+                  src={'/images/store-title.png'}
+                  alt={'Menu Title'}
+                  width={207}
+                  height={55}
+                />
+              )
+            }
           </Box>
           <Box
-            sx={{paddingRight: '85px', marginBottom: '27px'}}
-            className="flex justify-end"
+            sx={{
+              display: isLgUp ? undefined: 'flex',
+              justifyContent: {xs: 'center', md: 'flex-end', lg: 'unset'},
+              paddingRight: {lg: '85px'},
+              marginLeft: isLgUp ? '915px' : 0,
+              marginBottom: '27px'
+            }}
           >
             <SearchByLocationButton
               className="shrink-0"
@@ -191,7 +223,7 @@ export default function StoreList() {
               width: '100%',
               marginBottom: '100px',
               '& > div': {  // Wrapper に直接渡す
-                minHeight: '600px !important',
+                minHeight: {xs: '353px !important',lg: '600px !important'},
               }
             }}
           >
@@ -202,19 +234,41 @@ export default function StoreList() {
             </Wrapper>
           </Box>
           <Box>
-            <Typography className="text-black" variant="h5" component="h2" gutterBottom>
+            <Typography
+              className="text-black"
+              variant="h5"
+              component="h2"
+              gutterBottom
+              sx={{ textAlign: {sm: 'center', md: 'unset'} }}
+            >
               エリアから探す
             </Typography>
             <Box
-              sx={{marginBottom: '100px'}}
-              className="flex items-center align-center justify-between" alignItems="flex-end">
-              <Box className="flex justify-between">
-                <Box sx={{marginRight: '60px'}}>
+              sx={{
+                marginBottom: '100px',
+                flexDirection: {xs: 'column', md: 'unset'}
+              }}
+              className="flex items-center align-center justify-between"
+              alignItems="flex-end"
+            >
+              <Box
+                sx={{
+                  marginBottom: {xs: '20px', md: 0},
+                  flexDirection: {xs: 'column', md: 'unset'}
+                }}
+                className="flex justify-between"
+              >
+                <Box
+                  sx={{
+                    marginBottom: {xs: '10px', lg: 0},
+                    marginRight: {xs: 0, md: '30px', lg: '60px'}
+                  }}
+                >
                   <FormControl fullWidth>
                     <CustomSelect
                       sx={{
                         width: '353px',
-                        height: '30px',
+                        height: '40px',
                         borderRadius: '10px'
                       }}
                       className="bg-white"
@@ -241,7 +295,7 @@ export default function StoreList() {
                     <CustomSelect
                     sx={{
                       width: '353px',
-                      height: '30px',
+                      height: '40px',
                       borderRadius: '10px'
                     }}
                       className="bg-white"
@@ -268,8 +322,12 @@ export default function StoreList() {
                 </Box>
               </Box>
               <Box
-                sx={{width: '100%', marginLeft: '180px'}}
-                className="flex justify-start w-full ml-[180px]">
+                sx={{
+                  width: '100%',
+                  marginLeft: {md : '30px', lg: '150px'},
+                  justifyContent: {xs: 'center', md: 'start'}
+                }}
+                className="flex">
                 <LocationRetrievalButton
                   className="shrink-0"
                   onClick={() => {
@@ -286,7 +344,9 @@ export default function StoreList() {
               <Box>
                 {stores && stores.length > 0 && (
                   <Typography
-                    sx={{marginBottom: 4}}
+                    sx={{
+                      textAlign: {sm: 'center', lg: 'unset'},
+                    }}
                     className="text-black items-center align-center"
                     variant="h5"
                     gutterBottom
@@ -302,83 +362,108 @@ export default function StoreList() {
                 className="max-w-full m-auto m-0 flex flex-wrap flex-start"
                 sx={{ 
                   width: '100%', // (630px * 2) + (20px) = 1280px
+                  display: {xs: 'flex', lg: 'unset'},
+                  justifyContent: {xs: 'center', lg: 'unset'},
                 }}
               >
                 {stores && stores.length > 0 && stores.map((store, index) => (
                   <Box
                     key={index}
-                    sx={{maxWidth: '100%', marginTop: '10px', marginRight: '10px', marginBottom: '10px', position: 'relative'}}
+                    sx={{
+                      maxWidth: '100%',
+                      margin: {xs: '10px', md: '10px, 10px 10px 0'},
+                      position: 'relative',
+                    }}
                   >
                     <StyledLink className="text-decoration-none" href={`/store/${store.id}`}>
-                      <HexagonalBox
-                        width={600} // 1440/1512 x 630 = 600
-                        height={130} // 131.4
-                      >
-                        <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
-                          <Typography sx={{fontWeight: 'bold', fontSize: '20px'}} gutterBottom>
-                            {store.name}
-                          </Typography>
-                          <Box className="mx-auto flex flex-wrap justify-between w-full">
-                            <Box>
-                              {/* 左側のコンテンツ（変更なし） */}
-                              <Box display="flex" alignItems="flex-start" mb={1}>
-                                <Typography>{store.address}</Typography>
-                              </Box>
-                              <Box className="flex items-center align-center justify-between">
+                      {
+                        isMdUp ? (
+                          <HexagonalBox
+                            width={630} // 1440/1512 x 630 = 600
+                            height={138} // 131.4]
+                          >
+                            <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
+                              <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', sm: '20px'}}} gutterBottom>
+                                {store.name}
+                              </Typography>
+                              <Box className="mx-auto flex flex-wrap justify-between w-full">
                                 <Box>
+                                  {/* 左側のコンテンツ（変更なし） */}
                                   <Box display="flex" alignItems="flex-start" mb={1}>
-                                    <Typography>
-                                      <span className="font-bold">営業時間: </span>
-                                      {store.businessHours}
-                                    </Typography>
+                                    <Typography sx={{ fontSize: '14px' }}>{store.address}</Typography>
                                   </Box>
-                                  <Box display="flex" alignItems="flex-start" mb={1}>
-                                    <Typography>
-                                      <span className="font-bold">電話番号: </span>
-                                      {formatPhoneNumber(store.phone)}
-                                    </Typography>
-                                  </Box>
-                                </Box>
-                                <Box>
-                                  <Typography sx={{ mt: -4, pl: 4}}>
-                                    <span className="font-bold">昼の宅配: </span>
-                                    {store.deliveryHours}
-                                  </Typography>
-                                </Box>
-                              </Box>
-                            </Box>
-                            <Box  
-                              sx={{
-                                position: 'absolute',
-                                top: 0,
-                                right: 0,
-                                flexShrink: 0
-                              }}
-                            >
-                              <Box sx={{gap: 1}}>
-                                {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                                  chunkArray(store.deliveryServices, 6).map((chunk, rowIndex) => {
-                                    return (
-                                      <Box className="flex gap-1" key={`row_${rowIndex}`}>
-                                        {chunk.map((deliveryServiceId: Service) => {
-                                          const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                                          const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
-
-                                          return (
-                                            <Box key={`service_0${deliveryServiceId}`}>
-                                              <LogoComponent />
-                                            </Box>
-                                          )
-                                        })}
+                                  <Box className="flex items-center align-center justify-between">
+                                    <Box>
+                                      <Box display="flex" alignItems="flex-start">
+                                        <Typography sx={{ fontSize: '14px' }}>
+                                          <span className="font-bold">営業時間: </span>
+                                          {store.businessHours}
+                                        </Typography>
                                       </Box>
-                                    )
-                                  })
-                                }
+                                      <Box display="flex" alignItems="flex-start">
+                                        <Typography sx={{ fontSize: '14px' }}>
+                                          <span className="font-bold">電話番号: </span>
+                                          {formatPhoneNumber(store.phone)}
+                                        </Typography>
+                                      </Box>
+                                      {!isSmUp &&
+                                        <Box display="flex" alignItems="flex-start">
+                                          <Typography sx={{ fontSize: '14px' }}>
+                                            <span className="font-bold">昼の宅配: </span>
+                                            {store.deliveryHours}
+                                          </Typography>
+                                        </Box>
+                                      }
+                                    </Box>
+                                    {isSmUp &&
+                                      <Box>
+                                        <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
+                                          <span className="font-bold">昼の宅配: </span>
+                                          {store.deliveryHours}
+                                        </Typography>
+                                      </Box>
+                                    }
+                                  </Box>
+                                </Box>
+                                <Box  
+                                  sx={{
+                                    position: 'absolute',
+                                    top: 18,
+                                    right: -50,
+                                    flexShrink: 0
+                                  }}
+                                >
+                                  <Box sx={{gap: 1}}>
+                                    {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                                      chunkArray(store.deliveryServices, 6).map((chunk, rowIndex) => {
+                                        return (
+                                          <Box className="flex gap-1" key={`row_${rowIndex}`}>
+                                            {chunk.map((deliveryServiceId: Service) => {
+                                              const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                                              const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
+
+                                              return (
+                                                <Box key={`service_0${deliveryServiceId}`}>
+                                                  <LogoComponent />
+                                                </Box>
+                                              )
+                                            })}
+                                          </Box>
+                                        )
+                                      })
+                                    }
+                                  </Box>
+                                </Box>
                               </Box>
                             </Box>
-                          </Box>
-                        </Box>
-                      </HexagonalBox>
+                          </HexagonalBox>
+                        ) : (
+                          <SmallHexaBox
+                            width={353} // 1440/1512 x 630 = 600
+                            height={151} // 131.4]
+                          />
+                        )
+                      }
                     </StyledLink>
                   </Box>
                 ))}

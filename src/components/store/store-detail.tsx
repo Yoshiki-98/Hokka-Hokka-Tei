@@ -5,6 +5,7 @@ import {
   Typography, 
   Container, 
   Box,
+  useMediaQuery,
 } from '@mui/material';
 import axios from 'axios';
 import { Store } from '@/types/store';
@@ -24,6 +25,7 @@ import { Service } from '@/types/delivery-service';
 import { MapComponent } from '../map/map-component';
 import { MarkerConfig } from '@/types/map-marker';
 import { chunkArray } from '@/utils/array-utils';
+import { formatPhoneNumber } from '@/utils/format-utils';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -93,21 +95,46 @@ export default function StoreDetail() {
   const infoItems = [
     { label: '営業時間', value: store?.businessHours },
     { label: '住所', value: store?.address },
-    { label: '電話番号', value: store?.phone },
-    { label: 'その他', value: `昼の宅配 ${store?.deliveryHours}` },
+    { label: '電話番号', value: store?.phone && formatPhoneNumber(store?.phone) },
+    { label: 'その他', value: store?.deliveryHours && `昼の宅配 ${store?.deliveryHours}` },
   ];
+
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
         <Container className="w-full text-black mb-[200px]" sx={{ minWidth: '90%'}}>
-          <Typography sx={{fontWeight: 'bold', fontSize: '36px', mb: 4}}>
+          <Typography
+            sx={{
+              fontWeight: 'bold',
+              fontSize: {xs: '24px', sm: '28px', lg: '36px'},
+              mb: 4
+            }}
+          >
             {store?.name}
           </Typography>
-          <Box className="w-[1280px] mx-auto flex flex-wrap items-center align-center justify-between">
-            <Box sx={{ width: '48%' }}>
-              <Typography sx={{fontSize: '20px', mb: 2}} className="text-bold text-[#EE0026]" variant="h5" fontWeight="bold">
+          <Box
+            className="mx-auto flex flex-wrap items-center align-center"
+            sx={{
+              marginBottom: '50px',
+              justifyContent: {xs: 'center', md: 'space-between'}
+            }}
+          >
+            <Box
+              sx={{
+                width: {md: '48%'}
+              }}
+            >
+              <Typography
+                sx={{fontSize: '20px', mb: 2}}
+                className="text-bold text-[#EE0026]"
+                variant="h5"
+                fontWeight="bold"
+              >
                 {store?.comment}
               </Typography>
               <Box>
@@ -115,12 +142,25 @@ export default function StoreDetail() {
                   {infoItems.map((item, index) => (
                     <Box
                       key={index}
-                      sx={{ fontSize: '14px', display: 'flex', alignItems: 'flex-start', mb: 1 }}
+                      sx={{ display: 'flex', alignItems: 'flex-start', mb: 1 }}
                     >
-                      <Typography component="span" sx={{ minWidth: '80px', fontWeight: 'bold' }}>
+                      <Typography
+                        component="span"
+                        sx={{
+                          minWidth: '80px',
+                          fontSize: '14px',
+                          fontWeight: 'bold'
+                        }}
+                      >
                         {item.label}
                       </Typography>
-                      <Typography component="span" sx={{ pl: 2 }}>
+                      <Typography
+                        component="span"
+                        sx={{
+                          pl: 2,
+                          fontSize: '14px'
+                        }}
+                      >
                         {item.value}
                       </Typography>
                     </Box>
@@ -128,30 +168,82 @@ export default function StoreDetail() {
                 </Box>
               </Box>
             </Box>
-            <Box sx={{ width: '52%' }}>
-              <Typography variant="h5" fontWeight="bold" mb={2}>
-                対応サービス
-              </Typography>
-              <Box className="flex flex-col gap-2" sx={{ flexDirection: 'column' }}>
-                {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                  chunkArray(store.deliveryServices, 3).map((chunk, rowIndex) => {
-                    return (
-                      <Box key={`row_${rowIndex}`} className="flex gap-2">
-                        {chunk.map((deliveryServiceId: Service) => {
-                          const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                          const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
+            {
+              isMdUp && (
+                <Box
+                  sx={{
+                    alignItems: 'flex-end',
+                    margin: {md: '0 auto'},
+                    width: '52%'
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      marginLeft: '20%',
+                      marginBottom: 2
+                    }}
+                    variant="h5"
+                    fontWeight="bold"
+                  >
+                    対応サービス
+                  </Typography>
+                  <Box className="flex flex-col gap-2">
+                    {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                      chunkArray(store.deliveryServices, 3).map((chunk, rowIndex) => {
+                        return (
+                          <Box
+                            key={`row_${rowIndex}`}
+                            className="flex gap-2"
+                            sx={{ justifyContent: 'flex-end'}}
+                          >
+                            {chunk.map((deliveryServiceId: Service) => {
+                              const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                              const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
-                          return (
-                            <Box key={`service_0${deliveryServiceId}`}>
-                              <ButtonComponent />
-                            </Box>
-                          )
-                        })}
-                      </Box>
-                )})}
-              </Box>
-            </Box>
+                              return (
+                                <Box key={`service_0${deliveryServiceId}`}>
+                                  <ButtonComponent />
+                                </Box>
+                              )
+                            })}
+                          </Box>
+                    )})}
+                  </Box>
+                </Box>
+              )
+            }
           </Box>
+          {
+            !isMdUp && (
+              <Box>
+                <Typography variant="h5" fontWeight="bold" mb={2}>
+                  対応サービス
+                </Typography>
+                <Box className="flex flex-col">
+                  {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                    chunkArray(store.deliveryServices, isSmUp ? 3 : 2).map((chunk, rowIndex) => {
+                      return (
+                        <Box
+                          key={`row_${rowIndex}`}
+                          className="flex gap-5"
+                          sx={{margin: '0 auto'}}
+                        >
+                          {chunk.map((deliveryServiceId: Service) => {
+                            const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                            const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
+
+                            return (
+                              <Box key={`service_0${deliveryServiceId}`}>
+                                <ButtonComponent />
+                              </Box>
+                            )
+                          })}
+                        </Box>
+                  )})}
+                </Box>
+              </Box>
+            )
+          }
           <Box className="mx-auto">
             <Box className="mt-10 mb-[20px]">
               <Typography sx={{fontWeight: 'bold', fontSize: '24px'}}>アクセス</Typography> 
@@ -159,7 +251,7 @@ export default function StoreDetail() {
             <Box
               sx={{
                 '& > div': {  // Wrapper に直接渡す
-                  minHeight: '600px !important',
+                  minHeight: {xs: '353px !important',lg: '600px !important'},
                 },
               }}
             >

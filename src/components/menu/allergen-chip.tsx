@@ -14,10 +14,10 @@ interface CustomChipProps {
   iconButton: any;
 }
 
-const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuItem, iconButton }) => {
+const AllergenChip: React.FC<CustomChipProps>
+  = ({ allergen, index, array, menuItem, iconButton }) => {
   return (
     <Chip
-      variant="outlined"
       color="default"
       label={
         <Box
@@ -30,7 +30,7 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuI
           <Box
             sx={{
               position: 'absolute',
-              top: { xs: '15%', sm: '17.5%', md: '20%' },
+              top: { xs: '15%', sm: '15%', md: '20%' },
               left: '50%',
               transform: 'translateX(-50%)',
             }}
@@ -40,10 +40,10 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuI
           <Box
             sx={{
               position: 'absolute',
-              bottom: { xs: '20%', sm: '15%', md: '10%' },
+              bottom: '10%',
               left: '50%',
               transform: 'translateX(-50%)',
-              fontSize: { xs: '0.6rem', sm: '0.75rem', md: '0.875rem' },
+              fontSize: { xs: '14px', sm: '0.75rem', md: '0.875rem' },
               textAlign: 'center',
               width: '90%',
               whiteSpace: 'normal',
@@ -57,10 +57,10 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuI
       sx={{
         mr: index !== array.length - 1 ? 1 : 0,
         backgroundColor: '#FFF',
-        opacity: menuItem?.allergens.includes(index+1) ? 1 : 0.2,
+        opacity: menuItem?.allergens?.includes(index+1) ? 1 : 0.2,
         borderRadius: '50%',
-        height: { xs: 40, sm: 50, md: 100 },
-        width: { xs: 40, sm: 50, md: 100 },
+        height: { xs: 80, md: 90, lg: 100 },
+        width: { xs: 80, md: 90, lg: 100 },
         '& .MuiChip-label': {
           padding: 0,
           width: '100%',

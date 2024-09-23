@@ -13,20 +13,6 @@ const SVGContainer = styled(Box)({
   height: '100%',
 });
 
-const ContentContainer = styled(Box)({
-  position: 'absolute',
-  top: 5,
-  left: -25,
-  width: '100%',
-  height: '100%',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  padding: '20px',
-  boxSizing: 'border-box',
-});
-
 const HexagonalBox: React.FC<CustomShapeContainerProps> = ({
   children,
   width = 630,
@@ -36,7 +22,7 @@ const HexagonalBox: React.FC<CustomShapeContainerProps> = ({
     <SVGContainer style={{ width, height }}>
       <svg 
         width="100%" 
-        height="100%" 
+        height="100%"
         viewBox="0 0 630 138" 
         preserveAspectRatio="xMidYMid meet" 
         xmlns="http://www.w3.org/2000/svg"
@@ -48,9 +34,23 @@ const HexagonalBox: React.FC<CustomShapeContainerProps> = ({
         </defs>
         <rect width="100%" height="100%" fill={'white'} clipPath="url(#customShape)" />
       </svg>
-      <ContentContainer>
+      <Box
+        sx={{
+          position: 'absolute',
+          top: 0,
+          left: { xs: 0, sm: -80 },
+          width: '100%',
+          height: '100%',
+          display: 'flex',
+          flexDirection: 'column',
+          justifyContent: 'center',
+          alignItems: 'center',
+          padding: '20px',
+          boxSizing: 'border-box',
+        }}
+      >
         {children}
-      </ContentContainer>
+      </Box>
     </SVGContainer>
   );
 };

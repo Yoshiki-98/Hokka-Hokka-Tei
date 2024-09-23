@@ -25,3 +25,7 @@ export interface LogoProps {
   disabled?: boolean;
   className?: string;
 }
+
+export interface ContainerProps {
+  item: any;
+}

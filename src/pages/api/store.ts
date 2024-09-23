@@ -31,8 +31,6 @@ export default async function handler(
             ...doc.data()
           }))
 
-        console.log(`storeList: ${storeList}`);
-
         res.status(200).json(storeList);
       }
     } catch (error) {

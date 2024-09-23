@@ -3,22 +3,24 @@
 import React, { useState, useCallback } from 'react';
 import { prefectures } from 'src/data/prefectures';
 import { allergens as allergenArray } from 'src/data/allergens';
-import { 
-  Button,  
+import {
   Typography, 
   Card, 
-  CardContent, 
-  CardMedia, 
-  Select, 
+  CardContent,
   MenuItem, 
   FormControl, 
   Box,
   Checkbox,
-  Link,
-  styled,
-  Container,
-  SelectProps,
-} from '@mui/material'
+  useMediaQuery,
+} from '@mui/material';
+import {
+  activeTextStyle,
+  CustomSelect,
+  StraightBottomButton,
+  StyledLink,
+  tabStyle,
+  activeTabStyle
+} from '../styled/styled-component';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import { Category } from 'src/types/category';
@@ -26,9 +28,9 @@ import { Menu } from '@/types/menu';
 import Image from 'next/image';
 import Header from '../header';
 import Footer from '../footer';
-import LocationOnIcon from '@mui/icons-material/LocationOn';
 import HandleFilterButton from '../svg/button/trigger/handle-filter';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
+import NoImageThumbnail from '../svg/icon/no-image-thumbnail';
 
 const theme = createTheme({
   palette: {
@@ -42,55 +44,6 @@ const theme = createTheme({
       main: '#323232',
     },
   },
-});
-
-const tabStyle = {
-  padding: 0,
-  color: '#323232',
-  cursor: 'pointer',
-  borderBottom: '2px solid transparent',
-};
-
-const activeTabStyle = {
-  ...tabStyle,
-};
-
-const activeTextStyle = {
-  fontWeight: 'bold',
-  borderBottom: '3px solid #EE0026',
-}
-
-const StyledLink = styled(Link)(({ theme }) => ({
-  textDecoration: 'none',
-  '&:hover': {
-    textDecoration: 'none',
-  },
-  width: 'calc(33.333% - 16px)',
-  marginBottom: '24px',
-}));
-
-const StraightBottomButton = styled(Button)(({ theme }) => ({
-  flex: 1,
-  padding: theme.spacing(1),
-  whiteSpace: 'nowrap',
-  borderRadius: '0',
-}));
-
-// カスタムセレクトコンポーネント
-const CustomSelect = styled(Select)<SelectProps>(({ theme }) => ({
-  '& .MuiOutlinedInput-notchedOutline': {
-    border: 'none',
-  },
-  '&:hover .MuiOutlinedInput-notchedOutline': {
-    border: 'none',
-  },
-  '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-    border: 'none',
-  },
-}));
-
-const SVGContainer = styled(Box)({
-  maxWidth: '393px', // SVGの元の幅
 });
 
 export default function MentList() {
@@ -242,32 +195,60 @@ export default function MentList() {
     tabs[activeTab].fetch(selectedPrefCode, selectedAllergens);
   };
 
+  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
-        <Container className="w-full mt-[100px] mb-[100px]">
-          <Box className="menu-title flex justify-center items-center mb-[56.17px]">
+        <Box
+          className="w-full mx-auto"
+          sx={{
+            marginTop: { xs: '50px', md: '100px'},
+            marginBottom: { xs: '50px', md: '100px'}
+          }}
+        >
+          <Box
+            className="menu-title mx-auto flex justify-center items-center"
+            sx={{
+              width: { sm: '43%', md: 223.95 },
+              marginBottom: '56.17px'
+            }}
+          >
             <Image
               src={'/images/menu-title.png'}
               alt={'Menu Title'}
-              width={223.95}
-              height={66.83}
+              width={isSmDown ? 167.55 : 223.95}
+              height={isSmDown ? 66.83 : 50}
             />
           </Box>
-          <Box className="pb-[100px]">
+          <Box
+            sx={{
+              paddingBottom: { xs: '25px', md: '100px' },
+              textAlign: { xs: 'center', md: 'start' }
+            }}
+          >
             <Box
-              className="mb-[100px] mx-auto"
-              width={855}
+              className="mx-auto"
+              sx={{ marginBottom: { xs: '25px', md: '100px' } }}
+              width={{ sm: 600, md: 855 }}
             >
-              <Typography sx={{fontSize: '24px'}} className="text-black whitespace-nowrap" gutterBottom>
-                <LocationOnIcon fontSize="small" />
-                ご利用の都道府県でお選びください
+              <Typography
+                sx={{fontSize: '24px'}}
+                className="text-black whitespace-nowrap"
+                gutterBottom
+              >
+                ご利用の都道府県でお選び下さい
               </Typography>
               <FormControl fullWidth>
                 <CustomSelect
-                  sx={{borderRadius: '10px'}}
-                  className="w-[353px] h-[30px] bg-white"
+                  sx={{
+                    margin: {xs: '0 auto', md: '0'},
+                    width: {xs: '353px'},
+                    height: '30px',
+                    borderRadius: '10px',
+                  }}
+                  className="bg-white"
                   value={selectedPrefCode}
                   onChange={(e: any) => {
                     setSelectedPrefCode(e.target.value);
@@ -287,14 +268,14 @@ export default function MentList() {
                     key='pref_00' 
                     value={0}
                   >
-                    <span className="text-[#C4C4C6]">都道府県を選択</span>
+                    <span className="flex text-[#C4C4C6]">都道府県を選択</span>
                   </MenuItem>
                   {prefectures.map(pref => (
                     <MenuItem
                       key={`pref_${String(pref.code).padStart(2,'0')}`}
                       value={pref.code}
                     >
-                      {pref.name}
+                      <span className="flex">{pref.name}</span>
                     </MenuItem>
                   ))}
                 </CustomSelect>
@@ -302,44 +283,73 @@ export default function MentList() {
             </Box>
             <Box
               className="mx-auto"
-              width={855}
+              width={{ md: 855 }}
             >
               <Typography
-                sx={{fontSize: '24px', marginBottom: 2}}
                 className="text-black whitespace-nowrap"
+                sx={{
+                  fontSize: '24px',
+                  marginBottom: 2,
+                }}
               >
                 アレルギー物質から絞り込む
               </Typography>
-              <Box className="mx-auto text-black flex justify-center items-center">
+              <Box className="mx-auto text-black flex justify-start items-center">
                 <Box
-                  height={133}
+                  width={{ xs: '353px', sm: '67.5%', md: '100%' }}
+                  height={{ xs: 'auto', sm: 'auto', md: 133 }}
                   sx={{
-                    padding: '25px',
+                    padding: { xs: '25px 20px', md: '25px' },
                     borderRadius: '10px',
+                    flexDirection: { xs: 'column', md: 'row' },
+                    margin: { xs: '0 auto', sm: '0 auto', md: '0' }
+                    // alignItems: { xs: 'center', md: 'left' }
                   }}
-                  className="flex justify-between items-start bg-white shadow-lg"
+                  className="flex justify-between items-start bg-white"
                 >
                   <Box className="whitespace-nowrap">
-                    <Box sx={{marginBottom: '20px'}}>
+                    <Box sx={{ marginBottom: { xs: '10px', md: '20px' } }}>
                       <Typography
-                        sx={{marginBottom: 1, fontSize: '14px' }}
+                        sx={{
+                          display: 'flex',
+                          fontSize: { xs: '12px', sm: '14px' },
+                          marginBottom: 1
+                        }}
                       >
                         除去したい品目を選択して下さい
                       </Typography>
                       <Typography
                         sx={{
-                          fontSize: '12px',
-                          textShadow: '0px 4px 4px rgba(0,0,0,0.3)'
+                          display: 'flex',
+                          fontSize: { xs: '10px', sm: '12px' },
                         }}
                       >
                         ※絞込み条件は特定原材料（8品目）のみとなっております
                       </Typography>
                     </Box>
-                    <Box className="flex whitespace-nowrap">
+                    <Box 
+                      className="flex flex-wrap"
+                      sx={{
+                        justifyContent: 'center',
+                        '& > *': {
+                          flexBasis: { xs: '20%', md: 'auto' },
+                          marginBottom: '8px',
+                        },
+                        '& > *:nth-of-type(4) ~ *': {
+                          flexBasis: { xs: '20%', md: 'auto' },
+                        },
+                      }}
+                    >
                       {allergenArray.map((allergen: {id: number, name: string}) => (
                         <Box
-                          className="mr-[20px] items-center inline-flex shrink-0 mb-2"
+                          className="flex items-center justify-start mb-2"
                           key={allergen.id}
+                          sx={{
+                            marginRight: 1,
+                            width: 'auto',
+                            minWidth: 0,
+                            flexShrink: 0,
+                          }}
                         >
                           <Checkbox
                             id={String(allergen.id)}
@@ -347,10 +357,10 @@ export default function MentList() {
                             onChange={async () => await handleSelectAllergens(allergen.id)}
                             sx={{
                               marginRight: 1,
-                              width: 2.5,
-                              height: 2.5,
+                              width: { xs: 2, md: 2.5 },
+                              height: { xs: 2, md: 2.5 },
                               '& .MuiSvgIcon-root': {
-                                fontSize: 14,  // アイコンのサイズを変更
+                                fontSize: { xs: 12, md: 14 },
                               },
                             }}
                           />
@@ -360,7 +370,9 @@ export default function MentList() {
                               text-black text-sm
                               font-medium leading-none
                               peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                              whitespace-nowrap
                             "
+                            style={{ maxWidth: 'calc(100% - 20px)' }}
                           >
                             {allergen.name}
                           </label>
@@ -368,9 +380,12 @@ export default function MentList() {
                       ))}
                     </Box>
                   </Box>
-                  <Box className="shrink-0">
+                  <Box
+                    sx={{margin: { xs: '0 auto', md: '0' }}}
+                    className="shrink-0 mt-4 md:mt-0"
+                  >
                     <HandleFilterButton
-                      className="shrink-0"
+                      className="shrink-0 w-full md:w-auto"
                       onClick={async () => await handleFilter()}
                     />
                   </Box>
@@ -378,13 +393,22 @@ export default function MentList() {
               </Box>
             </Box>
           </Box>
-          <Box className="mx-auto flex flex-col">
-            <Box className="tab-wrapper mx-auto mt-[100px] mb-[113px]">
+          <Box className="menu-container mx-auto flex flex-col">
+            <Box
+              className="tab-wrapper mx-auto"
+              sx={{
+                marginTop: { xs: '25px', md: '100px' },
+                marginBottom: { xs: '25px', md: '100px' },
+              }}
+            >
               <Box className="flex">
                 {tabs.map((tab, index) => (
                   <StraightBottomButton
                     key={index}
-                    sx={{fontSize: '24px', margin: '4px 50px'}}
+                    sx={{
+                      fontSize: { xs: '14px', sm: '16px', md: '24px' },
+                      margin: { xs: '4px 20px', sm: '4px 24px', md: '4px 50px' },
+                    }}
                     className={'text-black'}
                     onClick={async () => await handleTabClick(index)}
                     style={activeTab === index ? activeTabStyle : tabStyle}
@@ -399,67 +423,71 @@ export default function MentList() {
               </Box>
             </Box>
             <Box
-              className="menu-wrapper w-full flex flex-wrap items-center"
+              className="menu-wrapper w-full flex flex-wrap  justify-center"
               sx={{ 
-                width: '1319px',  // (393px * 3) + (70px * 2) = 1319px
                 maxWidth: '100%',
                 margin: '0 auto',
                 marginBottom: '100px',
-                gap: 0
+                gap: {xs: '10px', sm: '15px', md: '35px'}
               }}
             >
               {menuItems && menuItems.map((item, index) => (
                 <Box
+                  className="item-container"
                   key={index}
                   sx={{
-                    width: '380px',
+                    width: { xs: '170px', sm: '250px', md: '380px' },
                     maxWidth: '100%',
-                    position: 'relative'
+                    position: 'relative',
+                    // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
+                    marginBottom: {xs: '65px', md: '50px'},
                   }}
                 >
                   <StyledLink href={`/menu/${item.id}`}>
                     <Card className="flex flex-col bg-transparent border-none shadow-none">
-                      <SVGContainer>
-                        <svg width="100%" height="100%" viewBox="0 0 393 260" preserveAspectRatio="xMidYMid meet" xmlns="http://www.w3.org/2000/svg">
-                          <defs>
-                            <clipPath id="svgShape">
-                            <path d="M376.856 238.354C376.196 242.981 372.419 246.533 367.76 246.909L205.546 259.996C204.934 260.046 204.318 260.038 203.707 259.975L45.3867 243.512C41.3392 243.091 37.9504 240.259 36.8168 236.351L13.7208 156.726C13.2481 155.096 13.1979 153.373 13.575 151.718L37.5278 46.6174C38.2568 43.4184 40.5088 40.7805 43.5539 39.5587L122.904 7.71924C124.089 7.24414 125.353 7 126.628 7L296.555 7C297.889 7 299.209 7.26688 300.438 7.78491L367.601 36.0899C370.538 37.3274 372.709 39.8903 373.446 42.9902L392.56 123.322C392.851 124.543 392.909 125.807 392.732 127.049L376.856 238.354Z" fill="#D84343"/>
-                            </clipPath>
-                          </defs>
-                          <image
-                            href={item.images[0]}
-                            width="100%"
-                            height="100%"
-                            preserveAspectRatio="xMidYMid slice"
-                            clipPath="url(#svgShape)"
-                          />
-                        </svg>
-                      </SVGContainer>
+                      <NoImageThumbnail item={item}/>
                       <CardContent
                         className="grow"
                         sx={{
                           position: 'absolute',
-                          left: -1,
-                          top: "200px"
+                          left: {xs: -10, md: -1},
+                          top: {xs: '75px', sm: '125px', md: '200px'},
                         }}
                       >
                         <Typography
-                          className="inline-block text-white font-bold bg-[#EE0026] whitespace-nowrap"
+                          className="inline-block text-white font-bold bg-[#EE0026]"
                           sx={{
                             px: 1,
-                            fontSize: '24px'
+                            fontSize: {xs: '14px', sm: '18px', md: '24px'}
                           }}
                           gutterBottom
                         >
                           {item.name}
                         </Typography>
-                        <Typography variant="body2" color="text.secondary" gutterBottom>
-                          <span className="text-4xl font-bold">
+                        <Typography
+                          className="whitespace-nowrap"
+                          color="#323232"
+                          gutterBottom
+                        >
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            sx={{
+                              fontWeight: 'bold',
+                              fontSize: {xs: '24px', sm: '30px', md: '36px'}
+                            }}
+                          >
                             {item.price}
-                          </span>
-                          <span className="text-xl">
-                            円 (税込{item.taxIncludedPrice ??  Math.round(item.price * 1.1)}円)
-                          </span>
+                          </Typography>
+                          <Typography
+                            component="span"
+                            variant="body2"
+                            sx={{
+                              fontSize: {xs: '14px', sm: '18px', md: '20px'}
+                            }}
+                          >
+                            円 (税込{item.taxIncludedPrice!}円)
+                          </Typography>
                         </Typography>
                       </CardContent>
                     </Card>
@@ -468,10 +496,9 @@ export default function MentList() {
               ))}
             </Box>
           </Box>
-        </Container>
+        </Box>
         <Footer/>
       </Box>
     </ThemeProvider>
   )
 }
-
