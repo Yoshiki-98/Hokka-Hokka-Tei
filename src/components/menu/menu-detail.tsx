@@ -207,10 +207,10 @@ export default function MenuDetail() {
                   </Box>
                   <Box sx={{marginBottom: {xs: '50px', md: '100px'}}}>
                     <Box
-                      className="flex flex-col gap-3"
                       sx={{
+                        display: 'flex',
+                        flexDirection: 'column',
                         marginBottom: '50px',
-                        flexDirection: 'column'
                       }}
                     >
                       {chunkArray(allergens, isMdUp ? 8 : 4).map((chunk, rowIndex) => {
@@ -219,8 +219,9 @@ export default function MenuDetail() {
                             key={`row_${rowIndex}`}
                             className="flex"
                             sx={{
-                              gap: isLgUp? 2.5 : 1,
-                              margin: isMdUp ? undefined : '0 auto'
+                              margin:
+                                isMdUp ? undefined :
+                                rowIndex === 0 ? '0 auto 20px auto' : '0 auto'
                             }}
                           >
                             {chunk.map((allergen: Allergen, index, array) => {
