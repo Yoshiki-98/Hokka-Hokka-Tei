@@ -13,7 +13,7 @@ const HokateiFlag: React.FC<IconProps> = ({ onClick, disabled, className }) => {
       }}
     >
       <svg width="54" height="63" viewBox="0 0 54 63" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-        <path fill-rule="evenodd" clip-rule="evenodd" d="M33.702 52.7317C44.9139 49.7248 53.1796 39.3584 53.1796 27.0324C53.1796 12.3531 41.4564 0.453125 26.9951 0.453125C12.5338 0.453125 0.810547 12.3531 0.810547 27.0324C0.810547 39.2833 8.97582 49.5984 20.0835 52.6759L27.2173 62.3184L33.702 52.7317Z" fill="#FFA600"/>
+        <path fillRule="evenodd" clipRule="evenodd" d="M33.702 52.7317C44.9139 49.7248 53.1796 39.3584 53.1796 27.0324C53.1796 12.3531 41.4564 0.453125 26.9951 0.453125C12.5338 0.453125 0.810547 12.3531 0.810547 27.0324C0.810547 39.2833 8.97582 49.5984 20.0835 52.6759L27.2173 62.3184L33.702 52.7317Z" fill="#FFA600"/>
         <rect x="8.35596" y="13.4102" width="37.2796" height="29.0362" fill="url(#pattern0_924_4814)"/>
         <defs>
           <pattern id="pattern0_924_4814" patternContentUnits="objectBoundingBox" width="1" height="1">

@@ -202,8 +202,9 @@ export default function MentList() {
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
         <Box
-          className="w-full mx-auto"
+          className="mx-auto"
           sx={{
+            width: {xs: '90%', sm: '100%'},
             marginTop: { xs: '50px', md: '100px'},
             marginBottom: { xs: '50px', md: '100px'}
           }}
