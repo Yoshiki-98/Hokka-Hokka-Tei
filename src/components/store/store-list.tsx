@@ -407,7 +407,7 @@ export default function StoreList() {
                                           {formatPhoneNumber(store.phone)}
                                         </Typography>
                                       </Box>
-                                      {!isSmUp &&
+                                      {!isMdUp &&
                                         <Box display="flex" alignItems="flex-start">
                                           <Typography sx={{ fontSize: '14px' }}>
                                             <span className="font-bold">昼の宅配: </span>
@@ -416,7 +416,7 @@ export default function StoreList() {
                                         </Box>
                                       }
                                     </Box>
-                                    {isSmUp &&
+                                    {isMdUp &&
                                       <Box>
                                         <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
                                           <span className="font-bold">昼の宅配: </span>
@@ -462,7 +462,82 @@ export default function StoreList() {
                           <SmallHexaBox
                             width={353} // 1440/1512 x 630 = 600
                             height={151} // 131.4]
-                          />
+                          >
+                            <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
+                              <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', md: '20px'}}}>
+                                {store.name}
+                              </Typography>
+                              <Box className="mx-auto flex flex-wrap justify-between w-full">
+                                <Box>
+                                  {/* 左側のコンテンツ（変更なし） */}
+                                  <Box display="flex" alignItems="flex-start">
+                                    <Typography sx={{ fontSize: '14px' }}>{store.address}</Typography>
+                                  </Box>
+                                  <Box className="flex items-center align-center justify-between">
+                                    <Box>
+                                      <Box display="flex" alignItems="flex-start">
+                                        <Typography sx={{ fontSize: '14px' }}>
+                                          <span className="font-bold">営業時間: </span>
+                                          {store.businessHours}
+                                        </Typography>
+                                      </Box>
+                                      <Box display="flex" alignItems="flex-start">
+                                        <Typography sx={{ fontSize: '14px' }}>
+                                          <span className="font-bold">電話番号: </span>
+                                          {formatPhoneNumber(store.phone)}
+                                        </Typography>
+                                      </Box>
+                                      {!isMdUp &&
+                                        <Box display="flex" alignItems="flex-start">
+                                          <Typography sx={{ fontSize: '14px' }}>
+                                            <span className="font-bold">昼の宅配: </span>
+                                            {store.deliveryHours}
+                                          </Typography>
+                                        </Box>
+                                      }
+                                    </Box>
+                                    {isMdUp &&
+                                      <Box>
+                                        <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
+                                          <span className="font-bold">昼の宅配: </span>
+                                          {store.deliveryHours}
+                                        </Typography>
+                                      </Box>
+                                    }
+                                  </Box>
+                                </Box>
+                                <Box  
+                                  sx={{
+                                    position: 'absolute',
+                                    top: 22.5,
+                                    right: -25,
+                                    flexShrink: 0
+                                  }}
+                                >
+                                  <Box sx={{gap: 1}}>
+                                    {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                                      chunkArray(store.deliveryServices, 6).map((chunk, rowIndex) => {
+                                        return (
+                                          <Box className="flex gap-1" key={`row_${rowIndex}`}>
+                                            {chunk.map((deliveryServiceId: Service) => {
+                                              const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                                              const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
+
+                                              return (
+                                                <Box key={`service_0${deliveryServiceId}`}>
+                                                  <LogoComponent />
+                                                </Box>
+                                              )
+                                            })}
+                                          </Box>
+                                        )
+                                      })
+                                    }
+                                  </Box>
+                                </Box>
+                              </Box>
+                            </Box>
+                          </SmallHexaBox>
                         )
                       }
                     </StyledLink>
