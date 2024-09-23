@@ -6,6 +6,7 @@ import {
   Container, 
   Box,
   useMediaQuery,
+  Link,
 } from '@mui/material';
 import axios from 'axios';
 import { Store } from '@/types/store';
@@ -203,9 +204,12 @@ export default function StoreDetail() {
                               const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
                               return (
-                                <Box key={`service_0${deliveryServiceId}`}>
+                                <Link
+                                  key={`service_0${deliveryServiceId}`}
+                                  href={deliveryService?.url}
+                                >
                                   <ButtonComponent />
-                                </Box>
+                                </Link>
                               )
                             })}
                           </Box>
