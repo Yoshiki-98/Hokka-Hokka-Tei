@@ -5,10 +5,7 @@ import {
   Typography, 
   Container, 
   Box,
-<<<<<<< Updated upstream
-=======
   Link,
->>>>>>> Stashed changes
   useMediaQuery,
 } from '@mui/material';
 import axios from 'axios';
@@ -184,39 +181,6 @@ export default function StoreDetail() {
                     width: '52%'
                   }}
                 >
-<<<<<<< Updated upstream
-                  <Typography
-                    sx={{
-                      marginLeft: '20%',
-                      marginBottom: 2
-                    }}
-                    variant="h5"
-                    fontWeight="bold"
-                  >
-                    対応サービス
-                  </Typography>
-                  <Box className="flex flex-col gap-2">
-                    {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                      chunkArray(store.deliveryServices, 3).map((chunk, rowIndex) => {
-                        return (
-                          <Box
-                            key={`row_${rowIndex}`}
-                            className="flex gap-2"
-                            sx={{ justifyContent: 'flex-end'}}
-                          >
-                            {chunk.map((deliveryServiceId: Service) => {
-                              const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                              const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
-
-                              return (
-                                <Box key={`service_0${deliveryServiceId}`}>
-                                  <ButtonComponent />
-                                </Box>
-                              )
-                            })}
-                          </Box>
-                    )})}
-=======
                   <Box className="flex-col">
                     <Box>
                       <Typography
@@ -258,7 +222,6 @@ export default function StoreDetail() {
                             </Box>
                       )})}
                     </Box>
->>>>>>> Stashed changes
                   </Box>
                 </Box>
               )
