@@ -41,7 +41,6 @@ const StyledLink = styled(Link)(({ theme }) => ({
   '&:hover': {
     textDecoration: 'none',
   },
-  width: 'calc(33.333% - 16px)',
   marginBottom: '24px',
 }));
 

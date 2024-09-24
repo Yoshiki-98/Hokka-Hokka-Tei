@@ -202,7 +202,7 @@ export default function MenuDetail() {
                     <Typography className="text-[#FFA600]">
                       <span className="text-2xl font-bold whitespace-nowrap mr-[20px]">アレルギー情報</span>
                     </Typography>
-                    <Box className="grow bg-[#FFA600] p-3"/>
+                    <Box className="grow bg-[#FFA600] py-3"/>
                   </Box>
                   <Box sx={{marginBottom: {xs: '50px', md: '100px'}}}>
                     <Box
@@ -287,7 +287,7 @@ export default function MenuDetail() {
                     <Typography className="text-[#FFA600]">
                       <span className="text-2xl text-[#FFA600] font-bold whitespace-nowrap mr-[20px]">栄養情報</span>
                     </Typography>
-                    <Box className="grow bg-[#FFA600] p-3"/>
+                    <Box className="grow bg-[#FFA600] py-3"/>
                   </Box>
                   <Box className="flex justify-center">
                     {menuItem && <NutritionInfo menuItem={menuItem} />}

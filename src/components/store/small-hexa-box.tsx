@@ -39,7 +39,7 @@ const SmallHexaBox: React.FC<CustomShapeContainerProps> = ({
         sx={{
           position: 'absolute',
           top: 0,
-          left: { xs: -35 },
+          left: -35,
           width: '100%',
           height: '100%',
           display: 'flex',
