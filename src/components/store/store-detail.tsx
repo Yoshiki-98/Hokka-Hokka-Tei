@@ -206,7 +206,7 @@ export default function StoreDetail() {
 
                               return (
                                 <IconButton
-                                  href={deliveryService?.url!}
+                                  href='/'
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
