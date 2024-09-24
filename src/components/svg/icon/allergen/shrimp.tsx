@@ -1,15 +1,27 @@
 import React from 'react';
 import { IconProps } from '@/types/element-prop';
+import {
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 
 const ShrimpIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const width = isLgUp ? '40' : isMdUp ? '37' : isSmUp ? '35' : '32';
+  const height = isLgUp ? '46' : isMdUp ? 'auto' : isSmUp ? 'auto' : '36.5';
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`relative inline-block ${className}`}
-      style={{ width: '40px', height: '46px' }}
+      style={{ width: 'auto', height: 'auto' }}
     >
-      <svg width="40" height="46" viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width={width} height={height} viewBox="0 0 40 46" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_2678_13923)">
           <path d="M22.07 22.85C22.04 22.55 21.78 22.32 21.46 22.36C16.92 22.84 16.03 24.78 15.32 26.34C15.2 26.6 15.09 26.85 14.95 27.09C14.8 27.36 14.9 27.69 15.16 27.84C15.25 27.89 15.34 27.91 15.43 27.91C15.63 27.91 15.81 27.81 15.92 27.63C16.07 27.37 16.19 27.09 16.32 26.8C16.98 25.36 17.66 23.87 21.57 23.46C21.87 23.43 22.09 23.16 22.06 22.85H22.07Z" fill="#323232"/>
           <path d="M23.9401 24.5694C24.2401 24.5094 24.4401 24.2294 24.3801 23.9194C24.3201 23.6194 24.0401 23.4194 23.7401 23.4794C19.7201 24.2294 19.2401 25.9694 18.7801 27.6594C18.7401 27.7994 18.7001 27.9394 18.6601 28.0794C18.5701 28.3694 18.7401 28.6794 19.0401 28.7594C19.0901 28.7694 19.1401 28.7794 19.1901 28.7794C19.4301 28.7794 19.6501 28.6194 19.7201 28.3794C19.7601 28.2294 19.8001 28.0894 19.8401 27.9494C20.2801 26.3494 20.5901 25.1894 23.9301 24.5694H23.9401Z" fill="#323232"/>

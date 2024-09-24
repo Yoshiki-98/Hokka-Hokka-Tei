@@ -1,15 +1,27 @@
 import React from 'react';
 import { IconProps } from '@/types/element-prop';
+import {
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 
 const WheatIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const width = isLgUp ? '37' : isMdUp ? '34' : isSmUp ? '32' : '30';
+  const height = isLgUp ? '46' : isMdUp ? 'auto' : isSmUp ? 'auto' : '36';
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`relative inline-block ${className}`}
-      style={{ width: '37px', height: '46px' }}
+      style={{ width: 'auto', height: 'auto' }}
     >
-      <svg width="37" height="46" viewBox="0 0 37 46" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width={width} height={height} viewBox="0 0 37 46" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_872_4413)">
           <path d="M18.41 0C17.64 4.77 13.75 9.81 13.75 15.21C13.75 17.71 15.52 20.99 18.41 22.91C21.3 20.99 23.07 17.72 23.07 15.21C23.07 9.81 19.17 4.76 18.41 0ZM18.16 20.17C18.03 20.28 17.87 20.34 17.71 20.34C17.51 20.34 17.31 20.26 17.17 20.09C15.07 17.59 14.57 14.02 15.84 10.53C15.97 10.16 16.38 9.97 16.74 10.11C17.1 10.24 17.29 10.65 17.16 11.01C16.07 14.01 16.48 17.07 18.25 19.17C18.5 19.47 18.46 19.91 18.17 20.17H18.16Z" fill="#323232"/>
           <path d="M15.9305 22.8005C12.6705 18.1405 6.27047 16.1405 2.73047 12.4805C4.95047 17.0705 4.63047 23.7905 7.88047 28.4305C9.39047 30.5905 12.8805 32.3305 16.5405 32.2305C17.8805 28.8305 17.4305 24.9505 15.9305 22.8005ZM14.7205 30.2205C14.6405 30.5405 14.3505 30.7405 14.0405 30.7405C13.9805 30.7405 13.9205 30.7405 13.8605 30.7205C10.7105 29.8905 8.26047 27.2705 7.31047 23.7205C7.21047 23.3405 7.43047 22.9605 7.81047 22.8605C8.18047 22.7605 8.57047 22.9805 8.67047 23.3605C9.85047 27.7705 12.9505 29.0305 14.2205 29.3705C14.5905 29.4705 14.8205 29.8605 14.7205 30.2305V30.2205Z" fill="#323232"/>
