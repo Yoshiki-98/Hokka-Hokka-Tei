@@ -5,7 +5,7 @@ export interface IconProps {
 }
 
 export interface IndicatorProps {
-  onClick?: () => void;
+  onClick?: (e: React.MouseEvent<HTMLAnchorElement>) => void;
   disabled?: boolean;
   className?: string;
 }
