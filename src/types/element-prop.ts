@@ -5,7 +5,6 @@ export interface IconProps {
 }
 
 export interface IndicatorProps {
-  href?: string;
   onClick?: () => void;
   disabled?: boolean;
   className?: string;
