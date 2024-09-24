@@ -247,8 +247,7 @@ export default function StoreDetail() {
                         return (
                           <Box
                             key={`row_${rowIndex}`}
-                            className="flex"
-                            sx={{ justifyContent: 'flex-end'}}
+                            className="flex justify-center"
                           >
                             {chunk.map((deliveryServiceId: Service) => {
                               const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
