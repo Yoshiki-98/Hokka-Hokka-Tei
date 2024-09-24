@@ -12,8 +12,8 @@ import { Menu } from '@/types/menu';
 import axios from 'axios';
 import { getSecondaryAllergenById } from '@/utils/theme/secondary-allergen-utils';
 import { allergens } from '@/data/allergens';
-import Header from '../header';
-import Footer from '../footer';
+import Header from 'src/components/header';
+import Footer from 'src/components/footer';
 import NutritionInfo from './nutrition-info';
 import AllergenChip from './allergen-chip';
 import WheatIcon from 'src/components/svg/icon/allergen/wheat';
@@ -24,9 +24,9 @@ import PeanutIcon from 'src/components/svg/icon/allergen/peanut';
 import WalnutIcon from 'src/components/svg/icon/allergen/walnut';
 import ShrimpIcon from 'src/components/svg/icon/allergen/shrimp';
 import CrabIcon from 'src/components/svg/icon/allergen/crab';
-import MenuContainer from '../svg/container/menu-container';
 import { Allergen } from '@/types/allergen';
 import { chunkArray } from '@/utils/array-utils';
+import MenuContainer from 'src/components/svg/container/menu-container';
 
 const theme = createTheme({
   palette: {
@@ -82,7 +82,6 @@ export default function MenuDetail() {
 
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <ThemeProvider theme={theme}>
@@ -102,7 +101,7 @@ export default function MenuDetail() {
                   className="md:flex items-center align-center justify-between"
                   sx={{
                     margin: isSmUp ? '0 0 100px 0': '0 auto 100px auto',
-                    width: isSmUp ? '100%' : '90%'
+                    width: isSmUp ? '100%' : '95%'
                   }}
                 >
                   <Box
@@ -196,7 +195,7 @@ export default function MenuDetail() {
                 <Box
                   sx={{
                     margin: isSmUp ? '0 0 100px 0': '0 auto 100px auto',
-                    width: isSmUp ? '100%' : '90%'
+                    width: isSmUp ? '100%' : '95%'
                   }}
                 >
                   <Box className="flex items-center align-center justify-between mb-9">
@@ -221,7 +220,7 @@ export default function MenuDetail() {
                             sx={{
                               margin:
                                 isMdUp ? undefined :
-                                rowIndex === 0 ? '0 auto 20px auto' : '0 auto'
+                                rowIndex === 0 ? '0 auto 20px' : '0 auto'
                             }}
                           >
                             {chunk.map((allergen: Allergen, index, array) => {
@@ -282,7 +281,7 @@ export default function MenuDetail() {
                     className="flex items-center align-center justify-between"
                     sx={{
                       margin: isSmUp ? '0': '0 auto',
-                      width: isSmUp ? '100%' : '90%'
+                      width: isSmUp ? '100%' : '95%'
                     }}
                   >
                     <Typography className="text-[#FFA600]">

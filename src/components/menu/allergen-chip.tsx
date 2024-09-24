@@ -1,5 +1,10 @@
 import React from 'react';
-import { Chip, Box } from '@mui/material';
+import {
+  Chip,
+  Box,
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 
 interface CustomChipProps {
   allergen: {
@@ -14,8 +19,11 @@ interface CustomChipProps {
   iconButton: any;
 }
 
-const AllergenChip: React.FC<CustomChipProps>
-  = ({ allergen, index, array, menuItem, iconButton }) => {
+const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuItem, iconButton }) => {
+  const theme = useTheme();
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+
   return (
     <Chip
       color="default"
@@ -55,7 +63,7 @@ const AllergenChip: React.FC<CustomChipProps>
         </Box>
       }
       sx={{
-        mr: index !== array.length - 1 ? 1 : 0,
+        mr: index === array.length - 1 ? 0 : isLgUp ? '30px' : isSmUp ? '20px' : '10px',
         backgroundColor: '#FFF',
         opacity: menuItem?.allergens?.includes(index+1) ? 1 : 0.2,
         borderRadius: '50%',
