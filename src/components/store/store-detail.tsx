@@ -231,7 +231,11 @@ export default function StoreDetail() {
             !isMdUp && (
               <Box>
                 <Box>
-                  <Typography variant="h5" fontWeight="bold" mb={2}>
+                  <Typography
+                    variant="h5"
+                    fontWeight="bold"
+                    mb={2}
+                  >
                     対応サービス
                   </Typography>
                 </Box>
