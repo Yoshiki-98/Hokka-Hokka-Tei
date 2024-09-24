@@ -7,6 +7,7 @@ import {
   Box,
   useMediaQuery,
   Link,
+  IconButton,
 } from '@mui/material';
 import axios from 'axios';
 import { Store } from '@/types/store';
@@ -190,13 +191,13 @@ export default function StoreDetail() {
                   >
                     対応サービス
                   </Typography>
-                  <Box className="flex flex-col gap-2">
+                  <Box className="flex flex-col">
                     {store?.deliveryServices && store.deliveryServices.length > 0 &&
                       chunkArray(store.deliveryServices, 3).map((chunk, rowIndex) => {
                         return (
                           <Box
                             key={`row_${rowIndex}`}
-                            className="flex gap-2"
+                            className="flex"
                             sx={{ justifyContent: 'flex-end'}}
                           >
                             {chunk.map((deliveryServiceId: Service) => {
@@ -204,10 +205,16 @@ export default function StoreDetail() {
                               const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
                               return (
-                                <ButtonComponent
-                                  key={`service_0${deliveryServiceId}`}
-                                  href={deliveryService?.url}
-                                />
+                                <IconButton
+                                  href={deliveryService?.url!}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
+                                >
+                                  <ButtonComponent
+                                    key={`service_0${deliveryServiceId}`}
+                                  />
+                                </IconButton>
                               )
                             })}
                           </Box>
