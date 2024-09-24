@@ -36,7 +36,7 @@ const SmSVGContainer = styled(Box)({
 });
 
 interface ThumbnailProp {
-  item: Menu;
+  item: any;
 } 
 
 const MenuListContainer: React.FC<ThumbnailProp> = ({ item }) => {

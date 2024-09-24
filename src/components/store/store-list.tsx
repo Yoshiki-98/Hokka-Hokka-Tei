@@ -202,7 +202,7 @@ export default function StoreList() {
           <Box
             sx={{
               display: isLgUp ? undefined: 'flex',
-              justifyContent: {xs: 'center', md: 'flex-end', lg: 'unset'},
+              justifyContent: {xs: 'center', lg: 'flex-end'},
               paddingRight: {lg: '85px'},
               marginLeft: isLgUp ? '915px' : 0,
               marginBottom: '27px'
@@ -223,7 +223,7 @@ export default function StoreList() {
               width: '100%',
               marginBottom: '100px',
               '& > div': {  // Wrapper に直接渡す
-                minHeight: {xs: '353px !important',lg: '600px !important'},
+                minHeight: {xs: '353px !important', lg: '600px !important'},
               }
             }}
           >
@@ -239,29 +239,29 @@ export default function StoreList() {
               variant="h5"
               component="h2"
               gutterBottom
-              sx={{ textAlign: {sm: 'center', md: 'unset'} }}
+              sx={{ textAlign: {sm: 'center', lg: 'unset'} }}
             >
               エリアから探す
             </Typography>
             <Box
-              className="flex justify-between"
+              className="flex justify-between items-center"
               sx={{
                 marginBottom: '100px',
-                flexDirection: {xs: 'column', md: 'unset'},
-                alignItems: {xs: 'center', md: 'flex-end'}
+                flexDirection: {xs: 'column', lg: 'unset'},
+                alignItems: {xs: 'center', lg: 'flex-end'}
               }}
             >
               <Box
                 sx={{
-                  marginBottom: {xs: '20px', md: 0},
-                  flexDirection: {xs: 'column', md: 'unset'}
+                  marginBottom: {xs: '20px', lg: 0},
+                  flexDirection: {xs: 'column', lg: 'unset'}
                 }}
                 className="flex justify-between"
               >
                 <Box
                   sx={{
                     marginBottom: {xs: '10px', lg: 0},
-                    marginRight: {xs: 0, md: '30px', lg: '60px'}
+                    marginRight: {xs: 0, lg: '60px'}
                   }}
                 >
                   <FormControl fullWidth>
@@ -325,8 +325,8 @@ export default function StoreList() {
                 className="flex"
                 sx={{
                   width: '100%',
-                  marginLeft: {md : '30px', lg: '150px'},
-                  justifyContent: {xs: 'center', md: 'start'}
+                  marginLeft: {xs : '0px', lg: '150px'},
+                  justifyContent: {xs: 'center', lg: 'start'}
                 }}
               >
                 <LocationRetrievalButton

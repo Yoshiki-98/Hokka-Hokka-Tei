@@ -1,8 +1,8 @@
 import React, { useEffect, useRef } from 'react';
 import { MarkerConfig } from '@/types/map-marker';
 import { createRoot } from 'react-dom/client';
-import HokateiFlag from '../svg/icon/hokatei-flag';
-import SmallHokateiFlag from '../svg/icon/small-hokatei-flag';
+import HokateiFlag from 'src/components/svg/icon/hokatei-flag';
+import SmallHokateiFlag from 'src/components/svg/icon/small-hokatei-flag';
 import { useTheme, useMediaQuery } from '@mui/material';
 
 interface MultipleMarkersMapProps {

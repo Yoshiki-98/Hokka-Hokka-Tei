@@ -20,17 +20,18 @@ import {
   StyledLink,
   tabStyle,
   activeTabStyle
-} from '../styled/styled-component';
+} from 'src/components/styled/styled-component';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import axios from 'axios';
 import { Category } from 'src/types/category';
 import { Menu } from '@/types/menu';
 import Image from 'next/image';
-import Header from '../header';
-import Footer from '../footer';
-import HandleFilterButton from '../svg/button/trigger/handle-filter';
+import Header from 'src/components/header';
+import Footer from 'src/components/footer';
+import HandleFilterButton from 'src/components/svg/button/trigger/handle-filter';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
-import MenuListContainer from '../svg/container/menu-list-container';
+import MenuListContainer from 'src/components/svg/container/menu-list-container';
+import { chunkArray } from '@/utils/array-utils';
 
 const theme = createTheme({
   palette: {
@@ -170,7 +171,7 @@ export default function MentList() {
   const tabs = [
     { title: '新商品・期間限定', filter: handleFilterNewItems, fetch: fetchNewItems },
     { title: 'お弁当', filter: handleFilterMainItems, fetch: fetchMainItems },
-    { title: 'おかず', filter: handleFilterSideItems, fetch: fetchSideItems },
+    { title: 'おかずのみ', filter: handleFilterSideItems, fetch: fetchSideItems },
   ];
 
   const handleTabClick = async (index: number) => {
@@ -196,6 +197,7 @@ export default function MentList() {
   };
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <ThemeProvider theme={theme}>
@@ -394,7 +396,7 @@ export default function MentList() {
               </Box>
             </Box>
           </Box>
-          <Box className="menu-container mx-auto flex flex-col">
+          <Box className="main-container flex flex-col">
             <Box
               className="tab-wrapper mx-auto"
               sx={{
@@ -402,7 +404,13 @@ export default function MentList() {
                 marginBottom: { xs: '25px', md: '100px' },
               }}
             >
-              <Box className="flex">
+              <Box
+                className="flex"
+                sx={{
+                  width: '90%',
+                  margin: '0 auto'
+                }}
+              >
                 {tabs.map((tab, index) => (
                   <StraightBottomButton
                     key={index}
@@ -423,78 +431,92 @@ export default function MentList() {
                 ))}
               </Box>
             </Box>
-            <Box
-              className="menu-wrapper w-full flex flex-wrap  justify-center"
-              sx={{ 
-                maxWidth: '100%',
-                margin: '0 auto',
-                marginBottom: '100px',
-                gap: {xs: '10px', sm: '15px', md: '35px'}
-              }}
-            >
-              {menuItems && menuItems.map((item, index) => (
-                <Box
-                  className="item-container"
-                  key={index}
-                  sx={{
-                    width: { xs: '170px', sm: '250px', md: '380px' },
-                    maxWidth: '100%',
-                    position: 'relative',
-                    // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
-                    marginBottom: {xs: '65px', md: '50px'},
-                  }}
-                >
-                  <StyledLink href={`/menu/${item.id}`}>
-                    <Card className="flex flex-col bg-transparent border-none shadow-none">
-                      <MenuListContainer item={item}/>
-                      <CardContent
-                        className="grow"
-                        sx={{
-                          position: 'absolute',
-                          left: {xs: -10, md: -1},
-                          top: {xs: '75px', sm: '125px', md: '200px'},
-                        }}
-                      >
-                        <Typography
-                          className="inline-block text-white font-bold bg-[#EE0026]"
-                          sx={{
-                            px: 1,
-                            fontSize: {xs: '14px', sm: '18px', md: '24px'}
-                          }}
-                          gutterBottom
-                        >
-                          {item.name}
-                        </Typography>
-                        <Typography
-                          className="whitespace-nowrap"
-                          color="#323232"
-                          gutterBottom
-                        >
-                          <Typography
-                            component="span"
-                            variant="body2"
+            <Box className="menu-container flex justify-center">
+              <Box
+                className="menu-wrapper flex-col"
+                sx={{ 
+                  maxWidth: '100%',
+                  margin: '0 auto',
+                  marginBottom: '100px',
+                  gap: {xs: '10px', sm: '15px', md: '35px'}
+                }}
+              >
+                {menuItems && chunkArray(menuItems, isLgUp ? 3 : 2).map((chunk, rowIndex) => (
+                  <Box
+                    key={`row_${rowIndex}`}
+                    className="flex"
+                    sx={{ marginBottom: {xs: '75px', sm: '100px', md: '120px'} }}
+                  >
+                    {
+                      chunk.map((item, index) => {
+                        return (
+                          <Box
+                            className="item-container"
+                            key={index}
                             sx={{
-                              fontWeight: 'bold',
-                              fontSize: {xs: '24px', sm: '30px', md: '36px'}
+                              width: { xs: '170px', sm: '250px', md: '380px' },
+                              maxWidth: '100%',
+                              position: 'relative',
+                              // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
+                              margin: {xs: '0 10px', sm: '0 30px'}
                             }}
                           >
-                            {item.price}
-                          </Typography>
-                          <Typography
-                            component="span"
-                            variant="body2"
-                            sx={{
-                              fontSize: {xs: '14px', sm: '18px', md: '20px'}
-                            }}
-                          >
-                            円 (税込{item.taxIncludedPrice!}円)
-                          </Typography>
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </StyledLink>
-                </Box>
-              ))}
+                            <StyledLink href={`/menu/${item.id}`}>
+                              <Card className="flex flex-col bg-transparent border-none shadow-none">
+                                <MenuListContainer item={item}/>
+                                <CardContent
+                                  className="grow"
+                                  sx={{
+                                    position: 'absolute',
+                                    left: {xs: -10, md: -1},
+                                    top: {xs: '75px', sm: '125px', md: '200px'},
+                                  }}
+                                >
+                                  <Typography
+                                    className="inline-block text-white font-bold bg-[#EE0026]"
+                                    sx={{
+                                      px: 1,
+                                      fontSize: {xs: '14px', sm: '18px', md: '24px'}
+                                    }}
+                                    gutterBottom
+                                  >
+                                    {item.name}
+                                  </Typography>
+                                  <Typography
+                                    className="whitespace-nowrap"
+                                    color="#323232"
+                                    gutterBottom
+                                  >
+                                    <Typography
+                                      component="span"
+                                      variant="body2"
+                                      sx={{
+                                        fontWeight: 'bold',
+                                        fontSize: {xs: '24px', sm: '30px', md: '36px'}
+                                      }}
+                                    >
+                                      {item.price}
+                                    </Typography>
+                                    <Typography
+                                      component="span"
+                                      variant="body2"
+                                      sx={{
+                                        fontSize: {xs: '14px', sm: '18px', md: '20px'}
+                                      }}
+                                    >
+                                      円 (税込{item.taxIncludedPrice!}円)
+                                    </Typography>
+                                  </Typography>
+                                </CardContent>
+                              </Card>
+                            </StyledLink>
+                          </Box>
+                        )
+                      })
+                    }
+                  </Box>
+                ))}
+              </Box>
             </Box>
           </Box>
         </Box>

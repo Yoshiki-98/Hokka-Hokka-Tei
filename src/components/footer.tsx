@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import { AppBar, Box, Toolbar, Typography, Link, Container, Divider, IconButton, createTheme, useMediaQuery, useTheme } from '@mui/material';
+import { AppBar, Box, Toolbar, Typography, Link, Container, Divider, IconButton, useMediaQuery, useTheme } from '@mui/material';
 import FooterLogo from 'src/components/svg/logo/footer/site-logo';
 import CompanyLogo from 'src/components/svg/logo/footer/company-logo';
 import RightArrowIcon from 'src/components/svg/logo/main/right-arrow-icon';
