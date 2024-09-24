@@ -248,7 +248,7 @@ export default function StoreList() {
               sx={{
                 marginBottom: '100px',
                 flexDirection: {xs: 'column', lg: 'unset'},
-                alignItems: {xs: 'center', lg: 'flex-end'}
+                alignItems: {xs: 'center'}
               }}
             >
               <Box
