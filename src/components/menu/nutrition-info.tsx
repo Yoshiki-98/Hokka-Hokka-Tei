@@ -88,7 +88,8 @@ const NutritionInfo: React.FC<NutritionInfoProps> = ({ menuItem }) => {
                   sx={{
                     flexDirection: 'column',
                     alignItems: 'center',
-                    p: 1
+                    px: isSmUp? 1: 0,
+                    py: 1
                   }}
                 >
                   <Typography
