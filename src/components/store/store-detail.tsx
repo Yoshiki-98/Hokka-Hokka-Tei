@@ -203,6 +203,11 @@ export default function StoreDetail() {
                               const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
                               const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
+                              const handleClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+                                e.preventDefault();
+                                window.open(deliveryService?.url, '_blank', 'noopener,noreferrer');
+                              };
+
                               return (
                                 <Link
                                   key={`service_0${deliveryServiceId}`}
@@ -210,7 +215,7 @@ export default function StoreDetail() {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                 >
-                                  <ButtonComponent />
+                                  <ButtonComponent onClick={handleClick} />
                                 </Link>
                               )
                             })}
