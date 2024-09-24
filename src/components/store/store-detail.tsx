@@ -5,8 +5,8 @@ import {
   Typography, 
   Container, 
   Box,
-  useMediaQuery,
   Link,
+  useMediaQuery,
   IconButton,
 } from '@mui/material';
 import axios from 'axios';
@@ -15,8 +15,8 @@ import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { prefsWithCities } from '@/data/prefs-with-cities';
 import { getDeliveryServiceDataById } from '@/utils/theme/delivery-service-utils';
-import Header from '../header';
-import Footer from '../footer';
+import Header from 'src/components/header';
+import Footer from 'src/components/footer';
 import MobileOrderIndicator from '@/components/svg/button/indicator/mobile-order';
 import UberEatsIndicator from '@/components/svg/button/indicator/uber-eats';
 import DemaeKanIndicator from '@/components/svg/button/indicator/demae-kan';
@@ -24,7 +24,7 @@ import BulkOrderIndicator from '@/components/svg/button/indicator/bulk-order';
 import CoinLaundryIndicator from '@/components/svg/button/indicator/coin-laundry';
 import WoltIndicator from '@/components/svg/button/indicator/wolt';
 import { Service } from '@/types/delivery-service';
-import { MapComponent } from '../map/map-component';
+import { MapComponent } from 'src/components/map/map-component';
 import { MarkerConfig } from '@/types/map-marker';
 import { chunkArray } from '@/utils/array-utils';
 import { formatPhoneNumber } from '@/utils/format-utils';
@@ -176,24 +176,74 @@ export default function StoreDetail() {
               isMdUp && (
                 <Box
                   sx={{
-                    alignItems: 'flex-end',
+                    display: 'flex',
+                    justifyContent: 'flex-end',
                     margin: {md: '0 auto'},
                     width: '52%'
                   }}
                 >
+                  <Box className="flex-col">
+                    <Box>
+                      <Typography
+                        sx={{marginBottom: 2}}
+                        variant="h5"
+                        fontWeight="bold"
+                      >
+                        対応サービス
+                      </Typography>
+                    </Box>
+                    <Box className="flex-col">
+                      {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                        chunkArray(
+                          (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), 3
+                        ).map((chunk, rowIndex) => {
+                          return (
+                            <Box
+                              key={`row_${rowIndex}`}
+                              sx={{
+                                gap: isLgUp ? 1.5 : 0.5,
+                                display: 'flex',
+                                justifyContent: 'flex-start',
+                                width: '100%'
+                              }}
+                            >
+                              {chunk.map((deliveryServiceId: Service) => {
+                                const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                                const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
+
+                                return (
+                                  <Link
+                                    key={`service_0${deliveryServiceId}`}
+                                    href={deliveryService?.url}
+                                  >
+                                    <ButtonComponent/>
+                                  </Link>
+                                )
+                              })}
+                            </Box>
+                      )})}
+                    </Box>
+                  </Box>
+                </Box>
+              )
+            }
+          </Box>
+          {
+            !isMdUp && (
+              <Box>
+                <Box>
                   <Typography
-                    sx={{
-                      marginLeft: '20%',
-                      marginBottom: 2
-                    }}
                     variant="h5"
                     fontWeight="bold"
+                    mb={2}
                   >
                     対応サービス
                   </Typography>
                   <Box className="flex flex-col">
                     {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                      chunkArray(store.deliveryServices, 3).map((chunk, rowIndex) => {
+                      chunkArray(
+                        (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), isSmUp ? 3 : 2
+                      ).map((chunk, rowIndex) => {
                         return (
                           <Box
                             key={`row_${rowIndex}`}
@@ -220,37 +270,6 @@ export default function StoreDetail() {
                           </Box>
                     )})}
                   </Box>
-                </Box>
-              )
-            }
-          </Box>
-          {
-            !isMdUp && (
-              <Box>
-                <Typography variant="h5" fontWeight="bold" mb={2}>
-                  対応サービス
-                </Typography>
-                <Box className="flex flex-col">
-                  {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                    chunkArray(store.deliveryServices, isSmUp ? 3 : 2).map((chunk, rowIndex) => {
-                      return (
-                        <Box
-                          key={`row_${rowIndex}`}
-                          className="flex gap-5"
-                          sx={{margin: '0 auto'}}
-                        >
-                          {chunk.map((deliveryServiceId: Service) => {
-                            const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                            const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
-
-                            return (
-                              <Box key={`service_0${deliveryServiceId}`}>
-                                <ButtonComponent />
-                              </Box>
-                            )
-                          })}
-                        </Box>
-                  )})}
                 </Box>
               </Box>
             )
