@@ -21,8 +21,8 @@ const SmallHexaBox: React.FC<CustomShapeContainerProps> = ({
   return (
     <SVGContainer style={{ width, height }}>
       <svg
-        width="100%"
-        height="100%"
+        width="353"
+        height="151"
         viewBox="0 0 353 151"
         fill="none"
         preserveAspectRatio="xMidYMid meet"

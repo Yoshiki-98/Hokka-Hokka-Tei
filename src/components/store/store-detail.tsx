@@ -7,6 +7,7 @@ import {
   Box,
   Link,
   useMediaQuery,
+  IconButton,
 } from '@mui/material';
 import axios from 'axios';
 import { Store } from '@/types/store';
@@ -238,14 +239,7 @@ export default function StoreDetail() {
                   >
                     対応サービス
                   </Typography>
-                </Box>
-                <Box
-                  className="flex"
-                  sx={{
-                    justifyContent: {xs: 'center', md: 'space-between'}
-                  }}
-                >
-                  <Box className="flex-col">
+                  <Box className="flex flex-col">
                     {store?.deliveryServices && store.deliveryServices.length > 0 &&
                       chunkArray(
                         (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), isSmUp ? 3 : 2
@@ -253,17 +247,24 @@ export default function StoreDetail() {
                         return (
                           <Box
                             key={`row_${rowIndex}`}
-                            className="flex gap-5"
-                            sx={{margin: '0 auto'}}
+                            className="flex"
+                            sx={{ justifyContent: 'flex-end'}}
                           >
                             {chunk.map((deliveryServiceId: Service) => {
                               const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
                               const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
                               return (
-                                <Box key={`service_0${deliveryServiceId}`}>
-                                  <ButtonComponent />
-                                </Box>
+                                <IconButton
+                                  href='/'
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
+                                >
+                                  <ButtonComponent
+                                    key={`service_0${deliveryServiceId}`}
+                                  />
+                                </IconButton>
                               )
                             })}
                           </Box>

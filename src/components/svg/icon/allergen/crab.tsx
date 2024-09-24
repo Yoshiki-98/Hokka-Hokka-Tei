@@ -1,15 +1,27 @@
 import React from 'react';
 import { IconProps } from '@/types/element-prop';
+import {
+  useMediaQuery,
+  useTheme
+} from '@mui/material';
 
 const CrabIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
+  const theme = useTheme();
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const width = isLgUp ? '49' : isMdUp ? '46' : isSmUp ? '42' : '39';
+  const height = isLgUp ? '39' : isMdUp ? 'auto' : isSmUp ? 'auto' : '30.5';
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`relative inline-block ${className}`}
-      style={{ width: '49px', height: '39px' }}
+      style={{ width: 'auto', height: '42.5px' }}
     >
-      <svg width="49" height="39" viewBox="0 0 49 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <svg width={width} height={height} viewBox="0 0 49 39" fill="none" xmlns="http://www.w3.org/2000/svg">
         <g clipPath="url(#clip0_2678_13935)">
           <path d="M22.8401 12.9688C22.8401 14.2088 21.8401 15.2188 20.5901 15.2188C19.3401 15.2188 18.3501 14.2188 18.3501 12.9688C18.3501 11.7188 19.3601 10.7188 20.5901 10.7188C21.8201 10.7188 22.8401 11.7287 22.8401 12.9688Z" fill="#323232"/>
           <path d="M26.01 12.9688C26.01 14.2088 27.01 15.2188 28.26 15.2188C29.51 15.2188 30.51 14.2188 30.51 12.9688C30.51 11.7188 29.5 10.7188 28.26 10.7188C27.02 10.7188 26.01 11.7287 26.01 12.9688Z" fill="#323232"/>
