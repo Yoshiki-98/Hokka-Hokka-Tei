@@ -362,9 +362,7 @@ export default function StoreList() {
                 className="max-w-full flex justify-center"
                 sx={{
                   width: '100%', // (630px * 2) + (20px) = 1280px
-                  display: {xs: 'flex', lg: 'unset'},
                   margin: '0 auto',
-                  justifyContent: {xs: 'center', lg: 'unset'},
                 }}
               >
                 <Box className="flex-col">
@@ -373,7 +371,6 @@ export default function StoreList() {
                       key={rowIndex}
                       sx={{
                         display: 'flex',
-                        justifyContent: 'center',
                         maxWidth: '100%',
                         position: 'relative',
                       }}
