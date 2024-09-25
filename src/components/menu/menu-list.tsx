@@ -247,7 +247,7 @@ export default function MentList() {
                 <CustomSelect
                   sx={{
                     margin: {xs: '0 auto', md: '0'},
-                    width: {xs: '353px'},
+                    width: {xs: '100%', sm: '353px'},
                     height: '30px',
                     borderRadius: '10px',
                   }}
@@ -299,7 +299,7 @@ export default function MentList() {
               </Typography>
               <Box className="mx-auto text-black flex justify-start items-center">
                 <Box
-                  width={{ xs: '353px', sm: '67.5%', md: '100%' }}
+                  width={{ xs: '90%px', sm: '67.5%', md: '100%' }}
                   height={{ xs: 'auto', sm: 'auto', md: 133 }}
                   sx={{
                     padding: { xs: '25px 20px', md: '25px' },
@@ -400,6 +400,7 @@ export default function MentList() {
             <Box
               className="tab-wrapper mx-auto"
               sx={{
+                width: {xs: '90%', sm: 'unset'},
                 marginTop: { xs: '25px', md: '100px' },
                 marginBottom: { xs: '25px', md: '100px' },
               }}
