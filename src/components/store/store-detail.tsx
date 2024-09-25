@@ -5,29 +5,19 @@ import {
   Typography, 
   Container, 
   Box,
-  Link,
   useMediaQuery,
-  IconButton,
 } from '@mui/material';
 import axios from 'axios';
 import { Store } from '@/types/store';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import { prefsWithCities } from '@/data/prefs-with-cities';
-import { getDeliveryServiceDataById } from '@/utils/theme/delivery-service-utils';
 import Header from 'src/components/header';
 import Footer from 'src/components/footer';
-import MobileOrderIndicator from '@/components/svg/button/indicator/mobile-order';
-import UberEatsIndicator from '@/components/svg/button/indicator/uber-eats';
-import DemaeKanIndicator from '@/components/svg/button/indicator/demae-kan';
-import BulkOrderIndicator from '@/components/svg/button/indicator/bulk-order';
-import CoinLaundryIndicator from '@/components/svg/button/indicator/coin-laundry';
-import WoltIndicator from '@/components/svg/button/indicator/wolt';
-import { Service } from '@/types/delivery-service';
 import { MapComponent } from 'src/components/map/map-component';
 import { MarkerConfig } from '@/types/map-marker';
-import { chunkArray } from '@/utils/array-utils';
-import { formatPhoneNumber } from '@/utils/format-utils';
+import { DeliveryServiceComponent } from './delivery-service-component';
+import { StoreInfoComponent } from './store-info-component';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -44,15 +34,6 @@ const theme = createTheme({
     },
   },
 })
-
-const buttonComponents = {
-  MobileOrderIndicator,
-  BulkOrderIndicator,
-  CoinLaundryIndicator,
-  UberEatsIndicator,
-  DemaeKanIndicator,
-  WoltIndicator,
-};
 
 export default function StoreDetail() {
   const [store, setStore] = useState<Store|undefined>(undefined);
@@ -94,16 +75,7 @@ export default function StoreDetail() {
     fetchStore(storeId!);
   }, [storeId]);
 
-  const infoItems = [
-    { label: '営業時間', value: store?.businessHours },
-    { label: '住所', value: store?.address },
-    { label: '電話番号', value: store?.phone && formatPhoneNumber(store?.phone) },
-    { label: 'その他', value: store?.deliveryHours && `昼の宅配 ${store?.deliveryHours}` },
-  ];
-
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   return (
     <ThemeProvider theme={theme}>
@@ -112,9 +84,9 @@ export default function StoreDetail() {
         <Container className="w-full text-black mb-[200px]" sx={{ minWidth: '90%'}}>
           <Typography
             sx={{
+              mb: 4,
               fontWeight: 'bold',
               fontSize: {xs: '24px', sm: '28px', lg: '36px'},
-              mb: 4
             }}
           >
             {store?.name}
@@ -128,157 +100,10 @@ export default function StoreDetail() {
               justifyContent: {xs: 'center', md: 'space-between'}
             }}
           >
-            <Box
-              sx={{
-                width: {md: '48%'}
-              }}
-            >
-              <Typography
-                sx={{fontSize: '20px', mb: 2}}
-                className="text-bold text-[#EE0026]"
-                variant="h5"
-                fontWeight="bold"
-              >
-                {store?.comment}
-              </Typography>
-              <Box>
-                <Box>
-                  {infoItems.map((item, index) => (
-                    <Box
-                      key={index}
-                      sx={{ display: 'flex', alignItems: 'flex-start', mb: 1 }}
-                    >
-                      <Typography
-                        component="span"
-                        sx={{
-                          minWidth: '80px',
-                          fontSize: '14px',
-                          fontWeight: 'bold'
-                        }}
-                      >
-                        {item.label}
-                      </Typography>
-                      <Typography
-                        component="span"
-                        sx={{
-                          pl: 2,
-                          fontSize: '14px'
-                        }}
-                      >
-                        {item.value}
-                      </Typography>
-                    </Box>
-                  ))}
-                </Box>
-              </Box>
-            </Box>
-            {
-              isMdUp && (
-                <Box
-                  sx={{
-                    display: 'flex',
-                    justifyContent: 'flex-end',
-                    margin: {md: '0 auto'},
-                    width: '52%'
-                  }}
-                >
-                  <Box className="flex-col">
-                    <Box>
-                      <Typography
-                        sx={{marginBottom: 2}}
-                        variant="h5"
-                        fontWeight="bold"
-                      >
-                        対応サービス
-                      </Typography>
-                    </Box>
-                    <Box className="flex-col">
-                      {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                        chunkArray(
-                          (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), 3
-                        ).map((chunk, rowIndex) => {
-                          return (
-                            <Box
-                              key={`row_${rowIndex}`}
-                              sx={{
-                                gap: isLgUp ? 1.5 : 0.5,
-                                display: 'flex',
-                                justifyContent: 'flex-start',
-                                width: '100%'
-                              }}
-                            >
-                              {chunk.map((deliveryServiceId: Service) => {
-                                const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                                const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
-
-                                return (
-                                  <IconButton
-                                    key={`service_0${deliveryServiceId}`}
-                                    href={deliveryService?.url!}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
-                                  >
-                                    <ButtonComponent
-                                      key={`service_0${deliveryServiceId}`}
-                                    />
-                                  </IconButton>
-                                )
-                              })}
-                            </Box>
-                      )})}
-                    </Box>
-                  </Box>
-                </Box>
-              )
-            }
+            <StoreInfoComponent store={store}/>
+            {isMdUp && <DeliveryServiceComponent store={store}/>}
           </Box>
-          {
-            !isMdUp && (
-              <Box>
-                <Box>
-                  <Typography
-                    variant="h5"
-                    fontWeight="bold"
-                    mb={2}
-                  >
-                    対応サービス
-                  </Typography>
-                  <Box className="flex flex-col">
-                    {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                      chunkArray(
-                        (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), isSmUp ? 3 : 2
-                      ).map((chunk, rowIndex) => {
-                        return (
-                          <Box
-                            key={`row_${rowIndex}`}
-                            className="flex justify-center"
-                          >
-                            {chunk.map((deliveryServiceId: Service) => {
-                              const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                              const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
-
-                              return (
-                                <IconButton
-                                  key={`service_0${deliveryServiceId}`}
-                                  href={deliveryService?.url!}
-                                  target="_blank"
-                                  rel="noopener noreferrer"
-                                  onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
-                                >
-                                  <ButtonComponent
-                                    key={`service_0${deliveryServiceId}`}
-                                  />
-                                </IconButton>
-                              )
-                            })}
-                          </Box>
-                    )})}
-                  </Box>
-                </Box>
-              </Box>
-            )
-          }
+          {!isMdUp && <DeliveryServiceComponent store={store}/>}
           <Box className="mx-auto">
             <Box className="mt-10 mb-[20px]">
               <Typography sx={{fontWeight: 'bold', fontSize: '24px'}}>アクセス</Typography> 
