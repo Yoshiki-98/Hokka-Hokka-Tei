@@ -12,6 +12,7 @@ interface CustomChipProps {
     name: string;
   };
   index: number;
+  rowIndex: number;
   array: any[];
   menuItem?: {
     allergens: number[];
@@ -19,7 +20,7 @@ interface CustomChipProps {
   iconButton: any;
 }
 
-const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuItem, iconButton }) => {
+const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, array, menuItem, iconButton }) => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
@@ -65,7 +66,7 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, array, menuI
       sx={{
         mr: index === array.length - 1 ? 0 : isLgUp ? '30px' : isSmUp ? '20px' : '10px',
         backgroundColor: '#FFF',
-        opacity: menuItem?.allergens?.includes(index+1) ? 1 : 0.2,
+        opacity: menuItem?.allergens?.includes((index + 1) + (rowIndex * 4)) ? 1 : 0.2,
         borderRadius: '50%',
         height: { xs: 80, md: 90, lg: 100 },
         width: { xs: 80, md: 90, lg: 100 },
