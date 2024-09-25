@@ -12,7 +12,7 @@ const BuckWheatIcon: React.FC<IconProps> = ({ onClick, disabled, className }) =>
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '41' : isMdUp ? '38' : isSmUp ? '35' : '32.27';
-  const height = isLgUp ? '39' : isMdUp ? 'auto' : isSmUp ? 'auto' : '30.54';
+  const height = isLgUp ? '39' : isMdUp ? '36' : isSmUp ? '33' : '30.54';
 
   return (
     <button

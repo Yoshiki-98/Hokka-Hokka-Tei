@@ -12,7 +12,7 @@ const WheatIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '37' : isMdUp ? '34' : isSmUp ? '32' : '30';
-  const height = isLgUp ? '46' : isMdUp ? 'auto' : isSmUp ? 'auto' : '36';
+  const height = isLgUp ? '46' : isMdUp ? '42' : isSmUp ? '39' : '36';
 
   return (
     <button

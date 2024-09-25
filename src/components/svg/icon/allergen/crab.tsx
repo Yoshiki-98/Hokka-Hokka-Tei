@@ -12,7 +12,7 @@ const CrabIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '49' : isMdUp ? '46' : isSmUp ? '42' : '39';
-  const height = isLgUp ? '39' : isMdUp ? 'auto' : isSmUp ? 'auto' : '30.5';
+  const height = isLgUp ? '39' : isMdUp ? '36' : isSmUp ? '33' : '30.5';
 
   return (
     <button

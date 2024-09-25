@@ -12,7 +12,7 @@ const WalnutIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '42' : isMdUp ? '39' : isSmUp ? '36' : '33';
-  const height = isLgUp ? '42' : isMdUp ? 'auto' : isSmUp ? 'auto' : '33';
+  const height = isLgUp ? '42' : isMdUp ? '39' : isSmUp ? '36' : '33';
 
   return (
     <button

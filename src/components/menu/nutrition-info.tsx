@@ -1,4 +1,4 @@
-import { Box, useMediaQuery, createTheme, Divider, Typography } from '@mui/material';
+import { Box, useMediaQuery, Typography } from '@mui/material';
 import { Menu } from '@/types/menu';
 import { Nutrition } from '@/types/nutrition';
 import { chunkArray } from '@/utils/array-utils';
@@ -63,7 +63,21 @@ const NutritionInfo: React.FC<NutritionInfoProps> = ({ menuItem }) => {
   const itemsPerRow: { [key: string]: number } = { xs: 2, sm: 3, lg: 5 };
 
   return (
-    <Box
+    <Box className="mb-[100px]">
+      <Box
+        className="label-wrapper flex items-center align-center justify-between"
+        sx={{
+          margin: isSmUp ? '0': '0 auto',
+          width: '100%'
+        }}
+      >
+        <Typography className="text-[#FFA600]">
+          <span className="text-2xl text-[#FFA600] font-bold whitespace-nowrap mr-[20px]">栄養情報</span>
+        </Typography>
+        <Box className="grow bg-[#FFA600] py-3"/>
+      </Box>
+      <Box className="flex justify-center">
+      <Box
       className="flex-col gap-3 items-center justify-center"
       sx={{
         marginBottom: '50px',
@@ -120,7 +134,9 @@ const NutritionInfo: React.FC<NutritionInfoProps> = ({ menuItem }) => {
             ))}
             {currentIsNotLg && <VerticalDivider/>}
           </Box>
-      )})}
+          )})}
+        </Box>
+      </Box>
     </Box>
   );
 };

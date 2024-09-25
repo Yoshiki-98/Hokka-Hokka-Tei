@@ -12,7 +12,7 @@ const PeanutIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '35' : isMdUp ? '32' : isSmUp ? '30' : '27.24';
-  const height = isLgUp ? '42' : isMdUp ? 'auto' : isSmUp ? 'auto' : '32.85';
+  const height = isLgUp ? '42' : isMdUp ? '39' : isSmUp ? '36' : '32.85';
 
   return (
     <button

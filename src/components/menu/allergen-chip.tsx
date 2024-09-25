@@ -23,7 +23,7 @@ interface CustomChipProps {
 const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, array, menuItem, iconButton }) => {
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
     <Chip
@@ -64,6 +64,9 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, ar
         </Box>
       }
       sx={{
+        marginRight:
+          isLgUp ? index+1 !== array.length ? '30px' : 0 :
+          isMdUp ? index+1 !== array.length ? '12.5px' : 0 : 0,
         backgroundColor: '#FFF',
         opacity: menuItem?.allergens?.includes((index + 1) + (rowIndex * 4)) ? 1 : 0.2,
         borderRadius: '50%',
