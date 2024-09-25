@@ -147,7 +147,7 @@ const Footer: React.FC = () => {
           <Box>
             <Box
               className="flex flex-wrap"
-              sx={{ gap: 3 }}
+              sx={{ gap: '20px' }}
             >
               {companyLinks.map((item, index) => (
                 <Link 
