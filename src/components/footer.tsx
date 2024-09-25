@@ -133,7 +133,13 @@ const Footer: React.FC = () => {
             )
           }
         </Box>
-        <Divider className="my-2 w-{1431px}" color='#323232'/>
+        <Divider
+          className="w-{1431px}"
+          sx={{
+            my: '1.0rem'
+          }}
+          color='#323232'
+        />
         <Box
           className="flex justify-between items-start"
           sx={{ py: 3 }}
@@ -152,7 +158,8 @@ const Footer: React.FC = () => {
                   underline="hover"
                   sx={{
                     gap: 0.5,
-                    width: isSmDown ? '100%' : undefined
+                    width: isSmDown ? '100%' : undefined,
+                    fontSize: '14px'
                   }}
                 >
                   {item.label}

@@ -315,11 +315,11 @@ export default function MentList() {
                       <Typography
                         sx={{
                           display: 'flex',
-                          fontSize: { xs: '12px', sm: '14px' },
+                          fontSize: { xs: '14px' },
                           marginBottom: 1
                         }}
                       >
-                        除去したい品目を選択して下さい
+                        除去したい品目を選択してください
                       </Typography>
                       <Typography
                         sx={{
