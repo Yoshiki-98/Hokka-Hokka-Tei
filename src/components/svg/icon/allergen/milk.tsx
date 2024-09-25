@@ -12,7 +12,7 @@ const MilkIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '25' : isMdUp ? '23' : isSmUp ? '21' : '19.66';
-  const height = isLgUp ? '41' : isMdUp ? 'auto' : isSmUp ? 'auto' : '32.6';
+  const height = isLgUp ? '41' : isMdUp ? '38' : isSmUp ? '35' : '32.6';
 
   return (
     <button

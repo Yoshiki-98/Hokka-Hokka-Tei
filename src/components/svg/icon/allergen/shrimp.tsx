@@ -12,7 +12,7 @@ const ShrimpIcon: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
   const width = isLgUp ? '40' : isMdUp ? '37' : isSmUp ? '35' : '32';
-  const height = isLgUp ? '46' : isMdUp ? 'auto' : isSmUp ? 'auto' : '36.5';
+  const height = isLgUp ? '46' : isMdUp ? '43' : isSmUp ? '40' : '36.5';
 
   return (
     <button
