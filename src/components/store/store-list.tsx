@@ -76,6 +76,7 @@ export default function StoreList() {
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
+  const isXlUp = useMediaQuery(theme.breakpoints.up('xl'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
@@ -201,9 +202,9 @@ export default function StoreList() {
           </Box>
           <Box
             sx={{
-              display: isLgUp ? undefined: 'flex',
-              justifyContent: {xs: 'center', lg: 'flex-end'},
-              paddingRight: {lg: '85px'},
+              display: isXlUp ? 'flex' : isLgUp ? undefined: 'flex',
+              justifyContent: {xs: 'center', lg: 'flex-end', xl: 'center'},
+              paddingRight: {lg: '85px', xl: 0},
               marginLeft: isLgUp ? '915px' : 0,
               marginBottom: '27px'
             }}
@@ -326,7 +327,7 @@ export default function StoreList() {
                 sx={{
                   width: '100%',
                   marginLeft: {xs : '0px', lg: '150px'},
-                  justifyContent: {xs: 'center', lg: 'start'}
+                  justifyContent: {xs: 'center', lg: 'start', xl: 'center'}
                 }}
               >
                 <LocationRetrievalButton
@@ -372,6 +373,7 @@ export default function StoreList() {
                       key={rowIndex}
                       sx={{
                         display: 'flex',
+                        justifyContent: 'center',
                         maxWidth: '100%',
                         position: 'relative',
                       }}
