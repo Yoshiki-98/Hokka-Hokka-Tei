@@ -212,12 +212,17 @@ export default function StoreDetail() {
                                 const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
                                 return (
-                                  <Link
+                                  <IconButton
                                     key={`service_0${deliveryServiceId}`}
-                                    href={deliveryService?.url}
+                                    href={deliveryService?.url!}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
                                   >
-                                    <ButtonComponent/>
-                                  </Link>
+                                    <ButtonComponent
+                                      key={`service_0${deliveryServiceId}`}
+                                    />
+                                  </IconButton>
                                 )
                               })}
                             </Box>
