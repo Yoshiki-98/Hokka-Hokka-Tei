@@ -64,7 +64,6 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, ar
         </Box>
       }
       sx={{
-        mr: index === array.length - 1 ? 0 : isLgUp ? '30px' : isSmUp ? '20px' : '10px',
         backgroundColor: '#FFF',
         opacity: menuItem?.allergens?.includes((index + 1) + (rowIndex * 4)) ? 1 : 0.2,
         borderRadius: '50%',

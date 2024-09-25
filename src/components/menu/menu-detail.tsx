@@ -101,7 +101,7 @@ export default function MenuDetail() {
                   className="md:flex items-center align-center justify-between"
                   sx={{
                     margin: isSmUp ? '0 0 100px 0': '0 auto 100px auto',
-                    width: isSmUp ? '100%' : '95%'
+                    width: '100%'
                   }}
                 >
                   <Box
@@ -155,7 +155,7 @@ export default function MenuDetail() {
                     <Box
                       className="flex items-center align-center mb-[50px]"
                       sx={{
-                        marginBottom: {xs: '30px', md: '50px'}
+                        marginBottom: {xs: '20px', md: '50px'}
                       }}
                     >
                       {menuItem?.isSideAloneOK && (
@@ -187,7 +187,7 @@ export default function MenuDetail() {
                       <span className="text-4xl font-bold">{menuItem?.price}</span>
                       <span className="text-xl">円 (税込 {menuItem?.taxIncludedPrice} 円)</span>
                     </Typography>
-                    <Typography sx={{fontSize: '10px'}} color="text.secondary">
+                    <Typography sx={{fontSize: '10px'}}>
                       ※店舗により商品の仕様が異なる場合や、取り扱いが無い場合がございます
                     </Typography>
                   </Box>
@@ -220,7 +220,7 @@ export default function MenuDetail() {
                             sx={{
                               margin:
                                 isMdUp ? undefined :
-                                rowIndex === 0 ? '0 auto 20px' : '0 auto'
+                                rowIndex === 0 ? '0 auto 20px auto' : '0 auto'
                             }}
                           >
                             {chunk.map((allergen: Allergen, index, array) => {
