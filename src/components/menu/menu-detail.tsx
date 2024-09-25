@@ -231,6 +231,7 @@ export default function MenuDetail() {
                                   key={allergen.nameEn}
                                   allergen={allergen}
                                   index={index}
+                                  rowIndex={rowIndex}
                                   array={array}
                                   menuItem={menuItem}
                                   iconButton={<ButtonComponent/>}
