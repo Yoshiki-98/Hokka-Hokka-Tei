@@ -146,6 +146,8 @@ export default function MenuDetail() {
                               label="おかず単品OK"
                               variant="outlined"
                               sx={{
+                                width: '140px',
+                                height: '36px',
                                 border: '3px solid #FFA600',
                                 borderRadius: 1
                               }}
@@ -158,6 +160,8 @@ export default function MenuDetail() {
                               label="ライス入れ替えOK"
                               variant="outlined"
                               sx={{
+                                width: '140px',
+                                height: '36px',
                                 border: '3px solid #FFA600',
                                 borderRadius: 1
                               }}

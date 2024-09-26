@@ -56,17 +56,17 @@ const AllergenInfo: React.FC<AllergenInfoProps> = ({ menuItem }) => {
             flexDirection: 'column',
             alignItems: {xs: 'center', md: 'unset'},
             justifyContent: 'center',
-            marginBottom: '50px',
+            marginBottom: '30px',
           }}
         >
           {chunkArray(allergens, isMdUp ? 8 : 4).map((chunk, rowIndex) => (
             <Box
-              key={`row_${rowIndex}`}
+              key={`row_0${rowIndex}`}
               sx={{
-                display: {xs: 'flex', md: 'unset'},
-                justifyContent: {xs: 'center', md: 'unset'},
+                display: 'flex',
+                justifyContent: { xs: 'center', md: 'unset' },
                 flexWrap: 'wrap',
-                gap: { xs: '10px', sm: '15px', md: '20px' },
+                gap: { xs: '10px', sm: '15px', md: 0 },
                 margin:
                   isMdUp ? '0 0 20px 0' :
                   rowIndex === 0 ? '0 auto 20px auto' : '0 auto'
