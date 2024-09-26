@@ -12,7 +12,7 @@ export const StoreInfoComponent: React.FC<StoreInfoComponentProps> = ({ store })
     { label: '営業時間', value: store?.businessHours },
     { label: '住所', value: store?.address },
     { label: '電話番号', value: store?.phone && formatPhoneNumber(store?.phone) },
-    { label: 'その他', value: store?.deliveryHours && `昼の宅配 ${store?.deliveryHours}` },
+    { label: 'その他', value: store?.deliveryHours && `昼の宅配　${store?.deliveryHours}` },
   ];
 
   return (

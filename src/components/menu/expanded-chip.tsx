@@ -1,13 +1,7 @@
 import React from 'react';
-import {
-  Chip,
-  Box,
-  useMediaQuery,
-  useTheme,
-} from '@mui/material';
-import ExpandedChip from './expanded-chip';
+import { Box, Chip, Typography, useMediaQuery, useTheme } from '@mui/material';
 
-interface CustomChipProps {
+interface ExpandedChipProps {
   allergen: {
     nameEn: string;
     name: string;
@@ -19,25 +13,30 @@ interface CustomChipProps {
     allergens: number[];
   };
   iconButton: any;
+  expandBy?: number;
 }
 
-const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, array, menuItem, iconButton }) => {
+const ExpandedChip: React.FC<ExpandedChipProps> =  ({ allergen, index, rowIndex, array, menuItem, iconButton, expandBy = 20 }) => {
+  const chipSize = { xs: 80, md: 90, lg: 100 };
+
   const theme = useTheme();
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
   return (
-    rowIndex === 0 && index === 4 || rowIndex === 1 && index === 0 ? (
-      <ExpandedChip
-        allergen={allergen}
-        index={index}
-        rowIndex={rowIndex}
-        array={array}
-        menuItem={menuItem}
-        iconButton={iconButton}
-        expandBy={20} // 必要に応じて調整
-      />
-    ) : (
+    <Box
+      sx={{
+        position: 'relative',
+        width: { xs: chipSize.xs, md: chipSize.md, lg: chipSize.lg },
+        height: { xs: chipSize.xs + expandBy, md: chipSize.md + expandBy, lg: chipSize.lg + expandBy },
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        marginRight:
+          isLgUp ? index + 1 !== array.length ? '30px' : 0 :
+          isMdUp ? index + 1 !== array.length ? '12.5px' : 0 : 0,
+      }}
+    >
       <Chip
         color="default"
         label={
@@ -76,14 +75,13 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, ar
           </Box>
         }
         sx={{
-          marginRight:
-            isLgUp ? index+1 !== array.length ? '30px' : 0 :
-            isMdUp ? index+1 !== array.length ? '12.5px' : 0 : 0,
+          position: 'absolute',
+          top: 0,
           backgroundColor: '#FFF',
           opacity: menuItem?.allergens?.includes((index + 1) + (rowIndex * 4)) ? 1 : 0.2,
           borderRadius: '50%',
-          height: { xs: 80, md: 90, lg: 100 },
-          width: { xs: 80, md: 90, lg: 100 },
+          height: { xs: chipSize.xs, md: chipSize.md, lg: chipSize.lg },
+          width: { xs: chipSize.xs, md: chipSize.md, lg: chipSize.lg },
           '& .MuiChip-label': {
             padding: 0,
             width: '100%',
@@ -91,8 +89,24 @@ const AllergenChip: React.FC<CustomChipProps> = ({ allergen, index, rowIndex, ar
           },
         }}
       />
-    )
+      <Box
+        sx={{
+          position: 'absolute',
+          top: { xs: chipSize.xs, md: chipSize.md, lg: chipSize.lg },
+        }}
+      >
+        <Typography
+          sx={{
+            fontSize: '10px',
+            whiteSpace: 'nowrap',
+            opacity: menuItem?.allergens?.includes((index + 1) + (rowIndex * 4)) ? 1 : 0.2,
+          }}
+        >
+          ※ピーナッツも含む
+        </Typography>
+      </Box>
+    </Box>
   );
 };
 
-export default AllergenChip;
+export default ExpandedChip;

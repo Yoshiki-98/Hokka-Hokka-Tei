@@ -166,6 +166,10 @@ export default function StoreList() {
     setMapCenter(selectedCityCenter);
   }, [selectedCityCode]);
 
+  useEffect(() => {
+    if (stores) console.log(stores);
+  }, [stores]);
+
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
@@ -247,7 +251,7 @@ export default function StoreList() {
             <Box
               className="flex justify-between items-center"
               sx={{
-                marginBottom: '100px',
+                marginBottom: '40px',
                 flexDirection: {xs: 'column', lg: 'unset'},
                 alignItems: {xs: 'center'}
               }}
@@ -368,7 +372,7 @@ export default function StoreList() {
                 <Box className="flex-col">
                   {stores && stores.length > 0 && chunkArray(stores, isMdUp ? 2 : 1).map((chunk, rowIndex) => (
                     <Box
-                      key={rowIndex}
+                      key={`chunk_wrapper_0${rowIndex}`}
                       sx={{
                         display: 'flex',
                         maxWidth: '100%',
@@ -402,13 +406,13 @@ export default function StoreList() {
                                           <Box>
                                             <Box display="flex" alignItems="flex-start">
                                               <Typography sx={{ fontSize: '14px' }}>
-                                                <span className="font-bold">営業時間: </span>
+                                                <span className="font-bold">営業時間：</span>
                                                 {store.businessHours}
                                               </Typography>
                                             </Box>
                                             <Box display="flex" alignItems="flex-start">
                                               <Typography sx={{ fontSize: '14px' }}>
-                                                <span className="font-bold">電話番号: </span>
+                                                <span className="font-bold">電話番号：</span>
                                                 {formatPhoneNumber(store.phone)}
                                               </Typography>
                                             </Box>
@@ -416,7 +420,7 @@ export default function StoreList() {
                                           {isLgUp &&
                                             <Box>
                                               <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
-                                                <span className="font-bold">昼の宅配: </span>
+                                                <span className="font-bold">昼の宅配：</span>
                                                 {store.deliveryHours}
                                               </Typography>
                                             </Box>
@@ -433,7 +437,11 @@ export default function StoreList() {
                                       >
                                         <Box sx={{gap: 1}}>
                                           {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                                            chunkArray(store.deliveryServices, 6).map((chunk, rowIndex) => {
+                                            chunkArray( // アイコンの存在するデリバリーサービスのみに絞る
+                                              store.deliveryServices
+                                                .filter((deliveryServiceId: number) => [3,4,5,6].includes(deliveryServiceId)),
+                                              6
+                                            ).map((chunk, rowIndex) => {
                                               return (
                                                 <Box className="flex gap-1" key={`row_${rowIndex}`}>
                                                   {chunk.map((deliveryServiceId: Service) => {
@@ -513,22 +521,24 @@ export default function StoreList() {
                                       >
                                         <Box sx={{gap: 1}}>
                                           {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                                            chunkArray(store.deliveryServices, 6).map((chunk, rowIndex) => {
-                                              return (
-                                                <Box className="flex gap-1" key={`row_${rowIndex}`}>
-                                                  {chunk.map((deliveryServiceId: Service) => {
-                                                    const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                                                    const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
+                                            chunkArray( // アイコンの存在するデリバリーサービスのみに絞る
+                                              store.deliveryServices
+                                                .filter((deliveryServiceId: number) => [3,4,5,6].includes(deliveryServiceId)),
+                                              6
+                                            ).map((chunk, rowIndex) => (
+                                              <Box className="flex gap-1" key={`row_${rowIndex}`}>
+                                                {chunk.map((deliveryServiceId: Service) => {
+                                                  const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                                                  const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
 
-                                                    return (
-                                                      <Box key={`service_0${deliveryServiceId}`}>
-                                                        <LogoComponent />
-                                                      </Box>
-                                                    )
-                                                  })}
-                                                </Box>
-                                              )
-                                            })
+                                                  return (
+                                                    <Box key={`service_0${deliveryServiceId}`}>
+                                                      <LogoComponent />
+                                                    </Box>
+                                                  )
+                                                })}
+                                              </Box>
+                                            ))
                                           }
                                         </Box>
                                       </Box>

@@ -359,11 +359,11 @@ export default function MentList() {
                             checked={selectedAllergens.includes(allergen.id)}
                             onChange={async () => await handleSelectAllergens(allergen.id)}
                             sx={{
-                              marginRight: 1,
-                              width: { xs: 2, md: 2.5 },
-                              height: { xs: 2, md: 2.5 },
+                              marginRight: { xs: 1, sm: 1.5 },
+                              width: { xs: 2, md: 3 },
+                              height: { xs: 2, md: 3 },
                               '& .MuiSvgIcon-root': {
-                                fontSize: { xs: 12, md: 14 },
+                                fontSize: { xs: 15, md: 17 },
                               },
                             }}
                           />
