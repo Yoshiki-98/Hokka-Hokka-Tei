@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@mui/material';
+import { Box, useMediaQuery } from '@mui/material';
 import HokateiBanner from '../svg/icon/hokatei-banner';
 import SmallHokateiBanner from '../svg/icon/small-hokatei-banner';
 import LeftArrowButton from '../svg/button/trigger/left-arrow';
@@ -14,6 +14,8 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
   const bannerWidth = 998; // バナーの幅（ピクセル）
   const arrowWidth = 216; // 矢印ボタンの幅（ピクセル）
   const minArrowWidth = 100; // 矢印ボタンの最小幅（ピクセル）
+
+  const isMobile = useMediaQuery('(max-width:393px)');
 
   return isLgUp ? 
   (
@@ -51,7 +53,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        <HokateiBanner/>
+        {isMobile ? <SmallHokateiBanner /> : <HokateiBanner/>}
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
@@ -75,7 +77,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        <HokateiBanner />
+        {isMobile ? <SmallHokateiBanner /> : <HokateiBanner/>}
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
