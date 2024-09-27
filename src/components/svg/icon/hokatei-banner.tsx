@@ -7,8 +7,8 @@ const HokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className }) =>
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
 
-  const width = isLgUp ? '1000' : isMdUp ? '700' : '500';
-  const height = isLgUp ? '397' : isMdUp ? '280' : '200';
+  const width = isLgUp ? '1000' : isMdUp ? '855' : '510';
+  const height = isLgUp ? '397' : isMdUp ? '340' : '210';
 
   return (
     <button
@@ -17,7 +17,7 @@ const HokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className }) =>
       className={`relative inline-block ${className}`}
       style={
         isLgUp ? { width: '1000', height: '397' } :
-        isMdUp ? { width: '700', height: '280' } :
+        isMdUp ? { width: '855', height: '340' } :
         { width: '500', height: '200' }
       }
     >

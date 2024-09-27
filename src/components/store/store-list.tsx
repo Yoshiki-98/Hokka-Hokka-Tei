@@ -166,10 +166,6 @@ export default function StoreList() {
     setMapCenter(selectedCityCenter);
   }, [selectedCityCode]);
 
-  useEffect(() => {
-    if (stores) console.log(stores);
-  }, [stores]);
-
   return (
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
@@ -368,6 +364,7 @@ export default function StoreList() {
                           display: 'flex',
                           '@media (min-width: 1200px) and (max-width: 1280px)': {
                             flexWrap: 'wrap', // 1200px-1280pxの範囲でwrapする
+                            justifyContent: 'center'
                           },
                           maxWidth: '100%',
                           position: 'relative',
