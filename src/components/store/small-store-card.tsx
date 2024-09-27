@@ -13,16 +13,17 @@ const SVGContainer = styled(Box)({
   height: '100%',
 });
 
-const SmallHexaBox: React.FC<CustomShapeContainerProps> = ({
-  children,
-  width = 353,
-  height = 151,
-}) => {
+const StoreCard: React.FC<CustomShapeContainerProps> = ({children, width, height}) => {
   return (
-    <SVGContainer style={{ width, height }}>
+    <SVGContainer
+      style={{
+        width: '353px',
+        height: '151px'
+      }}
+    >
       <svg
-        width="353"
-        height="151"
+        width="100%"
+        height="151px"
         viewBox="0 0 353 151"
         fill="none"
         preserveAspectRatio="xMidYMid meet"
@@ -56,4 +57,4 @@ const SmallHexaBox: React.FC<CustomShapeContainerProps> = ({
   );
 };
 
-export default SmallHexaBox;
+export default StoreCard;

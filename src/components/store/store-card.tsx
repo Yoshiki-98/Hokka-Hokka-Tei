@@ -1,5 +1,6 @@
 import React, { ReactNode } from 'react';
 import { Box, styled } from '@mui/material';
+import { useMediaQuery, useTheme } from '@mui/material';
 
 interface CustomShapeContainerProps {
   children?: ReactNode;
@@ -13,13 +14,17 @@ const SVGContainer = styled(Box)({
   height: '100%',
 });
 
-const HexagonalBox: React.FC<CustomShapeContainerProps> = ({
-  children,
-  width = 630,
-  height = 138,
-}) => {
+const StoreCard: React.FC<CustomShapeContainerProps> = ({children, width, height}) => {
+  const theme = useTheme();
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
   return (
-    <SVGContainer style={{ width, height }}>
+    <SVGContainer
+      style={{
+        width: '630px',
+        height: '138px'
+      }}
+    >
       <svg 
         width="100%" 
         height="100%"
@@ -55,4 +60,4 @@ const HexagonalBox: React.FC<CustomShapeContainerProps> = ({
   );
 };
 
-export default HexagonalBox;
+export default StoreCard;

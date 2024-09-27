@@ -173,7 +173,10 @@ export default function MenuDetail() {
                         <span className="text-4xl font-bold">{menuItem?.price}</span>
                         <span className="text-xl">円 (税込 {menuItem?.taxIncludedPrice} 円)</span>
                       </Typography>
-                      <Typography sx={{fontSize: '10px'}}>
+                      <Typography
+                        className="font-sans"
+                        sx={{fontSize: '10px'}}
+                      >
                         ※店舗により商品の仕様が異なる場合や、取り扱いが無い場合がございます
                       </Typography>
                     </Box>

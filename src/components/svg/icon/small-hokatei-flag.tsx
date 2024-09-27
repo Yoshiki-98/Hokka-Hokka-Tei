@@ -1,7 +1,7 @@
 import React from 'react';
 import { IconProps } from '@/types/element-prop';
 
-const HokateiFlag: React.FC<IconProps> = ({ onClick, disabled, className }) => {
+const SmallHokateiFlag: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   return (
     <button
       onClick={onClick}
@@ -26,4 +26,4 @@ const HokateiFlag: React.FC<IconProps> = ({ onClick, disabled, className }) => {
   );
 };
 
-export default HokateiFlag;
+export default SmallHokateiFlag;
