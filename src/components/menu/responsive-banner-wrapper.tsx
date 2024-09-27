@@ -27,7 +27,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
 
         maxWidth: {xs: 'unset', lg: '1430px'},
         width: {xs: 'unset', lg: '100%'},
-        overflow: {xs: 'unset', lg: 'hidden%'},
+        overflow: {xs: 'unset', lg: 'hidden'},
         '& > .arrow-container': {
           flex: `0 0 ${arrowWidth}px`,
           display: 'flex',
@@ -51,7 +51,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        {isSmUp ? <HokateiBanner /> : <SmallHokateiBanner />}
+        <HokateiBanner/>
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
@@ -67,10 +67,6 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         justifyContent: 'space-between',
         alignItems: 'center',
         margin: { xs: '0 auto 10px auto', md: '0 auto 20px auto' },
-
-        maxWidth: {xs: 'unset', lg: '1430px'},
-        width: {xs: 'unset', lg: '100%'},
-        overflow: {xs: 'unset', lg: 'hidden%'},
       }}
     >
       {isLgUp && (
@@ -79,7 +75,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        {isSmUp ? <HokateiBanner /> : <SmallHokateiBanner />}
+        <HokateiBanner />
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
