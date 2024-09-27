@@ -30,10 +30,10 @@ const HokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className }) =>
   const isLgDown = useMediaQuery(theme.breakpoints.down('lg'));
   const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMobile = useMediaQuery('(max-width:393px)');
+  const isMobile = useMediaQuery('(max-width:392px)');
 
   const SmSVGContainer = styled(Box)({
-    width: '393px',
+    width: isMobile ? '100%' : '393px',
     height: '154px',
     overflow: 'hidden',
   });

@@ -15,8 +15,6 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
   const arrowWidth = 216; // 矢印ボタンの幅（ピクセル）
   const minArrowWidth = 100; // 矢印ボタンの最小幅（ピクセル）
 
-  const isMobile = useMediaQuery('(max-width:392px)');
-
   return isLgUp ? 
   (
     <Box
@@ -53,7 +51,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        {isMobile ? <SmallHokateiBanner/> : <HokateiBanner/>}
+        <HokateiBanner/>
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
@@ -77,7 +75,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        {isMobile ? <SmallHokateiBanner/> : <HokateiBanner/>}
+        <HokateiBanner/>
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
