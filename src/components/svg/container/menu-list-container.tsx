@@ -1,10 +1,10 @@
+import React from 'react';
 import {
   Box,
   styled,
   useMediaQuery,
 } from '@mui/material';
 import { useTheme } from '@mui/material/styles';
-import React from 'react';
 
 const SVGContainer = styled(Box)({
   width: '390px',

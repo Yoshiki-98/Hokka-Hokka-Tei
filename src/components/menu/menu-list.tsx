@@ -31,7 +31,7 @@ import Header from 'src/components/header';
 import Footer from 'src/components/footer';
 import HandleFilterButton from 'src/components/svg/button/trigger/handle-filter';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
-import MenuListContainer from 'src/components/svg/container/menu-list-container';
+import MenuContainer from 'src/components/svg/container/menu-container';
 import { chunkArray } from '@/utils/array-utils';
 import Pointer from '../svg/button/trigger/pointer';
 import RedPointer from '../svg/button/trigger/red-pointer';
@@ -568,7 +568,7 @@ export default function MentList() {
                           >
                             <StyledLink href={`/menu/${item.id}`}>
                               <Card className="flex flex-col bg-transparent border-none shadow-none">
-                                <MenuListContainer item={item}/>
+                                <MenuContainer item={item}/>
                                 <CardContent
                                   className="grow"
                                   sx={{
