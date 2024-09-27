@@ -20,7 +20,7 @@ const LgSVGContainer = styled(Box)({
 
 const MdSVGContainer = styled(Box)({
   width: '170x',
-  height: '163Zpx',
+  height: '163px',
   overflow: 'hidden',
 });
 
