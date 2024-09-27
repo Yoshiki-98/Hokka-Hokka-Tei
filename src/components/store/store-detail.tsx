@@ -76,6 +76,7 @@ export default function StoreDetail() {
   }, [storeId]);
 
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isSubLgUp = useMediaQuery('(min-width:1024px)');
 
   return (
     <ThemeProvider theme={theme}>
@@ -85,6 +86,7 @@ export default function StoreDetail() {
           <Typography
             sx={{
               mb: 4,
+              textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset',
               fontWeight: 'bold',
               fontSize: {xs: '24px', sm: '28px', lg: '36px'},
             }}
@@ -97,16 +99,25 @@ export default function StoreDetail() {
               flexWrap: 'wrap',
               margin: '0 auto 50px auto',
               alignItems: 'center',
-              justifyContent: {xs: 'center', md: 'space-between'}
+              justifyContent: isSubLgUp ? 'space-between' : 'center'
             }}
           >
             <StoreInfoComponent store={store}/>
-            {isMdUp && <DeliveryServiceComponent store={store}/>}
+            {isSubLgUp &&
+              <DeliveryServiceComponent store={store}/>
+            }
           </Box>
-          {!isMdUp && <DeliveryServiceComponent store={store}/>}
+          {!isSubLgUp && <DeliveryServiceComponent store={store}/>}
           <Box className="mx-auto">
             <Box className="mt-10 mb-[20px]">
-              <Typography sx={{fontWeight: 'bold', fontSize: '24px'}}>アクセス</Typography> 
+              <Typography
+                sx={{
+                  textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset',
+                  fontWeight: 'bold',
+                  fontSize: '24px'
+                }}>
+                  アクセス
+                </Typography> 
             </Box>
             <Box
               sx={{

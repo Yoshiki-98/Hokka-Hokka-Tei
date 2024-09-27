@@ -186,23 +186,12 @@ export default function StoreList() {
             sx={{marginBottom: '50px'}}
             className="flex justify-center items-center"
           >
-            {
-              isMdUp ? (
-                <Image
-                  src={'/images/store-title.png'}
-                  alt={'Menu Title'}
-                  width={274.95}
-                  height={72.98}
-                />
-              ) : (
-                <Image
-                  src={'/images/store-title.png'}
-                  alt={'Menu Title'}
-                  width={207}
-                  height={55}
-                />
-              )
-            }
+            <Image
+              src={'/images/store-title.png'}
+              alt={'Menu Title'}
+              width={isMdUp ? 274.95 : 207}
+              height={isMdUp ? 72.98 : 55}
+            />
           </Box>
           <Box
             sx={{
