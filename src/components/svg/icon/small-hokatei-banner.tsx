@@ -11,13 +11,13 @@ const SmallHokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className 
       disabled={disabled}
       className={`relative inline-block ${className}`}
       style={{ 
-        width: isMobile ? '100%' : '393px',
+        width: '393px',
         height: '156px',
         maxWidth: '100%'
       }}
     >
       <svg
-        width="100%"
+        width="393px%"
         height="156px"
         viewBox="0 0 393 156"
         fill="none"
