@@ -53,7 +53,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        {isMobile ? <SmallHokateiBanner /> : <HokateiBanner/>}
+        <HokateiBanner/>
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
@@ -77,7 +77,7 @@ const ResponsiveBannerWrapper: React.FC<ResponsiveBannerWrapperProps> = ({ isLgU
         </Box>
       )}
       <Box className="banner-container">
-        {isMobile ? <SmallHokateiBanner /> : <HokateiBanner/>}
+        <HokateiBanner/>
       </Box>
       {isLgUp && (
         <Box className="arrow-container">
