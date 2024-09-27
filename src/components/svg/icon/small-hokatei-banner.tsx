@@ -5,20 +5,23 @@ import { LogoProps } from '@/types/element-prop';
 const SmallHokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className }) => {
   const isMobile = useMediaQuery('(max-width:393px)');
 
+  const bannerStyle = {
+    width: isMobile ? '100%' : '393px',
+    height: 'auto',
+    maxWidth: '100%',
+    aspectRatio: '393 / 156',
+  };
+
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`relative inline-block ${className}`}
-      style={{ 
-        width: '393px',
-        height: '156px',
-        maxWidth: '100%'
-      }}
+      style={bannerStyle}
     >
       <svg
-        width="393px%"
-        height="156px"
+        width="100%"
+        height="100%"
         viewBox="0 0 393 156"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
