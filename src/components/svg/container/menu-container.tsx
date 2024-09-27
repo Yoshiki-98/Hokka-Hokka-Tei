@@ -24,17 +24,19 @@ const MdSVGContainer = styled(Box)({
   overflow: 'hidden',
 });
 
-const SmSVGContainer = styled(Box)({
-  width: '353px',
-  height: '235.33px',
-  overflow: 'hidden',
-});
-
 const MenuContainer: React.FC<ContainerProps> = ({ item }) => {
   const theme = useTheme();
   const isLgDown = useMediaQuery(theme.breakpoints.down('lg'));
   const isMdDown = useMediaQuery(theme.breakpoints.down('md'));
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery('(max-width:393px)');
+
+  const SmSVGContainer = styled(Box)({
+    width: isMobile ? '100%' : '353px',
+    height: '235.33px',
+    overflow: 'hidden',
+  });
+  
 
   return (
     isSmDown ? (

@@ -59,7 +59,7 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
                 <Box
                   key={`row_${rowIndex}`}
                   sx={{
-                    gap: isLgUp ? 1.5 : 0.5,
+                    gap: {xs: 0.5, md: 0, lg: 1.5},
                     display: 'flex',
                     justifyContent: 'flex-start',
                     width: '100%'
@@ -84,7 +84,9 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
                     )
                   })}
                 </Box>
-          )})}
+              )
+            })
+          }
         </Box>
       </Box>
     </Box>

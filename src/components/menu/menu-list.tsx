@@ -12,6 +12,7 @@ import {
   Box,
   Checkbox,
   useMediaQuery,
+  Link,
 } from '@mui/material';
 import {
   activeTextStyle,
@@ -32,6 +33,12 @@ import HandleFilterButton from 'src/components/svg/button/trigger/handle-filter'
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import MenuListContainer from 'src/components/svg/container/menu-list-container';
 import { chunkArray } from '@/utils/array-utils';
+import HokateiBanner from '../svg/icon/hokatei-banner';
+import SmallHokateiBanner from '../svg/icon/small-hokatei-banner';
+import Pointer from '../svg/button/trigger/pointer';
+import RedPointer from '../svg/button/trigger/red-pointer';
+import LeftArrowButton from '../svg/button/trigger/left-arrow';
+import RightArrowButton from '../svg/button/trigger/right-arrow';
 
 const theme = createTheme({
   palette: {
@@ -198,15 +205,18 @@ export default function MentList() {
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      <Box
+        sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
         <Box
           className="mx-auto"
           sx={{
-            width: {xs: '90%', sm: '100%'},
+            width: '100%',
             marginTop: { xs: '50px', md: '100px'},
             marginBottom: { xs: '50px', md: '100px'}
           }}
@@ -227,14 +237,13 @@ export default function MentList() {
           </Box>
           <Box
             sx={{
-              paddingBottom: { xs: '25px', md: '100px' },
               textAlign: { xs: 'start', sm: 'center', md: 'start' }
             }}
           >
             <Box
-              className="mx-auto"
-              sx={{ marginBottom: { xs: '25px', md: '100px' } }}
-              width={{ sm: 600, md: 855 }}
+              className="pref-select-container mx-auto"
+              sx={{marginBottom: { xs: '25px', md: '100px' } }}
+              width={{ xs: '90%', sm: 600, md: 855 }}
             >
               <Typography
                 sx={{fontSize: '24px'}}
@@ -285,8 +294,9 @@ export default function MentList() {
               </FormControl>
             </Box>
             <Box
-              className="mx-auto"
-              width={{ md: 855 }}
+              className="allergen-select-container mx-auto"
+              sx={{ marginBottom: '100px' }}
+              width={{xs: '90%', md: 855 }}
             >
               <Typography
                 className="text-black whitespace-nowrap"
@@ -322,6 +332,7 @@ export default function MentList() {
                         除去したい品目を選択してください
                       </Typography>
                       <Typography
+                        className="font-sans"
                         sx={{
                           display: 'flex',
                           fontSize: { xs: '10px', sm: '12px' },
@@ -395,13 +406,146 @@ export default function MentList() {
                 </Box>
               </Box>
             </Box>
+            <Box
+              className="banner-container flex flex-col"
+              sx={{
+                marginBottom: '100px',
+                textAlign: 'center',
+              }}
+            >
+              <Box
+                className="banner-wrapper flex justify-between"
+                sx={{
+                  margin: {xs: '0 auto 10px auto', md: '0 auto 20px auto'}
+                }}
+              >
+                {isLgUp &&
+                  <Box
+                    className="flex justify-center"
+                    sx={{
+                      height: '400px',
+                      paddingTop: '164px',
+                      marginBottom: '10px'
+                    }}
+                  >
+                    <LeftArrowButton className="flex justify-center"/>
+                  </Box>
+                }
+                <Box>
+                  {
+                    isSmUp ? (
+                      <HokateiBanner/>
+                    ): (
+                      <SmallHokateiBanner/>
+                    )
+                  }
+                </Box>
+                {isLgUp &&
+                  <Box
+                    sx={{
+                      margin: '0 auto',
+                      paddingTop: '164px'
+                    }}
+                  >
+                    <RightArrowButton className="flex justify-center"/>
+                  </Box>
+                }
+              </Box>
+              <Box
+                className="desc-wrapper flex"
+                sx={{
+                  flexDirection: {xs: 'column', md: 'unset'},
+                  justifyContent: {lg: 'center'},
+                  margin: '0 auto',
+                  width: {xs: '100%', sm: '400px', md: '700px', lg: '1000px'}
+                }}
+              >
+                <Box
+                  className="pointer-container"
+                  sx={{
+                    display: 'flex',
+                    justifyContent: {xs: 'center', lg: 'unset'},
+                    flexWrap: 'wrap',
+                    fontSize: '14px',
+                    color: "#000"
+                  }}
+                >
+                  <Box
+                    className="pointer-wrapper whitespace-nowrap"
+                    sx={{marginBottom: '10px'}}
+                  >
+                    <RedPointer/>
+                    <Pointer/>
+                    <Pointer/>
+                    <Pointer/>
+                    <Pointer/>
+                    <Pointer/>
+                    <Pointer/>
+                    <Pointer/>
+                  </Box>
+                </Box>
+                <Box
+                  className="link-container"
+                  sx={{
+                    width: {xs: "92.5%", sm: '450px', md: "92.5%"},
+                    display: 'flex',
+                    justifyContent: 'end',
+                    fontSize: '14px',
+                    color: "#000"
+                  }}
+                >
+                  <Box
+                    className="link-wrapper"
+                    sx={{flexDirection: 'column'}}
+                  >
+                    <Typography
+                      sx={{
+                        fontSize: '14px',
+                        display: 'flex',
+                        justifyContent: 'end',
+                      }}
+                    >
+                      栄養成分・アレルギー一覧は<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: '14px',
+                        display: 'flex',
+                        justifyContent: 'end',
+                      }}
+                    >
+                      メニュー表は<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: '14px',
+                        display: 'flex',
+                        justifyContent: 'end',
+                      }}
+                    >
+                      外国語メニューは<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
+                    </Typography>
+                    <Typography
+                      className="font-sans"
+                      sx={{
+                        fontSize: '12px',
+                        display: 'flex',
+                        justifyContent: 'end',
+                      }}
+                    >
+                      ※一部、店舗によりメニューの価格・仕様が異なります。
+                    </Typography>
+                  </Box>
+                </Box>
+              </Box>
+            </Box>
           </Box>
           <Box className="main-container flex flex-col">
             <Box
               className="tab-wrapper mx-auto"
               sx={{
                 width: {xs: '90%', sm: 'unset'},
-                marginTop: { xs: '25px', md: '100px' },
+                marginTop: 0,
                 marginBottom: { xs: '25px', md: '100px' },
               }}
             >
