@@ -29,9 +29,9 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  const isSubLgUp = useMediaQuery('(min-width:1024px)');
 
-  return isMdUp ? (
+  return isSubLgUp ? (
     <Box
       sx={{
         display: 'flex',
@@ -43,7 +43,7 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
       <Box className="flex-col">
         <Box>
           <Typography
-            sx={{marginBottom: 2}}
+            sx={{ marginBottom: 2 }}
             variant="h5"
             fontWeight="bold"
           >
@@ -92,7 +92,7 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
     </Box>
   ) : (
     <Box>
-      <Box>
+      <Box sx={{textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset'}}>
         <Typography
           variant="h5"
           fontWeight="bold"
