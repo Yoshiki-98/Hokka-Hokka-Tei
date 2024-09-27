@@ -4,24 +4,17 @@ import { LogoProps } from '@/types/element-prop';
 
 const HokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className }) => {
   const theme = useTheme();
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   // const width = isLgUp ? '1000' : isMdUp ? '855' : '510';
-  const width = isLgUp ? '1000' : '100%';
-  const height = isLgUp ? '397' : isMdUp ? '340' : isSmUp ? '300' : '156';
+  const width = '1000';
+  const height = '397';
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`relative inline-block ${className}`}
-      style={
-        isLgUp ? { width: '1000', height: '397' } :
-        isMdUp ? { width: '855', height: '340' } :
-        isSmUp ? { width: '700', height: '300' } : { width: '500', height: '156' }
-      }
+      style={{ width: '1000', height: '397' }}
     >
       <svg width={width} height={height} viewBox="0 0 1000 397" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
         <rect width="1000" height="396.403" fill="url(#pattern0_2512_13369)"/>
