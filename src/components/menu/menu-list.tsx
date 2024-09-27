@@ -33,12 +33,9 @@ import HandleFilterButton from 'src/components/svg/button/trigger/handle-filter'
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import MenuListContainer from 'src/components/svg/container/menu-list-container';
 import { chunkArray } from '@/utils/array-utils';
-import HokateiBanner from '../svg/icon/hokatei-banner';
-import SmallHokateiBanner from '../svg/icon/small-hokatei-banner';
 import Pointer from '../svg/button/trigger/pointer';
 import RedPointer from '../svg/button/trigger/red-pointer';
-import LeftArrowButton from '../svg/button/trigger/left-arrow';
-import RightArrowButton from '../svg/button/trigger/right-arrow';
+import ResponsiveBannerWrapper from './responsive-banner-wrapper';
 
 const theme = createTheme({
   palette: {
@@ -413,44 +410,7 @@ export default function MentList() {
                 textAlign: 'center',
               }}
             >
-              <Box
-                className="banner-wrapper flex justify-between"
-                sx={{
-                  margin: {xs: '0 auto 10px auto', md: '0 auto 20px auto'}
-                }}
-              >
-                {isLgUp &&
-                  <Box
-                    className="flex justify-center"
-                    sx={{
-                      height: '400px',
-                      paddingTop: '164px',
-                      marginBottom: '10px'
-                    }}
-                  >
-                    <LeftArrowButton className="flex justify-center"/>
-                  </Box>
-                }
-                <Box>
-                  {
-                    isSmUp ? (
-                      <HokateiBanner/>
-                    ): (
-                      <SmallHokateiBanner/>
-                    )
-                  }
-                </Box>
-                {isLgUp &&
-                  <Box
-                    sx={{
-                      margin: '0 auto',
-                      paddingTop: '164px'
-                    }}
-                  >
-                    <RightArrowButton className="flex justify-center"/>
-                  </Box>
-                }
-              </Box>
+              <ResponsiveBannerWrapper isLgUp={isLgUp} isSmUp={isSmUp}/>
               <Box
                 className="desc-wrapper flex"
                 sx={{
