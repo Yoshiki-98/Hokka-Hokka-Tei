@@ -4,20 +4,24 @@ import { LogoProps } from '@/types/element-prop';
 
 const HokateiBanner: React.FC<LogoProps> = ({ onClick, disabled, className }) => {
   const theme = useTheme();
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
-  // const width = isLgUp ? '1000' : isMdUp ? '855' : '510';
-  const width = '1000';
-  const height = '397';
+  const bannerStyle = {
+    width: isLgUp ? '1000' : '100%',
+    height: 'auto',
+    maxWidth: '100%',
+    aspectRatio: '1000 / 397',
+  };
 
   return (
     <button
       onClick={onClick}
       disabled={disabled}
       className={`relative inline-block ${className}`}
-      style={{ width: '1000', height: '397' }}
+      style={bannerStyle}
     >
-      <svg width={width} height={height} viewBox="0 0 1000 397" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-        <rect width="1000" height="396.403" fill="url(#pattern0_2512_13369)"/>
+      <svg width="100%" height="100%" viewBox="0 0 1000 397" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
+        <rect width="100%" height="100%" fill="url(#pattern0_2512_13369)"/>
         <defs>
           <pattern id="pattern0_2512_13369" patternContentUnits="objectBoundingBox" width="1" height="1">
             <use xlinkHref="#image0_2512_13369" transform="scale(0.000781861 0.00197239)"/>
