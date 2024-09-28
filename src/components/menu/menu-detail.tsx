@@ -13,7 +13,7 @@ import axios from 'axios';
 import Header from 'src/components/header';
 import Footer from 'src/components/footer';
 import NutritionInfo from './nutrition-info';
-import MenuContainer from 'src/components/svg/container/menu-container';
+import MenuListContainer from 'src/components/svg/container/menu-list-container';
 import AllergenInfo from './allergen-info';
 
 const theme = createTheme({
@@ -96,7 +96,7 @@ export default function MenuDetail() {
                         marginBottom: {xs: '30px', md: '50px', lg: 0}
                       }}
                     >
-                      <MenuContainer item={menuItem}/>
+                      <MenuListContainer item={menuItem}/>
                     </Box>
                     <Box className="top-right-wrapper lg:ml-12">
                       <Box
