@@ -4,9 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { prefectures } from 'src/data/prefectures';
 import { allergens as allergenArray } from 'src/data/allergens';
 import {
-  Typography, 
-  Card, 
-  CardContent,
+  Typography,
   MenuItem, 
   FormControl, 
   Box,
@@ -207,8 +205,7 @@ export default function MentList() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box
-        sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
         <Box
           className="mx-auto"
@@ -567,9 +564,9 @@ export default function MentList() {
                             }}
                           >
                             <StyledLink href={`/menu/${item.id}`}>
-                              <Card className="flex flex-col bg-transparent border-none shadow-none">
-                                <MenuListContainer item={item}/>
-                                <CardContent
+                              <Box className="flex flex-col bg-transparent border-none shadow-none">
+                                { item && <MenuListContainer item={item}/> }
+                                <Box
                                   className="grow"
                                   sx={{
                                     position: 'absolute',
@@ -612,8 +609,8 @@ export default function MentList() {
                                       円 (税込{item.taxIncludedPrice!}円)
                                     </Typography>
                                   </Typography>
-                                </CardContent>
-                              </Card>
+                                </Box>
+                              </Box>
                             </StyledLink>
                           </Box>
                         )
