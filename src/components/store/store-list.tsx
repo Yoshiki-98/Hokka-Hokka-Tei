@@ -76,7 +76,6 @@ export default function StoreList() {
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
-  const isXlUp = useMediaQuery(theme.breakpoints.up('xl'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isMobile = useMediaQuery('(max-width:393px)');
@@ -191,9 +190,9 @@ export default function StoreList() {
           </Box>
           <Box
             sx={{
-              display: isXlUp ? 'flex' : isLgUp ? undefined: 'flex',
-              justifyContent: {xs: 'center', lg: 'flex-end', xl: 'center'},
-              paddingRight: {lg: '85px', xl: 0},
+              display: 'flex',
+              justifyContent: 'center',
+              paddingRight: {lg: 0},
               marginLeft: isLgUp ? '915px' : 0,
               marginBottom: '27px'
             }}
@@ -209,9 +208,11 @@ export default function StoreList() {
             </Dialog>
           </Box>
           <Box
+            className="map-wrapper"
             sx={{
               width: '100%',
-              marginBottom: '100px',
+              maxWidth: '1280px',
+              margin: '0 auto 100px auto',
               '& > div': {  // Wrapper に直接渡す
                 minHeight: {xs: '353px !important', lg: '600px !important'},
               }
@@ -223,121 +224,140 @@ export default function StoreList() {
               }
             </Wrapper>
           </Box>
-          <Box className="search-by-area-box">
-            <Typography
-              className="text-black"
-              variant="h5"
-              component="h2"
-              gutterBottom
-              sx={{ textAlign: {sm: 'center', lg: 'unset'} }}
-            >
-              エリアから探す
-            </Typography>
+          <Box className="search-by-area-box flex justify-center">
             <Box
-              className="flex justify-between items-center"
+              className="flex-col"
               sx={{
-                marginBottom: '40px',
-                flexDirection: {xs: 'column', lg: 'unset'},
-                alignItems: {xs: 'center'}
+                '@media (min-width: 1400px)': {
+                  minWidth: '1280px'
+                },
               }}
             >
-              <Box
-                sx={{
-                  width: isMobile ? '100%' : 'unset',
-                  marginBottom: {xs: '20px', lg: 0},
-                  flexDirection: {xs: 'column', lg: 'unset'}
-                }}
-                className="flex justify-between"
-              >
+              <Box className="retrieval-title-wrapper">
+                <Typography
+                  className="text-black"
+                  variant="h5"
+                  component="h2"
+                  gutterBottom
+                  sx={{ textAlign: {sm: 'center', lg: 'unset'} }}
+                >
+                  エリアから探す
+                </Typography>
+              </Box>
+              <Box className="retrieval-funtions-wrapper">
                 <Box
+                  className="flex justify-between items-center"
                   sx={{
-                    marginBottom: {xs: '10px', lg: 0},
-                    marginRight: {xs: 0, lg: '60px'}
+                    marginBottom: '40px',
+                    flexDirection: {xs: 'column', lg: 'unset'},
+                    alignItems: {xs: 'center'}
                   }}
                 >
-                  <FormControl fullWidth>
-                    <CustomSelect
-                      sx={{
-                        width: isMobile ? '100%' : '353px',
-                        height: '40px',
-                        borderRadius: '10px'
-                      }}
-                      className="bg-white"
-                      value={selectedPrefCode}
-                      onChange={(e: any) => setSelectedPrefCode(e.target.value)}
-                      IconComponent={() => <DownArrowIcon className="mr-4"/>}
-                    >
-                      <MenuItem key='pref_00' value={0}>
-                        <span className="text-[#C4C4C6]">都道府県を選択</span>
-                      </MenuItem>
-                      {prefectures.map(pref => (
-                        <MenuItem
-                          key={`pref_${String(pref.code).padStart(2,'0')}`}
-                          value={pref.code}
-                        >
-                          {pref.name}
-                        </MenuItem>
-                      ))}
-                    </CustomSelect>
-                  </FormControl>
-                </Box>
-                <Box>
-                  <FormControl fullWidth>
-                    <CustomSelect
+                  <Box
                     sx={{
-                      width: isMobile ? '100%' : '353px',
-                      height: '40px',
-                      borderRadius: '10px'
+                      width: isMobile ? '100%' : 'unset',
+                      marginBottom: {xs: '20px', lg: 0},
+                      flexDirection: {xs: 'column', lg: 'unset'}
                     }}
-                      className="bg-white"
-                      value={selectedCityCode}
-                      onChange={(e) => setSelectedCityCode(e.target.value as number)}
-                      IconComponent={() =>
-                        <DownArrowIcon className="mr-4"/>
-                      }
+                    className="flex justify-between"
+                  >
+                    <Box
+                      sx={{
+                        marginBottom: {xs: '10px', lg: 0},
+                        marginRight: {xs: 0, lg: '60px'}
+                      }}
                     >
-                      <MenuItem key='pref_00' value={0}>
-                        <span className="text-[#C4C4C6]">市区町村を選択</span>
-                      </MenuItem>
-                      {citiesList && citiesList.length > 0 &&
-                        citiesList.map((city: {code: string, name: string}) => (
-                          <MenuItem
-                            key={`city_${city.code}`}
-                            value={city.code}
-                          >
-                            {city.name}
+                      <FormControl fullWidth>
+                        <CustomSelect
+                          sx={{
+                            width: isMobile ? '100%' : '353px',
+                            height: '40px',
+                            borderRadius: '10px'
+                          }}
+                          className="bg-white"
+                          value={selectedPrefCode}
+                          onChange={(e: any) => setSelectedPrefCode(e.target.value)}
+                          IconComponent={() => <DownArrowIcon className="mr-4"/>}
+                        >
+                          <MenuItem key='pref_00' value={0}>
+                            <span className="text-[#C4C4C6]">都道府県を選択</span>
                           </MenuItem>
-                      ))}
-                    </CustomSelect>
-                  </FormControl>
+                          {prefectures.map(pref => (
+                            <MenuItem
+                              key={`pref_${String(pref.code).padStart(2,'0')}`}
+                              value={pref.code}
+                            >
+                              {pref.name}
+                            </MenuItem>
+                          ))}
+                        </CustomSelect>
+                      </FormControl>
+                    </Box>
+                    <Box>
+                      <FormControl fullWidth>
+                        <CustomSelect
+                        sx={{
+                          width: isMobile ? '100%' : '353px',
+                          height: '40px',
+                          borderRadius: '10px'
+                        }}
+                          className="bg-white"
+                          value={selectedCityCode}
+                          onChange={(e) => setSelectedCityCode(e.target.value as number)}
+                          IconComponent={() =>
+                            <DownArrowIcon className="mr-4"/>
+                          }
+                        >
+                          <MenuItem key='pref_00' value={0}>
+                            <span className="text-[#C4C4C6]">市区町村を選択</span>
+                          </MenuItem>
+                          {citiesList && citiesList.length > 0 &&
+                            citiesList.map((city: {code: string, name: string}) => (
+                              <MenuItem
+                                key={`city_${city.code}`}
+                                value={city.code}
+                              >
+                                {city.name}
+                              </MenuItem>
+                          ))}
+                        </CustomSelect>
+                      </FormControl>
+                    </Box>
+                  </Box>
+                  <Box
+                    className="flex"
+                    sx={{
+                      width: '100%',
+                      marginLeft: {xs : '0px', lg: '150px'},
+                      justifyContent: {xs: 'center', lg: 'center'}
+                    }}
+                  >
+                    <LocationRetrievalButton
+                      className="shrink-0"
+                      onClick={() => {
+                        fetchStores(selectedCityCode);
+                        setSearched(true);
+                      }}
+                      disabled={searched}
+                    />
+                  </Box>
                 </Box>
-              </Box>
-              <Box
-                className="flex"
-                sx={{
-                  width: '100%',
-                  marginLeft: {xs : '0px', lg: '150px'},
-                  justifyContent: {xs: 'center', lg: 'start', xl: 'center'}
-                }}
-              >
-                <LocationRetrievalButton
-                  className="shrink-0"
-                  onClick={() => {
-                    fetchStores(selectedCityCode);
-                    setSearched(true);
-                  }}
-                  disabled={searched}
-                />
               </Box>
             </Box>
           </Box>
-          <Box>
-            <Box className="text-black">
-              <Box>
+          <Box className="flex justify-center">
+            <Box
+              className="store-list-container flex-col"
+              sx={{maxWidth: '1280px'}}
+            >
+              <Box className="title-wrapper">
                 {stores && stores.length > 0 && (
                   <Typography
                     sx={{
-                      marginBottom: 2.5,
+                      '@media (min-width: 1200px) and (max-width: 1400px)': {
+                        maxWidth: '1132px',
+                      },
+                      margin: '0 auto 0.35rem auto',
                       textAlign: {sm: 'center', lg: 'unset'},
                     }}
                     className="text-black items-center align-center"
@@ -349,7 +369,7 @@ export default function StoreList() {
                 )}
               </Box>
               <Box
-                className="max-w-full flex justify-center"
+                className="max-w-full store-list-card-wrapper"
                 sx={{
                   width: '100%', // (630px * 2) + (20px) = 1280px
                   margin: '0 auto',
@@ -362,7 +382,7 @@ export default function StoreList() {
                         key={`chunk_wrapper_0${rowIndex}`}
                         sx={{
                           display: 'flex',
-                          '@media (min-width: 1200px) and (max-width: 1280px)': {
+                          '@media (min-width: 1200px) and (max-width: 1400px)': {
                             flexWrap: 'wrap', // 1200px-1280pxの範囲でwrapする
                             justifyContent: 'center'
                           },
@@ -374,14 +394,17 @@ export default function StoreList() {
                           chunk.map((store, index) => (
                             <StyledLink
                               className="text-decoration-none"
-                              sx={{mx: '10px'}}
+                              sx={{
+                                marginRight: {xs: 0, lg: '20px'},
+                                mx: {xs: '10px', lg: 0}
+                              }}
                               href={`/store/${store.id}`}
                             >
                               {
                                 isLgUp ? (
                                   <StoreCard
                                     width={630} // 1440/1512 x 630 = 600
-                                    height={138} // 131.4]
+                                    height={138} // 131.4
                                   >
                                     <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
                                       <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', sm: '20px'}}} gutterBottom>
@@ -457,7 +480,7 @@ export default function StoreList() {
                                 ) : (
                                   <SmallStoreCard
                                     width={353} // 1440/1512 x 630 = 600
-                                    height={151} // 131.4]
+                                    height={151} // 131.4
                                   >
                                     <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
                                       <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', lg: '20px'}}}>
