@@ -96,7 +96,7 @@ export default function MenuDetail() {
                         marginBottom: {xs: '30px', md: '50px', lg: 0}
                       }}
                     >
-                      <MenuListContainer item={menuItem}/>
+                      { menuItem && <MenuListContainer item={menuItem}/> }
                     </Box>
                     <Box className="top-right-wrapper lg:ml-12">
                       <Box
