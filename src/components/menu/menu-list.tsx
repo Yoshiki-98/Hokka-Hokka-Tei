@@ -200,7 +200,7 @@ export default function MentList() {
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLargeWindow = useMediaQuery('(min-width:1400px)');
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
@@ -543,11 +543,11 @@ export default function MentList() {
                   gap: {xs: '10px', sm: '15px', md: '35px'}
                 }}
               >
-                {menuItems && chunkArray(menuItems, isLgUp ? 3 : 2).map((chunk, rowIndex) => (
+                {menuItems && chunkArray(menuItems, isLargeWindow ? 3 : 2).map((chunk, rowIndex) => (
                   <Box
                     key={`row_${rowIndex}`}
                     className="flex"
-                    sx={{ marginBottom: {xs: '75px', sm: '100px', md: '120px'} }}
+                    sx={{ marginBottom: {xs: '50px', sm: '100px', md: '120px'} }}
                   >
                     {
                       chunk.map((item, index) => {
@@ -570,8 +570,8 @@ export default function MentList() {
                                   className="grow"
                                   sx={{
                                     position: 'absolute',
-                                    left: {xs: -10, md: -1},
-                                    top: {xs: '75px', sm: '125px', md: '200px'},
+                                    left: {xs: 5, md: 10},
+                                    top: {xs: '125px', sm: '147.5px', md: '237.5px'},
                                   }}
                                 >
                                   <Typography
