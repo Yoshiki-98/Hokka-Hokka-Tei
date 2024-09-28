@@ -47,7 +47,7 @@ const MenuListContainer: React.FC<ThumbnailProp> = ({ item }) => {
             </clipPath>
           </defs>
           <image
-            href={item.images![0] ? item.images[0] : '/images/no_image_thumbnail.webp' }
+            href={item?.images![0] ? item.images[0] : '/images/no_image_thumbnail.webp' }
             width="100%"
             height="100%"
             preserveAspectRatio="xMidYMid slice"
@@ -64,7 +64,7 @@ const MenuListContainer: React.FC<ThumbnailProp> = ({ item }) => {
             </clipPath>
           </defs>
           <image
-            href={item.images![0] ? item.images[0] : '/images/no_image_thumbnail.webp' }
+            href={item?.images![0] ? item.images[0] : '/images/no_image_thumbnail.webp' }
             width="100%"
             height="100%"
             preserveAspectRatio="xMidYMid slice"
@@ -81,7 +81,7 @@ const MenuListContainer: React.FC<ThumbnailProp> = ({ item }) => {
             </clipPath>
           </defs>
           <image
-            href={item.images![0] ? item.images[0] : '/images/no_image_thumbnail.webp' }
+            href={item?.images![0] ? item.images[0] : '/images/no_image_thumbnail.webp' }
             width="100%"
             height="100%"
             preserveAspectRatio="xMidYMid slice"
