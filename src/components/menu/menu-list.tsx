@@ -31,9 +31,7 @@ import HandleFilterButton from 'src/components/svg/button/trigger/handle-filter'
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import MenuListContainer from 'src/components/svg/container/menu-list-container';
 import { chunkArray } from '@/utils/array-utils';
-import Pointer from '../svg/button/trigger/pointer';
-import RedPointer from '../svg/button/trigger/red-pointer';
-import ResponsiveBannerWrapper from './responsive-banner-wrapper';
+import BannerSlider from './banner-slider';
 
 const theme = createTheme({
   palette: {
@@ -175,6 +173,17 @@ export default function MentList() {
     { title: 'お弁当', filter: handleFilterMainItems, fetch: fetchMainItems },
     { title: 'おかずのみ', filter: handleFilterSideItems, fetch: fetchSideItems },
   ];
+
+  const banners = [
+    { id: '1a2b3c4d', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e6f', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e6f7g', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e6f7g8h', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e6f7g8h9i', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e6f7g8h9i10j', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+    { id: '1a2b3c4d5e6f7g8h9i10j11h', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
+  ]
 
   const handleTabClick = async (index: number) => {
     setActiveTab(index);
@@ -407,46 +416,23 @@ export default function MentList() {
                 textAlign: 'center',
               }}
             >
-              <ResponsiveBannerWrapper isLgUp={isLgUp} isSmUp={isSmUp}/>
+              <BannerSlider/>
               <Box
                 className="desc-wrapper flex"
                 sx={{
                   flexDirection: {xs: 'column', md: 'unset'},
                   justifyContent: {lg: 'center'},
                   margin: '0 auto',
-                  width: {xs: '100%', sm: '400px', md: '700px', lg: '1000px'}
+                  width: {xs: '100%', sm: '350px', md: '855px', lg: '1000px'}
                 }}
               >
                 <Box
-                  className="pointer-container"
-                  sx={{
-                    display: 'flex',
-                    justifyContent: {xs: 'center', lg: 'unset'},
-                    flexWrap: 'wrap',
-                    fontSize: '14px',
-                    color: "#000"
-                  }}
-                >
-                  <Box
-                    className="pointer-wrapper whitespace-nowrap"
-                    sx={{marginBottom: '10px'}}
-                  >
-                    <RedPointer/>
-                    <Pointer/>
-                    <Pointer/>
-                    <Pointer/>
-                    <Pointer/>
-                    <Pointer/>
-                    <Pointer/>
-                    <Pointer/>
-                  </Box>
-                </Box>
-                <Box
                   className="link-container"
                   sx={{
-                    width: {xs: "92.5%", sm: '450px', md: "92.5%"},
+                    width: {xs: "92.5%", sm: '450px', md: "100%"},
                     display: 'flex',
                     justifyContent: 'end',
+                    marginTop: {sm: '-25px', lg: '-20px'},
                     fontSize: '14px',
                     color: "#000"
                   }}

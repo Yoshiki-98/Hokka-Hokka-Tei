@@ -9,7 +9,8 @@ import {
   Box,
   Dialog,
   DialogContent,
-  useMediaQuery
+  useMediaQuery,
+  Link
 } from '@mui/material';
 import { Wrapper } from "@googlemaps/react-wrapper";
 import axios from 'axios';
@@ -178,8 +179,8 @@ export default function StoreList() {
           }}
         >
           <Box
+            className="title-wrapper flex justify-center items-center"
             sx={{marginBottom: '50px'}}
-            className="flex justify-center items-center"
           >
             <Image
               src={'/images/store-title.png'}
@@ -189,18 +190,33 @@ export default function StoreList() {
             />
           </Box>
           <Box
+            className="flex justify-center"
             sx={{
-              display: 'flex',
-              justifyContent: 'center',
               paddingRight: {lg: 0},
-              marginLeft: isLgUp ? '915px' : 0,
-              marginBottom: '27px'
+              margin: '0 auto 27px auto',
             }}
           >
-            <SearchByLocationButton
-              className="shrink-0"
-              onClick={async () => await handleSearchLocation()}
-            />
+            <Box
+              className="flex justify-center"
+              sx={{width: '100%'}}
+            >
+              <Box
+                sx={{
+                  width: {md: '480px', lg: '766px'},
+                  marginRight: {md: '30px', lg: '60px'}
+                }}
+              />
+              <Box
+                sx={{
+                  margin: {lg: '0 auto'}
+                }}
+              >
+                <SearchByLocationButton
+                  className="shrink-0"
+                  onClick={async () => await handleSearchLocation()}
+                />
+              </Box>
+            </Box>
             <Dialog open={isOpen} onClose={() => setIsOpen(false)} maxWidth="md" fullWidth>
               <DialogContent>
                 {mapCenter && (<LoadScript googleMapsApiKey={apiKey!}/>)}
@@ -210,8 +226,8 @@ export default function StoreList() {
           <Box
             className="map-wrapper"
             sx={{
-              width: '100%',
-              maxWidth: '1280px',
+              width: {xs: '100%', md: '746px', lg: '100%'},
+              maxWidth:  {sm: '600px', md: '1280px'},
               margin: '0 auto 100px auto',
               '& > div': {  // Wrapper に直接渡す
                 minHeight: {xs: '353px !important', lg: '600px !important'},
@@ -228,49 +244,57 @@ export default function StoreList() {
             <Box
               className="flex-col"
               sx={{
+                width: isMobile ? '100%' : 'unset',
                 '@media (min-width: 1400px)': {
                   minWidth: '1280px'
                 },
               }}
             >
-              <Box className="retrieval-title-wrapper">
+              <Box
+                className="retrieval-title-wrapper"
+                sx={{marginBottom: {xs: '20px', md: 'unset'}}}
+              >
                 <Typography
                   className="text-black"
                   variant="h5"
                   component="h2"
                   gutterBottom
-                  sx={{ textAlign: {sm: 'center', lg: 'unset'} }}
+                  sx={{ textAlign: {sm: 'center', md: 'unset'} }}
                 >
                   エリアから探す
                 </Typography>
               </Box>
-              <Box className="retrieval-funtions-wrapper">
+              <Box
+                className="retrieval-funtions-wrapper"
+                sx={{margin: {md: '0 10px', lg: 'unset'}}}
+              >
                 <Box
                   className="flex justify-between items-center"
                   sx={{
                     marginBottom: '40px',
-                    flexDirection: {xs: 'column', lg: 'unset'},
+                    flexDirection: {xs: 'column', md: 'unset'},
                     alignItems: {xs: 'center'}
                   }}
                 >
                   <Box
                     sx={{
                       width: isMobile ? '100%' : 'unset',
-                      marginBottom: {xs: '20px', lg: 0},
-                      flexDirection: {xs: 'column', lg: 'unset'}
+                      marginBottom: {xs: '20px', md: 0},
+                      flexDirection: {xs: 'column', md: 'unset'}
                     }}
                     className="flex justify-between"
                   >
                     <Box
                       sx={{
-                        marginBottom: {xs: '10px', lg: 0},
-                        marginRight: {xs: 0, lg: '60px'}
+                        marginBottom: {xs: '10px', sm: '20px', md: 0},
+                        marginRight: {xs: 0, md: '20px', lg: '60px'}
                       }}
                     >
                       <FormControl fullWidth>
                         <CustomSelect
                           sx={{
-                            width: isMobile ? '100%' : '353px',
+                            width: isMobile ? '100%' : // スマホサイズでは100%
+                              isMdUp ? (isLgUp ? '353px' : '230px') : '353px', // md-lgであれば230px, それ以外353px
                             height: '40px',
                             borderRadius: '10px'
                           }}
@@ -297,7 +321,8 @@ export default function StoreList() {
                       <FormControl fullWidth>
                         <CustomSelect
                         sx={{
-                          width: isMobile ? '100%' : '353px',
+                          width: isMobile ? '100%' : // スマホサイズでは100%
+                              isMdUp ? (isLgUp ? '353px' : '230px') : '353px', // md-lgであれば300px, それ以外353px
                           height: '40px',
                           borderRadius: '10px'
                         }}
@@ -325,11 +350,11 @@ export default function StoreList() {
                     </Box>
                   </Box>
                   <Box
-                    className="flex"
                     sx={{
                       width: '100%',
-                      marginLeft: {xs : '0px', lg: '150px'},
-                      justifyContent: {xs: 'center', lg: 'center'}
+                      display: 'flex',
+                      justifyContent: {xs: 'center'},
+                      marginLeft: {xs : '0px', md: '30px', lg: '60px'},
                     }}
                   >
                     <LocationRetrievalButton
@@ -345,20 +370,28 @@ export default function StoreList() {
               </Box>
             </Box>
           </Box>
-          <Box className="flex justify-center">
+          <Box
+            className="flex justify-center"
+            sx={{
+              margin: isMobile ? '0 auto' : 'unset',
+            }}
+          >
             <Box
               className="store-list-container flex-col"
-              sx={{maxWidth: '1280px'}}
+              sx={{
+                width: isMobile ? '100%' : 'unset',
+                maxWidth: '1280px'
+              }}
             >
               <Box className="title-wrapper">
                 {stores && stores.length > 0 && (
                   <Typography
                     sx={{
                       '@media (min-width: 1200px) and (max-width: 1400px)': {
-                        maxWidth: '1132px',
+                        maxWidth: '1042px',
                       },
-                      margin: '0 auto 0.35rem auto',
-                      textAlign: {sm: 'center', lg: 'unset'},
+                      margin: '0 auto 20px auto',
+                      textAlign: {sm: 'center', md: 'unset'},
                     }}
                     className="text-black items-center align-center"
                     variant="h5"
@@ -382,6 +415,9 @@ export default function StoreList() {
                         key={`chunk_wrapper_0${rowIndex}`}
                         sx={{
                           display: 'flex',
+                          '@media (max-width: 393px)': {
+                            justifyContent: 'center'
+                          },
                           '@media (min-width: 1200px) and (max-width: 1400px)': {
                             flexWrap: 'wrap', // 1200px-1280pxの範囲でwrapする
                             justifyContent: 'center'
@@ -392,11 +428,16 @@ export default function StoreList() {
                       >
                         {
                           chunk.map((store, index) => (
-                            <StyledLink
+                            <Link
                               className="text-decoration-none"
                               sx={{
                                 marginRight: {xs: 0, lg: '20px'},
-                                mx: {xs: '10px', lg: 0}
+                                mx: {xs: '10px', lg: 0},
+                                textDecoration: 'none',
+                                '&:hover': {
+                                  textDecoration: 'none',
+                                },
+                                marginBottom: {xs: '10px', lg: '24px'},
                               }}
                               href={`/store/${store.id}`}
                             >
@@ -561,7 +602,7 @@ export default function StoreList() {
                                   </SmallStoreCard>
                                 )
                               }
-                            </StyledLink>
+                            </Link>
                           ))
                         }
                       </Box>
