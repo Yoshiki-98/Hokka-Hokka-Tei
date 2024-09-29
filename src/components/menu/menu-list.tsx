@@ -489,7 +489,7 @@ export default function MentList() {
               sx={{
                 width: {xs: '90%', sm: 'unset'},
                 marginTop: 0,
-                marginBottom: { xs: '25px', md: '100px' },
+                marginBottom: { sm: '25px', md: '100px' },
               }}
             >
               <Box
@@ -533,7 +533,7 @@ export default function MentList() {
                   <Box
                     key={`row_${rowIndex}`}
                     className="flex"
-                    sx={{ marginBottom: {xs: '50px', sm: '100px', md: '120px'} }}
+                    sx={{ marginBottom: {xs: '30px', sm: '100px', md: '120px'} }}
                   >
                     {
                       chunk.map((item, index) => {
