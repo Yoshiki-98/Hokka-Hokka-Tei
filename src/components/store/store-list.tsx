@@ -79,17 +79,18 @@ export default function StoreList() {
 
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isSubMdUp = useMediaQuery('(min-width:768px)');
   const isMobile = useMediaQuery('(max-width:393px)');
 
   const handleSearchLocation = async () => {
     try {
       if (navigator.geolocation) {
+        setIsOpen(true);
         await navigator.geolocation.getCurrentPosition(
           (position) => {
             const lat = position.coords.latitude;
             const lng = position.coords.longitude;
             setMapCenter({ lat: lat, lng: lng })
-            setIsOpen(true);
           },
           (error) => {
             console.error("Error: " + error.message);
@@ -127,6 +128,34 @@ export default function StoreList() {
     }
   }
 
+  const fetchChayamachi = async () => {
+    try {
+      const res = await axios.get('/api/store', { params: { id: 'FJvyuBDyCPdzPozkGfg8' } });
+      const storeData = res.data;
+
+      await setStores([storeData]);
+
+      const cityCenter = { lat: 34.7080901, lng: 135.4982747 };
+      const markersData = [{
+        zoom: 10,
+        position: cityCenter,
+        title: '茶屋町店'
+      }] as MarkerConfig[];
+
+      await setMapCenter(cityCenter);
+      await setMarkers(markersData);
+
+      const prefWithCities = prefsWithCities.find((pref) => pref.code === 27);
+      const cities = prefWithCities?.cities;
+
+      await setSelectedPrefCode(27);
+      await setCitiesList(cities!);
+      await setSelectedCityCode(27100);
+    } catch (error) {
+      console.error('店舗のフェッチに失敗しました:', error);
+    }
+  }
+
   const getQueryParam = (param: string) : string|null => {
     const windowLocation = typeof window !== 'undefined' ? window.location.search : null;
     const urlParams = windowLocation ? new URLSearchParams(windowLocation) : null;
@@ -143,28 +172,10 @@ export default function StoreList() {
       handleSearchLocation();
       // ここでトラッキングや分析のためのコードを追加（例: Google Analytics にイベントを送信
       // ga('send', 'event', 'User Source', 'QR Code');
+    } else {
+      fetchChayamachi();
     }
   }, []);
-
-  useEffect(() => {
-    fetchStores(selectedCityCode);
-  }, []);
-
-  useEffect(() => {
-    setSelectedCityCode(0);
-    const prefWithCities = prefsWithCities.find((pref) => pref.code === selectedPrefCode);
-    const cities = prefWithCities?.cities;
-
-    setCitiesList(cities!);
-  }, [selectedPrefCode]);
-
-  useEffect(() => {
-    setSearched(false);
-    const selectedCity = citiesList?.find((city) => city.code === String(selectedCityCode));
-    const selectedCityCenter = { lat: selectedCity?.lat, lng: selectedCity?.lng };
-
-    setMapCenter(selectedCityCenter);
-  }, [selectedCityCode]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -240,7 +251,18 @@ export default function StoreList() {
               }
             </Wrapper>
           </Box>
-          <Box className="search-by-area-box flex justify-center">
+          <Box
+            className="search-by-area-box"
+            sx={{
+              display: 'flex',
+              '@media (max-width: 1480px)': {
+                justifyContent: { xs: 'center', lg: 'start' },
+              },
+              '@media (min-width: 1480px)': {
+                justifyContent: 'center',
+              },
+            }}
+          >
             <Box
               className="flex-col"
               sx={{
@@ -300,7 +322,15 @@ export default function StoreList() {
                           }}
                           className="bg-white"
                           value={selectedPrefCode}
-                          onChange={(e: any) => setSelectedPrefCode(e.target.value)}
+                          onChange={(e: any) => {
+                            setSelectedPrefCode(e.target.value);
+                            setSelectedCityCode(0);
+
+                            const prefWithCities = prefsWithCities.find((pref) => pref.code === e.target.value);
+                            const cities = prefWithCities?.cities;
+
+                            setCitiesList(cities!);
+                          }}
                           IconComponent={() => <DownArrowIcon className="mr-4"/>}
                         >
                           <MenuItem key='pref_00' value={0}>
@@ -320,18 +350,24 @@ export default function StoreList() {
                     <Box>
                       <FormControl fullWidth>
                         <CustomSelect
-                        sx={{
-                          width: isMobile ? '100%' : // スマホサイズでは100%
+                          sx={{
+                            width: isMobile ? '100%' : // スマホサイズでは100%
                               isMdUp ? (isLgUp ? '353px' : '230px') : '353px', // md-lgであれば300px, それ以外353px
-                          height: '40px',
-                          borderRadius: '10px'
-                        }}
+                            height: '40px',
+                            borderRadius: '10px'
+                          }}
                           className="bg-white"
                           value={selectedCityCode}
-                          onChange={(e) => setSelectedCityCode(e.target.value as number)}
-                          IconComponent={() =>
-                            <DownArrowIcon className="mr-4"/>
-                          }
+                          onChange={(e) => {
+                            setSelectedCityCode(e.target.value as number);
+                            setSearched(false);
+
+                            const selectedCity = citiesList?.find((city) => city.code === String(e.target.value));
+                            const selectedCityCenter = { lat: selectedCity?.lat, lng: selectedCity?.lng };
+
+                            setMapCenter(selectedCityCenter);
+                          }}
+                          IconComponent={() => <DownArrowIcon className="mr-4"/>}
                         >
                           <MenuItem key='pref_00' value={0}>
                             <span className="text-[#C4C4C6]">市区町村を選択</span>
@@ -371,133 +407,231 @@ export default function StoreList() {
             </Box>
           </Box>
           <Box
-            className="flex justify-center"
             sx={{
-              margin: isMobile ? '0 auto' : 'unset',
+              display: 'flex',
+              justifyContent: {xs: 'center', md: 'start'},
+              width: {md: '746px', lg: '100%'},
+              '@media (min-width: 1480px)': {
+                width: '1280px',
+              },
+              margin: '0 auto',
             }}
           >
             <Box
-              className="store-list-container flex-col"
+              className="store-list-container"
               sx={{
-                width: isMobile ? '100%' : 'unset',
-                maxWidth: '1280px'
+                margin: isMobile ? '0 auto' : 'unset',
+                display: 'flex',
+                '@media (max-width: 1480px)': {
+                  justifyContent: { xs: 'center', lg: 'start' },
+                },
+                '@media (min-width: 1480px)': {
+                  justifyContent: 'center',
+                },
               }}
             >
-              <Box className="title-wrapper">
-                {stores && stores.length > 0 && (
-                  <Typography
-                    sx={{
-                      '@media (min-width: 1200px) and (max-width: 1400px)': {
-                        maxWidth: '1042px',
-                      },
-                      margin: '0 auto 20px auto',
-                      textAlign: {sm: 'center', md: 'unset'},
-                    }}
-                    className="text-black items-center align-center"
-                    variant="h5"
-                    gutterBottom
-                  >
-                    店舗一覧
-                  </Typography>
-                )}
-              </Box>
               <Box
-                className="max-w-full store-list-card-wrapper"
+                className="flex-col"
                 sx={{
-                  width: '100%', // (630px * 2) + (20px) = 1280px
-                  margin: '0 auto',
+                  width: isMobile ? '100%' : 'unset',
+                  maxWidth: '1280px'
                 }}
               >
-                <Box className="flex-col">
-                  {stores && stores.length > 0 &&
-                    chunkArray(stores, isMdUp ? 2 : 1).map((chunk, rowIndex) => (
-                      <Box
-                        key={`chunk_wrapper_0${rowIndex}`}
-                        sx={{
-                          display: 'flex',
-                          '@media (max-width: 393px)': {
-                            justifyContent: 'center'
-                          },
-                          '@media (min-width: 1200px) and (max-width: 1400px)': {
-                            flexWrap: 'wrap', // 1200px-1280pxの範囲でwrapする
-                            justifyContent: 'center'
-                          },
-                          maxWidth: '100%',
-                          position: 'relative',
-                        }}
-                      >
-                        {
-                          chunk.map((store, index) => (
-                            <Link
-                              className="text-decoration-none"
-                              sx={{
-                                marginRight: {xs: 0, lg: '20px'},
-                                mx: {xs: '10px', lg: 0},
-                                textDecoration: 'none',
-                                '&:hover': {
+                <Box className="title-wrapper">
+                  {stores && stores.length > 0 && (
+                    <Typography
+                      sx={{
+                        margin: '0 auto 20px auto',
+                        textAlign: {sm: 'center', md: 'unset'},
+                      }}
+                      className="text-black items-center align-center"
+                      variant="h5"
+                      gutterBottom
+                    >
+                      店舗一覧
+                    </Typography>
+                  )}
+                </Box>
+                <Box
+                  className="max-w-full store-list-card-wrapper justify-center"
+                  sx={{
+                    width: '100%', // (630px * 2) + (20px) = 1280px
+                    margin: '0 auto',
+                  }}
+                >
+                  <Box className="flex-col">
+                    {stores && stores.length > 0 &&
+                      chunkArray(stores, isSubMdUp ? 2 : 1).map((chunk, rowIndex) => (
+                        <Box
+                          key={`chunk_wrapper_0${rowIndex}`}
+                          sx={{
+                            display: 'flex',
+                            '@media (max-width: 393px)': {
+                              justifyContent: 'center'
+                            },
+                            '@media (min-width: 1200px) and (max-width: 1400px)': {
+                              flexWrap: 'wrap', // 1200px-1280pxの範囲でwrapする
+                              justifyContent: 'start'
+                            },
+                            maxWidth: '100%',
+                            position: 'relative',
+                          }}
+                        >
+                          {
+                            chunk.map((store, index) => (
+                              <Link
+                                className="text-decoration-none"
+                                sx={{
+                                  marginRight: {xs: 0, lg: '20px'},
+                                  mx: {xs: '10px', lg: 0},
                                   textDecoration: 'none',
-                                },
-                                marginBottom: {xs: '10px', lg: '24px'},
-                              }}
-                              href={`/store/${store.id}`}
-                            >
-                              {
-                                isLgUp ? (
-                                  <StoreCard
-                                    width={630} // 1440/1512 x 630 = 600
-                                    height={138} // 131.4
-                                  >
-                                    <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
-                                      <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', sm: '20px'}}} gutterBottom>
-                                        {store.name}
-                                      </Typography>
-                                      <Box className="mx-auto flex flex-wrap justify-between w-full">
-                                        <Box>
-                                          {/* 左側のコンテンツ（変更なし） */}
-                                          <Box display="flex" alignItems="flex-start" mb={1}>
-                                            <Typography sx={{ fontSize: '14px' }}>{store.address}</Typography>
-                                          </Box>
-                                          <Box className="flex items-center align-center justify-between">
-                                            <Box>
-                                              <Box display="flex" alignItems="flex-start">
-                                                <Typography sx={{ fontSize: '14px' }}>
-                                                  <span className="font-bold">営業時間：</span>
-                                                  {store.businessHours}
-                                                </Typography>
-                                              </Box>
-                                              <Box display="flex" alignItems="flex-start">
-                                                <Typography sx={{ fontSize: '14px' }}>
-                                                  <span className="font-bold">電話番号：</span>
-                                                  {formatPhoneNumber(store.phone)}
-                                                </Typography>
-                                              </Box>
+                                  '&:hover': {
+                                    textDecoration: 'none',
+                                  },
+                                  marginBottom: {xs: '10px', lg: '24px'},
+                                }}
+                                href={`/store/${store.id}`}
+                              >
+                                {
+                                  isLgUp ? (
+                                    <StoreCard
+                                      width={630} // 1440/1512 x 630 = 600
+                                      height={138} // 131.4
+                                    >
+                                      <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
+                                        <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', sm: '20px'}}} gutterBottom>
+                                          {store.name}
+                                        </Typography>
+                                        <Box className="mx-auto flex flex-wrap justify-between w-full">
+                                          <Box>
+                                            {/* 左側のコンテンツ（変更なし） */}
+                                            <Box display="flex" alignItems="flex-start" mb={1}>
+                                              <Typography sx={{ fontSize: '14px' }}>{store.address}</Typography>
                                             </Box>
-                                            {isLgUp &&
+                                            <Box className="flex items-center align-center justify-between">
                                               <Box>
-                                                <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
-                                                  <span className="font-bold">昼の宅配：</span>
-                                                  {store.deliveryHours}
-                                                </Typography>
+                                                <Box display="flex" alignItems="flex-start">
+                                                  <Typography sx={{ fontSize: '14px' }}>
+                                                    <span className="font-bold">営業時間：</span>
+                                                    {store.businessHours}
+                                                  </Typography>
+                                                </Box>
+                                                <Box display="flex" alignItems="flex-start">
+                                                  <Typography sx={{ fontSize: '14px' }}>
+                                                    <span className="font-bold">電話番号：</span>
+                                                    {formatPhoneNumber(store.phone)}
+                                                  </Typography>
+                                                </Box>
                                               </Box>
-                                            }
+                                              {isLgUp &&
+                                                <Box>
+                                                  <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
+                                                    <span className="font-bold">昼の宅配：</span>
+                                                    {store.deliveryHours}
+                                                  </Typography>
+                                                </Box>
+                                              }
+                                            </Box>
+                                          </Box>
+                                          <Box  
+                                            sx={{
+                                              position: 'absolute',
+                                              top: 18,
+                                              right: -50,
+                                              flexShrink: 0
+                                            }}
+                                          >
+                                            <Box sx={{gap: 1}}>
+                                              {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                                                chunkArray( // アイコンの存在するデリバリーサービスのみに絞る
+                                                  store.deliveryServices
+                                                    .filter((deliveryServiceId: number) => [3,4,5,6].includes(deliveryServiceId)),
+                                                  6
+                                                ).map((chunk, rowIndex) => {
+                                                  return (
+                                                    <Box className="flex gap-1" key={`row_${rowIndex}`}>
+                                                      {chunk.map((deliveryServiceId: Service) => {
+                                                        const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                                                        const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
+
+                                                        return (
+                                                          <Box key={`service_0${deliveryServiceId}`}>
+                                                            <LogoComponent />
+                                                          </Box>
+                                                        )
+                                                      })}
+                                                    </Box>
+                                                  )
+                                                })
+                                              }
+                                            </Box>
                                           </Box>
                                         </Box>
-                                        <Box  
-                                          sx={{
-                                            position: 'absolute',
-                                            top: 18,
-                                            right: -50,
-                                            flexShrink: 0
-                                          }}
-                                        >
-                                          <Box sx={{gap: 1}}>
-                                            {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                                              chunkArray( // アイコンの存在するデリバリーサービスのみに絞る
-                                                store.deliveryServices
-                                                  .filter((deliveryServiceId: number) => [3,4,5,6].includes(deliveryServiceId)),
-                                                6
-                                              ).map((chunk, rowIndex) => {
-                                                return (
+                                      </Box>
+                                    </StoreCard>
+                                  ) : (
+                                    <SmallStoreCard
+                                      width={353} // 1440/1512 x 630 = 600
+                                      height={151} // 131.4
+                                    >
+                                      <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
+                                        <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', lg: '20px'}}}>
+                                          {store.name}
+                                        </Typography>
+                                        <Box className="mx-auto flex flex-wrap justify-between w-full">
+                                          <Box>
+                                            {/* 左側のコンテンツ（変更なし） */}
+                                            <Box display="flex" alignItems="flex-start">
+                                              <Typography sx={{ fontSize: '14px' }}>{store.address}</Typography>
+                                            </Box>
+                                            <Box className="flex items-center align-center justify-between">
+                                              <Box>
+                                                <Box display="flex" alignItems="flex-start">
+                                                  <Typography sx={{ fontSize: '14px' }}>
+                                                    <span className="font-bold">営業時間: </span>
+                                                    {store.businessHours}
+                                                  </Typography>
+                                                </Box>
+                                                <Box display="flex" alignItems="flex-start">
+                                                  <Typography sx={{ fontSize: '14px' }}>
+                                                    <span className="font-bold">電話番号: </span>
+                                                    {formatPhoneNumber(store.phone)}
+                                                  </Typography>
+                                                </Box>
+                                                {!isLgUp &&
+                                                  <Box display="flex" alignItems="flex-start">
+                                                    <Typography sx={{ fontSize: '14px' }}>
+                                                      <span className="font-bold">昼の宅配: </span>
+                                                      {store.deliveryHours}
+                                                    </Typography>
+                                                  </Box>
+                                                }
+                                              </Box>
+                                              {isLgUp &&
+                                                <Box>
+                                                  <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
+                                                    <span className="font-bold">昼の宅配: </span>
+                                                    {store.deliveryHours}
+                                                  </Typography>
+                                                </Box>
+                                              }
+                                            </Box>
+                                          </Box>
+                                          <Box  
+                                            sx={{
+                                              position: 'absolute',
+                                              top: 22.5,
+                                              right: -25,
+                                              flexShrink: 0
+                                            }}
+                                          >
+                                            <Box sx={{gap: 1}}>
+                                              {store?.deliveryServices && store.deliveryServices.length > 0 &&
+                                                chunkArray( // アイコンの存在するデリバリーサービスのみに絞る
+                                                  store.deliveryServices
+                                                    .filter((deliveryServiceId: number) => [3,4,5,6].includes(deliveryServiceId)),
+                                                  6
+                                                ).map((chunk, rowIndex) => (
                                                   <Box className="flex gap-1" key={`row_${rowIndex}`}>
                                                     {chunk.map((deliveryServiceId: Service) => {
                                                       const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
@@ -510,105 +644,23 @@ export default function StoreList() {
                                                       )
                                                     })}
                                                   </Box>
-                                                )
-                                              })
-                                            }
-                                          </Box>
-                                        </Box>
-                                      </Box>
-                                    </Box>
-                                  </StoreCard>
-                                ) : (
-                                  <SmallStoreCard
-                                    width={353} // 1440/1512 x 630 = 600
-                                    height={151} // 131.4
-                                  >
-                                    <Box className="text-black flex" sx={{ flexDirection: 'column' }}>
-                                      <Typography sx={{fontWeight: 'bold', fontSize: {xs: '14px', lg: '20px'}}}>
-                                        {store.name}
-                                      </Typography>
-                                      <Box className="mx-auto flex flex-wrap justify-between w-full">
-                                        <Box>
-                                          {/* 左側のコンテンツ（変更なし） */}
-                                          <Box display="flex" alignItems="flex-start">
-                                            <Typography sx={{ fontSize: '14px' }}>{store.address}</Typography>
-                                          </Box>
-                                          <Box className="flex items-center align-center justify-between">
-                                            <Box>
-                                              <Box display="flex" alignItems="flex-start">
-                                                <Typography sx={{ fontSize: '14px' }}>
-                                                  <span className="font-bold">営業時間: </span>
-                                                  {store.businessHours}
-                                                </Typography>
-                                              </Box>
-                                              <Box display="flex" alignItems="flex-start">
-                                                <Typography sx={{ fontSize: '14px' }}>
-                                                  <span className="font-bold">電話番号: </span>
-                                                  {formatPhoneNumber(store.phone)}
-                                                </Typography>
-                                              </Box>
-                                              {!isLgUp &&
-                                                <Box display="flex" alignItems="flex-start">
-                                                  <Typography sx={{ fontSize: '14px' }}>
-                                                    <span className="font-bold">昼の宅配: </span>
-                                                    {store.deliveryHours}
-                                                  </Typography>
-                                                </Box>
+                                                ))
                                               }
                                             </Box>
-                                            {isLgUp &&
-                                              <Box>
-                                                <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
-                                                  <span className="font-bold">昼の宅配: </span>
-                                                  {store.deliveryHours}
-                                                </Typography>
-                                              </Box>
-                                            }
-                                          </Box>
-                                        </Box>
-                                        <Box  
-                                          sx={{
-                                            position: 'absolute',
-                                            top: 22.5,
-                                            right: -25,
-                                            flexShrink: 0
-                                          }}
-                                        >
-                                          <Box sx={{gap: 1}}>
-                                            {store?.deliveryServices && store.deliveryServices.length > 0 &&
-                                              chunkArray( // アイコンの存在するデリバリーサービスのみに絞る
-                                                store.deliveryServices
-                                                  .filter((deliveryServiceId: number) => [3,4,5,6].includes(deliveryServiceId)),
-                                                6
-                                              ).map((chunk, rowIndex) => (
-                                                <Box className="flex gap-1" key={`row_${rowIndex}`}>
-                                                  {chunk.map((deliveryServiceId: Service) => {
-                                                    const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                                                    const LogoComponent = logoComponents[deliveryService?.logo as keyof typeof logoComponents];
-
-                                                    return (
-                                                      <Box key={`service_0${deliveryServiceId}`}>
-                                                        <LogoComponent />
-                                                      </Box>
-                                                    )
-                                                  })}
-                                                </Box>
-                                              ))
-                                            }
                                           </Box>
                                         </Box>
                                       </Box>
-                                    </Box>
-                                  </SmallStoreCard>
-                                )
-                              }
-                            </Link>
-                          ))
-                        }
-                      </Box>
-                  ))}
-                </Box>
-              </Box> 
+                                    </SmallStoreCard>
+                                  )
+                                }
+                              </Link>
+                            ))
+                          }
+                        </Box>
+                    ))}
+                  </Box>
+                </Box> 
+              </Box>
             </Box>
           </Box>
         </Container>
