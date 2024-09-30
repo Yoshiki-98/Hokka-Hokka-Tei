@@ -33,9 +33,11 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
 
   return isSubLgUp ? (
     <Box
+      className="pl-[90px] h-[182px]"
       sx={{
         display: 'flex',
-        justifyContent: 'flex-end',
+        justifyContent:
+        store?.deliveryServices && store?.deliveryServices.length < 3 ? 'start' : 'flex-end',
         margin: {md: '0 auto'},
         width: '52%'
       }}
@@ -100,36 +102,41 @@ export const DeliveryServiceComponent: React.FC<DeliveyServiceComponentProps> = 
         >
           対応サービス
         </Typography>
-        <Box className="flex flex-col">
-          {store?.deliveryServices && store.deliveryServices.length > 0 &&
-            chunkArray(
-              (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), isSmUp ? 3 : 2
-            ).map((chunk, rowIndex) => {
-              return (
-                <Box
-                  key={`row_${rowIndex}`}
-                  className="flex justify-center"
-                >
-                  {chunk.map((deliveryServiceId: Service) => {
-                    const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
-                    const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
+        <Box className="flex justify-center">
+          <Box
+            className="flex flex-col"
+            sx={{ width: {xs: '364px', sm: '550px'} }}
+          >
+            {store?.deliveryServices && store.deliveryServices.length > 0 &&
+              chunkArray(
+                (store.deliveryServices as unknown as number[]).sort((a, b) => a - b), isSmUp ? 3 : 2
+              ).map((chunk, rowIndex) => {
+                return (
+                  <Box
+                    key={`row_${rowIndex}`}
+                    className="flex justify-start"
+                  >
+                    {chunk.map((deliveryServiceId: Service) => {
+                      const deliveryService = getDeliveryServiceDataById(deliveryServiceId)
+                      const ButtonComponent = buttonComponents[deliveryService?.indicator as keyof typeof buttonComponents];
 
-                    return (
-                      <IconButton
-                        key={`service_0${deliveryServiceId}`}
-                        href={deliveryService?.url!}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
-                      >
-                        <ButtonComponent
+                      return (
+                        <IconButton
                           key={`service_0${deliveryServiceId}`}
-                        />
-                      </IconButton>
-                    )
-                  })}
-                </Box>
-          )})}
+                          href={deliveryService?.url!}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onTouchStart={() => {}} // iOS Safari用のタッチイベントを追加
+                        >
+                          <ButtonComponent
+                            key={`service_0${deliveryServiceId}`}
+                          />
+                        </IconButton>
+                      )
+                    })}
+                  </Box>
+            )})}
+          </Box>
         </Box>
       </Box>
     </Box>

@@ -51,10 +51,7 @@ export default function StoreDetail() {
 
       setStore(storeData);
 
-      const city = prefsWithCities.flatMap(pref => pref.cities)
-        .find(city => city.code === String(storeData.cityCode));
-
-      const cityCenter = { lat: city?.lat, lng: city?.lng };
+      const cityCenter = storeData.location;
       setMapCenter(cityCenter);
 
       const markerData = {
