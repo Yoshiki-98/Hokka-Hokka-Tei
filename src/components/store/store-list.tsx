@@ -441,7 +441,7 @@ export default function StoreList() {
                   {stores && stores.length > 0 && (
                     <Typography
                       sx={{
-                        margin: {xs: '0 10px', sm: '0 auto 20px auto'},
+                        margin: {xs: '0 10px 20px 10px', sm: '0 auto 20px auto'},
                         textAlign: {sm: 'center', md: 'unset'},
                       }}
                       className="text-black items-center align-center"
