@@ -32,6 +32,7 @@ import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import MenuListContainer from 'src/components/svg/container/menu-list-container';
 import { chunkArray } from '@/utils/array-utils';
 import BannerSlider from './banner-slider';
+import FadeInSection from 'src/components/menu/fade-in-section';
 
 const theme = createTheme({
   palette: {
@@ -174,17 +175,6 @@ export default function MentList() {
     { title: 'おかずのみ', filter: handleFilterSideItems, fetch: fetchSideItems },
   ];
 
-  const banners = [
-    { id: '1a2b3c4d', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e6f', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e6f7g', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e6f7g8h', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e6f7g8h9i', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e6f7g8h9i10j', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-    { id: '1a2b3c4d5e6f7g8h9i10j11h', url: 'https://firebasestorage.googleapis.com/v0/b/hokkatei-dev.appspot.com/o/menu%2Fhokatei-banner.png?alt=media&token=9931459a-3659-40f8-9ee7-0eaa18571dea'},
-  ]
-
   const handleTabClick = async (index: number) => {
     setActiveTab(index);
     const menu = await fetchMenuItems(selectedPrefCode);
@@ -208,9 +198,7 @@ export default function MentList() {
   };
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isLargeWindow = useMediaQuery('(min-width:1400px)');
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <ThemeProvider theme={theme}>
@@ -243,172 +231,174 @@ export default function MentList() {
               textAlign: { xs: 'start', sm: 'center', md: 'start' }
             }}
           >
-            <Box
-              className="pref-select-container mx-auto"
-              sx={{marginBottom: { xs: '25px', md: '100px' } }}
-              width={{ xs: '90%', sm: 600, md: 855 }}
-            >
-              <Typography
-                sx={{fontSize: '24px'}}
-                className="text-black whitespace-nowrap"
-                gutterBottom
+            <FadeInSection>
+              <Box
+                className="pref-select-container mx-auto"
+                sx={{marginBottom: { xs: '25px', md: '100px' } }}
+                width={{ xs: '90%', sm: 600, md: 855 }}
               >
-                都道府県を選択する
-              </Typography>
-              <FormControl fullWidth>
-                <CustomSelect
-                  sx={{
-                    margin: {xs: '0 auto', md: '0'},
-                    width: {xs: '100%', sm: '353px'},
-                    height: '30px',
-                    borderRadius: '10px',
-                  }}
-                  className="bg-white"
-                  value={selectedPrefCode}
-                  onChange={(e: any) => {
-                    setSelectedPrefCode(e.target.value);
-                    tabs[activeTab].fetch(e.target.value);
-                  }}
-                  IconComponent={() =>
-                    <DownArrowIcon className="mr-4"/>
-                  }
+                <Typography
+                  sx={{fontSize: '24px'}}
+                  className="text-black whitespace-nowrap"
+                  gutterBottom
                 >
-                  <MenuItem
+                  都道府県を選択する
+                </Typography>
+                <FormControl fullWidth>
+                  <CustomSelect
                     sx={{
-                      color: selectedPrefCode === 0 ? '#C4C4C6' : 'inherit',
-                      '&.Mui-selected': {
-                        color: '#C4C4C6',
-                      },
-                    }} 
-                    key='pref_00' 
-                    value={0}
+                      margin: {xs: '0 auto', md: '0'},
+                      width: {xs: '100%', sm: '353px'},
+                      height: '30px',
+                      borderRadius: '10px',
+                    }}
+                    className="bg-white"
+                    value={selectedPrefCode}
+                    onChange={(e: any) => {
+                      setSelectedPrefCode(e.target.value);
+                      tabs[activeTab].fetch(e.target.value);
+                    }}
+                    IconComponent={() =>
+                      <DownArrowIcon className="mr-4"/>
+                    }
                   >
-                    <span className="flex text-[#C4C4C6]">都道府県を選択</span>
-                  </MenuItem>
-                  {prefectures.map(pref => (
                     <MenuItem
-                      key={`pref_${String(pref.code).padStart(2,'0')}`}
-                      value={pref.code}
-                    >
-                      <span className="flex">{pref.name}</span>
-                    </MenuItem>
-                  ))}
-                </CustomSelect>
-              </FormControl>
-            </Box>
-            <Box
-              className="allergen-select-container mx-auto"
-              sx={{ marginBottom: '100px' }}
-              width={{xs: '90%', md: 855 }}
-            >
-              <Typography
-                className="text-black whitespace-nowrap"
-                sx={{
-                  fontSize: '24px',
-                  marginBottom: 2,
-                }}
-              >
-                アレルギー物質から絞り込む
-              </Typography>
-              <Box className="mx-auto text-black flex justify-start items-center">
-                <Box
-                  width={{ xs: '90%px', sm: '67.5%', md: '100%' }}
-                  height={{ xs: 'auto', sm: 'auto', md: 133 }}
-                  sx={{
-                    padding: { xs: '25px 20px', md: '25px' },
-                    borderRadius: '10px',
-                    flexDirection: { xs: 'column', md: 'row' },
-                    margin: { xs: '0 auto', sm: '0 auto', md: '0' }
-                    // alignItems: { xs: 'center', md: 'left' }
-                  }}
-                  className="flex justify-between items-start bg-white"
-                >
-                  <Box className="whitespace-nowrap mb-4">
-                    <Box sx={{ marginBottom: { xs: '10px', md: '20px' } }}>
-                      <Typography
-                        sx={{
-                          display: 'flex',
-                          fontSize: { xs: '14px' },
-                          marginBottom: 1
-                        }}
-                      >
-                        除去したい品目を選択してください
-                      </Typography>
-                      <Typography
-                        className="font-sans"
-                        sx={{
-                          display: 'flex',
-                          fontSize: { xs: '10px', sm: '12px' },
-                        }}
-                      >
-                        ※絞込み条件は特定原材料（8品目）のみとなっております
-                      </Typography>
-                    </Box>
-                    <Box 
-                      className="flex flex-wrap"
                       sx={{
-                        justifyContent: 'center',
-                        '& > *': {
-                          flexBasis: { xs: '20%', md: 'auto' },
-                          marginBottom: '8px',
+                        color: selectedPrefCode === 0 ? '#C4C4C6' : 'inherit',
+                        '&.Mui-selected': {
+                          color: '#C4C4C6',
                         },
-                        '& > *:nth-of-type(4) ~ *': {
-                          flexBasis: { xs: '20%', md: 'auto' },
-                        },
-                      }}
+                      }} 
+                      key='pref_00' 
+                      value={0}
                     >
-                      {allergenArray.map((allergen: {id: number, name: string}) => (
-                        <Box
-                          className="flex items-center justify-start mb-2"
-                          key={allergen.id}
+                      <span className="flex text-[#C4C4C6]">都道府県を選択</span>
+                    </MenuItem>
+                    {prefectures.map(pref => (
+                      <MenuItem
+                        key={`pref_${String(pref.code).padStart(2,'0')}`}
+                        value={pref.code}
+                      >
+                        <span className="flex">{pref.name}</span>
+                      </MenuItem>
+                    ))}
+                  </CustomSelect>
+                </FormControl>
+              </Box>
+              <Box
+                className="allergen-select-container mx-auto"
+                sx={{ marginBottom: '100px' }}
+                width={{xs: '90%', md: 855 }}
+              >
+                <Typography
+                  className="text-black whitespace-nowrap"
+                  sx={{
+                    fontSize: '24px',
+                    marginBottom: 2,
+                  }}
+                >
+                  アレルギー物質から絞り込む
+                </Typography>
+                <Box className="mx-auto text-black flex justify-start items-center">
+                  <Box
+                    width={{ xs: '90%px', sm: '67.5%', md: '100%' }}
+                    height={{ xs: 'auto', sm: 'auto', md: 133 }}
+                    sx={{
+                      padding: { xs: '25px 20px', md: '25px' },
+                      borderRadius: '10px',
+                      flexDirection: { xs: 'column', md: 'row' },
+                      margin: { xs: '0 auto', sm: '0 auto', md: '0' }
+                      // alignItems: { xs: 'center', md: 'left' }
+                    }}
+                    className="flex justify-between items-start bg-white"
+                  >
+                    <Box className="whitespace-nowrap mb-4">
+                      <Box sx={{ marginBottom: { xs: '10px', md: '20px' } }}>
+                        <Typography
                           sx={{
-                            marginRight: 1,
-                            width: 'auto',
-                            minWidth: 0,
-                            flexShrink: 0,
+                            display: 'flex',
+                            fontSize: { xs: '14px' },
+                            marginBottom: 1
                           }}
                         >
-                          <Checkbox
-                            id={String(allergen.id)}
-                            checked={selectedAllergens.includes(allergen.id)}
-                            onChange={async () => await handleSelectAllergens(allergen.id)}
+                          除去したい品目を選択してください
+                        </Typography>
+                        <Typography
+                          className="font-sans"
+                          sx={{
+                            display: 'flex',
+                            fontSize: { xs: '10px', sm: '12px' },
+                          }}
+                        >
+                          ※絞込み条件は特定原材料（8品目）のみとなっております
+                        </Typography>
+                      </Box>
+                      <Box 
+                        className="flex flex-wrap"
+                        sx={{
+                          justifyContent: 'center',
+                          '& > *': {
+                            flexBasis: { xs: '20%', md: 'auto' },
+                            marginBottom: '8px',
+                          },
+                          '& > *:nth-of-type(4) ~ *': {
+                            flexBasis: { xs: '20%', md: 'auto' },
+                          },
+                        }}
+                      >
+                        {allergenArray.map((allergen: {id: number, name: string}) => (
+                          <Box
+                            className="flex items-center justify-start mb-2"
+                            key={allergen.id}
                             sx={{
-                              marginRight: { xs: 1, sm: 1.5 },
-                              width: { xs: 2, md: 3 },
-                              height: { xs: 2, md: 3 },
-                              '& .MuiSvgIcon-root': {
-                                fontSize: { xs: 15, md: 17 },
-                              },
+                              marginRight: 1,
+                              width: 'auto',
+                              minWidth: 0,
+                              flexShrink: 0,
                             }}
-                          />
-                          <label 
-                            htmlFor={String(allergen.id)} 
-                            className="
-                              text-black text-sm
-                              font-medium leading-none
-                              peer-disabled:cursor-not-allowed peer-disabled:opacity-70
-                              whitespace-nowrap
-                            "
-                            style={{ maxWidth: 'calc(100% - 20px)' }}
                           >
-                            {allergen.name}
-                          </label>
-                        </Box>
-                      ))}
+                            <Checkbox
+                              id={String(allergen.id)}
+                              checked={selectedAllergens.includes(allergen.id)}
+                              onChange={async () => await handleSelectAllergens(allergen.id)}
+                              sx={{
+                                marginRight: { xs: 1, sm: 1.5 },
+                                width: { xs: 2, md: 3 },
+                                height: { xs: 2, md: 3 },
+                                '& .MuiSvgIcon-root': {
+                                  fontSize: { xs: 15, md: 17 },
+                                },
+                              }}
+                            />
+                            <label 
+                              htmlFor={String(allergen.id)} 
+                              className="
+                                text-black text-sm
+                                font-medium leading-none
+                                peer-disabled:cursor-not-allowed peer-disabled:opacity-70
+                                whitespace-nowrap
+                              "
+                              style={{ maxWidth: 'calc(100% - 20px)' }}
+                            >
+                              {allergen.name}
+                            </label>
+                          </Box>
+                        ))}
+                      </Box>
                     </Box>
-                  </Box>
-                  <Box
-                    sx={{margin: { xs: '0 auto', md: '0' }}}
-                    className="shrink-0"
-                  >
-                    <HandleFilterButton
-                      className="shrink-0 w-full md:w-auto"
-                      onClick={async () => await handleFilter()}
-                    />
+                    <Box
+                      sx={{margin: { xs: '0 auto', md: '0' }}}
+                      className="shrink-0"
+                    >
+                      <HandleFilterButton
+                        className="shrink-0 w-full md:w-auto"
+                        onClick={async () => await handleFilter()}
+                      />
+                    </Box>
                   </Box>
                 </Box>
               </Box>
-            </Box>
+            </FadeInSection>
             <Box
               className="banner-container flex flex-col"
               sx={{
@@ -530,79 +520,77 @@ export default function MentList() {
                 }}
               >
                 {menuItems && chunkArray(menuItems, isLargeWindow ? 3 : 2).map((chunk, rowIndex) => (
-                  <Box
-                    key={`row_${rowIndex}`}
-                    className="flex"
-                    sx={{ marginBottom: {xs: '30px', sm: '100px', md: '120px'} }}
-                  >
-                    {
-                      chunk.map((item, index) => {
-                        return (
-                          <Box
-                            className="item-container"
-                            key={index}
-                            sx={{
-                              width: { xs: '170px', sm: '250px', md: '380px' },
-                              maxWidth: '100%',
-                              position: 'relative',
-                              // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
-                              margin: {xs: '0 10px', sm: '0 30px'}
-                            }}
-                          >
-                            <StyledLink href={`/menu/${item.id}`}>
-                              <Box className="flex flex-col bg-transparent border-none shadow-none">
-                                { item && <MenuListContainer item={item}/> }
-                                <Box
-                                  className="grow"
+                  <FadeInSection key={rowIndex} trigger={activeTab} delay={rowIndex * 300}>
+                    <Box
+                      key={`row_${rowIndex}`}
+                      className="flex"
+                      sx={{ marginBottom: {xs: '30px', sm: '100px', md: '120px'} }}
+                    >
+                      {chunk.map((item, index) => (
+                        <Box
+                          className="item-container"
+                          key={index}
+                          sx={{
+                            width: { xs: '170px', sm: '250px', md: '380px' },
+                            maxWidth: '100%',
+                            position: 'relative',
+                            // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
+                            margin: {xs: '0 10px', sm: '0 30px'}
+                          }}
+                        >
+                          <StyledLink href={`/menu/${item.id}`}>
+                            <Box className="flex flex-col bg-transparent border-none shadow-none">
+                              { item && <MenuListContainer item={item}/> }
+                              <Box
+                                className="grow"
+                                sx={{
+                                  position: 'absolute',
+                                  left: {xs: 5, md: 10},
+                                  top: {xs: '125px', sm: '147.5px', md: '237.5px'},
+                                }}
+                              >
+                                <Typography
+                                  className="inline-block text-white font-bold bg-[#EE0026]"
                                   sx={{
-                                    position: 'absolute',
-                                    left: {xs: 5, md: 10},
-                                    top: {xs: '125px', sm: '147.5px', md: '237.5px'},
+                                    px: 1,
+                                    fontSize: {xs: '14px', sm: '18px', md: '24px'}
                                   }}
+                                  gutterBottom
+                                >
+                                  {item.name}
+                                </Typography>
+                                <Typography
+                                  className="whitespace-nowrap"
+                                  color="#323232"
+                                  gutterBottom
                                 >
                                   <Typography
-                                    className="inline-block text-white font-bold bg-[#EE0026]"
+                                    component="span"
+                                    variant="body2"
                                     sx={{
-                                      px: 1,
-                                      fontSize: {xs: '14px', sm: '18px', md: '24px'}
+                                      fontWeight: 'bold',
+                                      fontSize: {xs: '24px', sm: '30px', md: '36px'}
                                     }}
-                                    gutterBottom
                                   >
-                                    {item.name}
+                                    {item.price}
                                   </Typography>
                                   <Typography
-                                    className="whitespace-nowrap"
-                                    color="#323232"
-                                    gutterBottom
+                                    component="span"
+                                    variant="body2"
+                                    sx={{
+                                      fontSize: {xs: '14px', sm: '18px', md: '20px'}
+                                    }}
                                   >
-                                    <Typography
-                                      component="span"
-                                      variant="body2"
-                                      sx={{
-                                        fontWeight: 'bold',
-                                        fontSize: {xs: '24px', sm: '30px', md: '36px'}
-                                      }}
-                                    >
-                                      {item.price}
-                                    </Typography>
-                                    <Typography
-                                      component="span"
-                                      variant="body2"
-                                      sx={{
-                                        fontSize: {xs: '14px', sm: '18px', md: '20px'}
-                                      }}
-                                    >
-                                      円 (税込{item.taxIncludedPrice!}円)
-                                    </Typography>
+                                    円 (税込{item.taxIncludedPrice!}円)
                                   </Typography>
-                                </Box>
+                                </Typography>
                               </Box>
-                            </StyledLink>
-                          </Box>
-                        )
-                      })
-                    }
-                  </Box>
+                            </Box>
+                          </StyledLink>
+                        </Box>
+                      ))}
+                    </Box>
+                  </FadeInSection>
                 ))}
               </Box>
             </Box>
