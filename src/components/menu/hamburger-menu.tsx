@@ -10,12 +10,12 @@ import {
   AccordionDetails,
   useMediaQuery,
   useTheme,
-  Typography
 } from '@mui/material';
 import HamburgerMenuLogo from '../svg/logo/header/hamburger-menu-logo';
 import Image from "next/image";
 import HokateiMenuRightArrow from '../svg/icon/hamburger-menu-right-arrow';
 import HokateiMenuDownArrow from '../svg/icon/hamburger-menu-down-arrow';
+import HeaderCloseButton from '../svg/icon/header-close-button';
 
 interface MenuItem {
   text: string;
@@ -28,9 +28,10 @@ const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | false>(false);
   const theme = useTheme();
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
 
-  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent | React.MouseEvent) => {
+  const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent|React.MouseEvent) => {
     if (
       event.type === 'keydown' &&
       ((event as React.KeyboardEvent).key === 'Tab' ||
@@ -46,7 +47,27 @@ const HamburgerMenu = () => {
       setExpanded(isExpanded ? panel : false);
   };
 
-  const menuItems: MenuItem[] = [
+  const menuItems: MenuItem[] = isLgUp ? [
+    // group2
+    { text: '団体予約', link: '/', group: 2 },
+    { text: 'よくあるご質問', link: '/', group: 2 },
+    { text: 'お問い合わせ', link: '/', group: 2 },
+    { text: 'フランチャイズオーナー募集', link: '/', group: 2 },
+    { text: '採用情報', link: '/', group: 2 },
+    { text: '社会との関わり', link: '/s', group: 2 },
+    { text: '会社概要', link: '/', group: 2 },
+    // group3
+    { 
+      text: 'English Menu', 
+      link: '/#', 
+      group: 3,
+      children: [
+        { text: 'West Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
+        { text: 'East Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
+        { text: 'Kyushu Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
+      ]
+    },
+  ] : [
     // group1
     { text: 'メニュー', link: '/menu', group: 1 },
     { text: '店舗', link: '/store', group: 1 },
@@ -69,7 +90,7 @@ const HamburgerMenu = () => {
         { text: 'Kyushu Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
       ]
     },
-  ];
+  ]
 
   const renderMenuItem = (item: MenuItem, index: number) => {
     if (item.children) {
@@ -167,6 +188,7 @@ const HamburgerMenu = () => {
           alignItems: 'center',
           justifyContent: 'center',
           padding: 1,
+          margin: isOpen ? '0 5px' : 'unset',
           border: 'none',
           background: 'none',
           cursor: 'pointer',
@@ -180,17 +202,28 @@ const HamburgerMenu = () => {
           },
         }}
       >
-        <HamburgerMenuLogo />
+        {
+          isOpen ? (
+            <HeaderCloseButton />
+          ) : (
+            <HamburgerMenuLogo />
+          )
+        }
       </Box>
       <Drawer
         anchor="right"
         open={isOpen}
         onClose={toggleDrawer(false)}
+        // ModalProps={{ // 暗転効果
+        //   BackdropProps: {
+        //     style: { backgroundColor: 'transparent' }
+        //   }
+        // }}
         PaperProps={{
           sx: {
             width: 500,
             maxWidth: '100%',
-            marginTop: '60px', // ヘッダーの高さに応じて調整
+            marginTop: {xs: '56px', sm: '64px'}, // ヘッダーの高さに応じて調整
             height: 'calc(100% - 60px)', // ヘッダーの高さを引いた高さ
             backgroundColor: 'transparent',
             boxShadow: 'none',
@@ -209,14 +242,14 @@ const HamburgerMenu = () => {
             sx={{
               position: 'relative',
               width: '100%',
-              height: {xs: '25px', sm: '60px'},
+              height: {xs: '25px', sm: '37.5px', md: '50px'},
               maxHeight: '100px',
               flexShrink: 0,
               backgroundColor: '#F7F0E8',
             }}
           >
             {
-              isSmUp ? (
+              isMdUp ? (
                 <Image
                   src='/images/hokatei-hamburger-menu-mask.png'
                   alt='ほっかほっか亭のラベル'
@@ -251,11 +284,17 @@ const HamburgerMenu = () => {
               padding: 2,
             }}
           >
-            <List>
+            <List
+              sx={{
+                width: {xs: '100%', sm: '70%'},
+                margin: '0 auto',
+                paddingTop: '60px'
+              }}
+            >
               {menuItems.map((item, index) => (
                 <React.Fragment key={item.text}>
                   {index > 0 && menuItems[index - 1].group !== item.group && (
-                    <Box sx={{ my: 2 }}/>
+                    <Box sx={{ my: {xs: 3, md: 6} }}/>
                   )}
                   {renderMenuItem(item, index)}
                 </React.Fragment>
@@ -266,14 +305,14 @@ const HamburgerMenu = () => {
             sx={{
               position: 'relative',
               width: '100%',
-              height: {xs: '25px', sm: '60px'},
+              height: {xs: '25px', sm: '37.5px', md: '50px'},
               maxHeight: '100px',
               flexShrink: 0,
               backgroundColor: '#F7F0E8',
             }}
           >
             {
-              isSmUp ? (
+              isMdUp ? (
                 <Image
                   src='/images/hokatei-hamburger-menu-mask.png'
                   alt='ほっかほっか亭のラベル'
