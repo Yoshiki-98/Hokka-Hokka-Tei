@@ -259,7 +259,7 @@ const HamburgerMenu = () => {
                 />
               ) : (
                 <Image
-                  src='/images/small-hokatei-mask.png'
+                  src='/images/hokatei-mask.png'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
@@ -322,7 +322,7 @@ const HamburgerMenu = () => {
                 />
               ) : (
                 <Image
-                  src='/images/small-hokatei-mask.png'
+                  src='/images/hokatei-mask.png'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
