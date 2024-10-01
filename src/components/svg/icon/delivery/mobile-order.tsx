@@ -8,9 +8,7 @@ const MobileOrderIcon: React.FC<IconProps> = ({ onClick, disabled, className }) 
       disabled={disabled}
       className={`relative inline-block ${className}`}
       style={{ width: '20px', height: '20px' }}
-    >
-      
-    </button>
+    />
   );
 };
 
