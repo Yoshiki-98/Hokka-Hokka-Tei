@@ -92,6 +92,14 @@ const HamburgerMenu = () => {
     },
   ]
 
+  const responsiveTypography = {
+    fontSize: {
+      xs: '14px',
+      sm: '16px',
+      md: '18px',
+    },
+  };
+
   const renderMenuItem = (item: MenuItem, index: number) => {
     if (item.children) {
       return (
@@ -119,14 +127,20 @@ const HamburgerMenu = () => {
             }}
           >
             <ListItem component="div">
-              <ListItemText primary={item.text}/>
-                {
-                  expanded ? (
-                    <HokateiMenuDownArrow />
-                  ) : (
-                    <HokateiMenuRightArrow />
-                  )
-                }
+              <ListItemText
+                className={item.group === 3 ? "sans-serif" : ""}
+                primary={item.text}
+                primaryTypographyProps={{
+                  sx: responsiveTypography
+                }}
+              />
+              {
+                expanded ? (
+                  <HokateiMenuDownArrow />
+                ) : (
+                  <HokateiMenuRightArrow />
+                )
+              }
             </ListItem>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: 0 }}>
@@ -144,7 +158,13 @@ const HamburgerMenu = () => {
                     },
                   }}
                 >
-                  <ListItemText primary={child.text}/>
+                  <ListItemText
+                    className={item.group === 3 ? "sans-serif" : ""}
+                    primary={child.text}
+                    primaryTypographyProps={{
+                      sx: responsiveTypography
+                    }}
+                  />
                   <HokateiMenuRightArrow />
                 </ListItem>
               ))}
@@ -166,7 +186,12 @@ const HamburgerMenu = () => {
           },
         }}
       >
-        <ListItemText primary={item.text} />
+        <ListItemText 
+          primary={item.text}
+          primaryTypographyProps={{
+            sx: responsiveTypography
+          }}
+        />
         <HokateiMenuRightArrow />
       </ListItem>
     );
@@ -259,7 +284,7 @@ const HamburgerMenu = () => {
                 />
               ) : (
                 <Image
-                  src='/images/small-hokatei-mask.png'
+                  src='/images/hokatei-mask.png'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
@@ -288,7 +313,7 @@ const HamburgerMenu = () => {
               sx={{
                 width: {xs: '100%', sm: '70%'},
                 margin: '0 auto',
-                paddingTop: '60px'
+                paddingTop: '40px'
               }}
             >
               {menuItems.map((item, index) => (
@@ -322,7 +347,7 @@ const HamburgerMenu = () => {
                 />
               ) : (
                 <Image
-                  src='/images/small-hokatei-mask.png'
+                  src='/images/hokatei-mask.png'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
