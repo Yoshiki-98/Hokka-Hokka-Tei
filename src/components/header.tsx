@@ -4,8 +4,8 @@ import { AppBar, Box, IconButton, Toolbar, useMediaQuery } from '@mui/material';
 import HeaderLogo from 'src/components/svg/logo/header/site-logo';
 import StoreLogo from 'src/components/svg/logo/header/store-logo';
 import MenuLogo from 'src/components/svg/logo/header/menu-logo';
-import HamburgerMenuLogo from 'src/components/svg/logo/header/hamburger-menu-logo';
 import { useTheme } from '@mui/material/styles';
+import HamburgerMenu from './menu/hamburger-menu';
 
 const Header: React.FC = () => {
   const theme = useTheme();
@@ -35,7 +35,7 @@ const Header: React.FC = () => {
               </IconButton>
             )}
             <IconButton href='#'>
-              <HamburgerMenuLogo/>
+              <HamburgerMenu/>
             </IconButton>
           </Box>
         </Toolbar>
