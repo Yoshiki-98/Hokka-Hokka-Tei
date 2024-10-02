@@ -15,6 +15,7 @@ import Footer from 'src/components/footer';
 import NutritionInfo from './nutrition-info';
 import MenuContainer from 'src/components/svg/container/menu-container';
 import AllergenInfo from './allergen-info';
+import 'src/app/globals.css';
 
 const theme = createTheme({
   palette: {
@@ -22,17 +23,16 @@ const theme = createTheme({
       default: '#F7F0E8',
     },
     primary: {
-      main: '#ff0000',
+      main: '#323232',
     },
     secondary: {
-      main: '#323232',
+      main: '#ff0000',
     },
   },
 });
 
 export default function MenuDetail() {
   const [menuItem, setMenuItem] = useState<Menu>();
-
   const path = window.location.pathname;
   const pathSegments = path.split('/');
   const menuId = pathSegments[pathSegments.length - 1];
@@ -56,12 +56,17 @@ export default function MenuDetail() {
   }, []);
 
   const partsOfDesc = menuItem?.desc?.split(/(?:<br\s*\/?>\s*|\n)/);
-
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
 
   return (
     <ThemeProvider theme={theme}>
-      <Box className="flex flex-col text-black" sx={{ bgcolor: 'background.default' }}>
+      <Box
+        className="flex flex-col text-black"
+        sx={{
+          color: theme.palette.primary.main,
+          bgcolor: 'background.default'
+        }}
+      >
         <Header/>
         <Box
           className="mx-auto"
@@ -129,7 +134,10 @@ export default function MenuDetail() {
                         component="div"
                       >
                         {partsOfDesc && partsOfDesc.map((part, index) => ( // 改行を適切に行うための部品化
-                          <Box key={index}>
+                          <Box
+                            className="font-sans-jp"
+                            key={index}
+                          >
                             {part.trim()}
                           </Box>
                         ))}
@@ -170,8 +178,8 @@ export default function MenuDetail() {
                         )}
                       </Box>
                       <Typography gutterBottom>
-                        <span className="text-4xl font-bold">{menuItem?.price}</span>
-                        <span className="text-xl">円 (税込{menuItem?.taxIncludedPrice}円)</span>
+                        <span className="text-4xl font-bold font-noto-sans">{menuItem?.price}</span>
+                        <span className="text-xl font-noto-sans">円 （税込{menuItem?.taxIncludedPrice}円）</span>
                       </Typography>
                       <Typography sx={{fontSize: '10px'}}>
                         ※店舗により商品の仕様が異なる場合や、取り扱いが無い場合がございます
