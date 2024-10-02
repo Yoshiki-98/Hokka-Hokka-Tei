@@ -109,7 +109,10 @@ const Footer: React.FC = () => {
                     href="#"
                     className="flex items-center"
                     underline="hover"
-                    sx={{ gap: 0.5 }}
+                    sx={{
+                      gap: 0.5,
+                      color: theme.palette.secondary.main
+                    }}
                   >
                     <RightArrowIcon className="mr-[3px] mb-[3px]"/>
                     {item.label}
@@ -134,6 +137,7 @@ const Footer: React.FC = () => {
                     sx={{ 
                       gap: 0.5,
                       width: '100%', // 各アイテムが全幅を占めるように設定
+                      color: theme.palette.secondary.main
                     }}
                   >
                     <RightArrowIcon className="mr-[1.71px] mb-2"/>
@@ -180,7 +184,8 @@ const Footer: React.FC = () => {
                   sx={{
                     gap: 0.5,
                     width: isSmDown ? '100%' : undefined,
-                    fontSize: '14px'
+                    fontSize: '14px',
+                    color: theme.palette.secondary.main
                   }}
                 >
                   {item.label}
