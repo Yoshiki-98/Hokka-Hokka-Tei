@@ -31,30 +31,30 @@ const NutritionInfo: React.FC<NutritionInfoProps> = ({ menuItem }) => {
     {
       label: 'エネルギー',
       value: menuItem.nutrition?.energy
-        ? `${menuItem.nutrition?.energy} kcal`
+        ? `${menuItem.nutrition?.energy}kcal`
         : '未設定'
     },
     {
       label: 'タンパク質',
       value: menuItem.nutrition?.protein
-        ? `${menuItem.nutrition?.protein} g`
+        ? `${menuItem.nutrition?.protein}g`
         : '未設定'
       },
     {
       label: '脂質',
       value: menuItem.nutrition?.fat
-        ? `${menuItem.nutrition?.fat} g`
+        ? `${menuItem.nutrition?.fat}g`
         : '未設定'
     },
     {
       label: '炭水化物',
       value: menuItem.nutrition?.carbohydrate
-        ? `${menuItem.nutrition?.carbohydrate} g`
+        ? `${menuItem.nutrition?.carbohydrate}g`
         : '未設定'
       },
     { label: '食塩相当量',
       value: menuItem.nutrition?.salt
-        ? `${menuItem.nutrition?.salt} g`
+        ? `${menuItem.nutrition?.salt}g`
         : '未設定'
       },
   ];
@@ -120,6 +120,7 @@ const NutritionInfo: React.FC<NutritionInfoProps> = ({ menuItem }) => {
                     flexItem
                   />
                   <Typography
+                    className="font-noto-sans"
                     sx={{
                       padding: '15px',
                       fontSize: '24px',

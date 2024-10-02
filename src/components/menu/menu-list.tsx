@@ -202,7 +202,12 @@ export default function MentList() {
 
   return (
     <ThemeProvider theme={theme}>
-      <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
+      <Box
+        sx={{
+          minHeight: '100vh',
+          color: theme.palette.secondary.main,
+          bgcolor: 'background.default'
+        }}>
         <Header/>
         <Box
           className="mx-auto"
@@ -239,7 +244,7 @@ export default function MentList() {
               >
                 <Typography
                   sx={{fontSize: '24px'}}
-                  className="text-black whitespace-nowrap"
+                  className="whitespace-nowrap"
                   gutterBottom
                 >
                   都道府県を選択する
@@ -289,7 +294,7 @@ export default function MentList() {
                 width={{xs: '90%', md: 855 }}
               >
                 <Typography
-                  className="text-black whitespace-nowrap"
+                  className="whitespace-nowrap"
                   sx={{
                     fontSize: '24px',
                     marginBottom: 2,
@@ -297,7 +302,7 @@ export default function MentList() {
                 >
                   アレルギー物質から絞り込む
                 </Typography>
-                <Box className="mx-auto text-black flex justify-start items-center">
+                <Box className="mx-auto flex justify-start items-center">
                   <Box
                     width={{ xs: '90%px', sm: '67.5%', md: '100%' }}
                     height={{ xs: 'auto', sm: 'auto', md: 133 }}
@@ -370,7 +375,7 @@ export default function MentList() {
                             <label 
                               htmlFor={String(allergen.id)} 
                               className="
-                                text-black text-sm
+                                text-sm
                                 font-medium leading-none
                                 peer-disabled:cursor-not-allowed peer-disabled:opacity-70
                                 whitespace-nowrap
@@ -421,7 +426,6 @@ export default function MentList() {
                     justifyContent: 'end',
                     marginTop: {sm: '-25px', lg: '-20px'},
                     fontSize: '14px',
-                    color: "#000"
                   }}
                 >
                   <Box
@@ -435,7 +439,7 @@ export default function MentList() {
                         justifyContent: 'end',
                       }}
                     >
-                      栄養成分・アレルギー一覧は<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
+                      栄養成分・アレルギー一覧は<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       sx={{
@@ -444,7 +448,7 @@ export default function MentList() {
                         justifyContent: 'end',
                       }}
                     >
-                      メニュー表は<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
+                      メニュー表は<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       sx={{
@@ -453,7 +457,7 @@ export default function MentList() {
                         justifyContent: 'end',
                       }}
                     >
-                      外国語メニューは<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
+                      外国語メニューは<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       sx={{
@@ -492,7 +496,6 @@ export default function MentList() {
                       fontSize: { xs: '14px', sm: '16px', md: '24px' },
                       margin: { xs: '4px 20px', sm: '4px 24px', md: '4px 50px' },
                     }}
-                    className={'text-black'}
                     onClick={async () => await handleTabClick(index)}
                     style={activeTab === index ? activeTabStyle : tabStyle}
                   >
@@ -563,19 +566,16 @@ export default function MentList() {
                                   <Typography
                                     component="span"
                                     variant="body2"
-                                    sx={{
-                                      fontWeight: 'bold',
-                                      fontSize: {xs: '24px', sm: '30px', md: '36px'}
-                                    }}
+                                    className="font-noto-sans font-weight-black"
+                                    sx={{ fontSize: {xs: '24px', sm: '30px', md: '36px'} }}
                                   >
                                     {item.price}
                                   </Typography>
                                   <Typography
                                     component="span"
                                     variant="body2"
-                                    sx={{
-                                      fontSize: {xs: '14px', sm: '18px', md: '20px'}
-                                    }}
+                                    className="font-noto-sans"
+                                    sx={{ fontSize: {xs: '14px', sm: '18px', md: '20px'} }}
                                   >
                                     円 (税込{item.taxIncludedPrice!}円)
                                   </Typography>
