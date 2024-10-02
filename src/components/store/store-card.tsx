@@ -41,7 +41,7 @@ const StoreCard: React.FC<CustomShapeContainerProps> = ({children, width, height
         sx={{
           position: 'absolute',
           top: 0,
-          left: { xs: 0, sm: -80 },
+          left: { xs: 0, sm: -60 },
           width: '100%',
           height: '100%',
           display: 'flex',

@@ -203,6 +203,7 @@ export default function StoreList() {
           <Box
             className="flex justify-center"
             sx={{
+              width: '1280px',
               paddingRight: {lg: 0},
               margin: '0 auto 27px auto',
             }}
@@ -217,11 +218,7 @@ export default function StoreList() {
                   marginRight: {md: '30px', lg: '60px'}
                 }}
               />
-              <Box
-                sx={{
-                  margin: {lg: '0 auto'}
-                }}
-              >
+              <Box sx={{ margin: {lg: '0 auto'} }}>
                 <SearchByLocationButton
                   className="shrink-0"
                   onClick={async () => await handleSearchLocation()}
@@ -537,7 +534,7 @@ export default function StoreList() {
                                             sx={{
                                               position: 'absolute',
                                               top: 18,
-                                              right: -50,
+                                              right: -40,
                                               flexShrink: 0
                                             }}
                                           >

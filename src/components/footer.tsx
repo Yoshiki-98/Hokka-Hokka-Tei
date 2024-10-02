@@ -135,9 +135,7 @@ const Footer: React.FC = () => {
         </Box>
         <Divider
           className="w-{1431px}"
-          sx={{
-            my: '1.0rem'
-          }}
+          sx={{ my: '1.0rem' }}
           color='#323232'
         />
         <Box

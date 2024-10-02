@@ -14,14 +14,41 @@
   }
 }
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
-}
-
 @layer utilities {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@layer base {
+  html {
+    font-family: "Noto Sans", sans-serif !important;
+  }
+}
+
+/* すべての要素に対してフォントファミリーを強制的に適用 */
+body {
+  @apply bg-background text-foreground;
+  color: var(--foreground);
+  background: var(--background);
+}
+
+* {
+  font-family: var(--font-noto-sans-jp), sans-serif;
+}
+
+.font-weight-regular {
+  font-weight: 400 !important;
+}
+
+.font-weight-medium {
+  font-weight: 500 !important;
+}
+
+.font-weight-bold {
+  font-weight: 700 !important;
+}
+
+.font-weight-black {
+  font-weight: 900 !important;
 }
