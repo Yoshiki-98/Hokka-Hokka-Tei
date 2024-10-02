@@ -258,9 +258,7 @@ export default function MentList() {
                       setSelectedPrefCode(e.target.value);
                       tabs[activeTab].fetch(e.target.value);
                     }}
-                    IconComponent={() =>
-                      <DownArrowIcon className="mr-4"/>
-                    }
+                    IconComponent={() => <DownArrowIcon className="mr-4"/>}
                   >
                     <MenuItem
                       sx={{
@@ -324,7 +322,6 @@ export default function MentList() {
                           除去したい品目を選択してください
                         </Typography>
                         <Typography
-                          className="font-sans"
                           sx={{
                             display: 'flex',
                             fontSize: { xs: '10px', sm: '12px' },
@@ -459,7 +456,6 @@ export default function MentList() {
                       外国語メニューは<Link href="#" sx={{ color: '#000', textDecoration: 'underline' }}>こちら</Link>
                     </Typography>
                     <Typography
-                      className="font-sans"
                       sx={{
                         fontSize: '12px',
                         display: 'flex',

@@ -128,7 +128,6 @@ const HamburgerMenu = () => {
           >
             <ListItem component="div">
               <ListItemText
-                className={item.group === 3 ? "sans-serif" : ""}
                 primary={item.text}
                 primaryTypographyProps={{
                   sx: responsiveTypography
@@ -159,7 +158,6 @@ const HamburgerMenu = () => {
                   }}
                 >
                   <ListItemText
-                    className={item.group === 3 ? "sans-serif" : ""}
                     primary={child.text}
                     primaryTypographyProps={{
                       sx: responsiveTypography

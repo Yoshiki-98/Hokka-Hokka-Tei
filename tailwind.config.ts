@@ -13,7 +13,8 @@ const config: Config = {
         foreground: "var(--foreground)",
       },
       fontFamily: {
-        'sans': ['"Noto Sans JP"', 'sans-serif'],
+        'sans': ['"Noto Sans"', 'sans-serif'],
+        'sans-jp': ['"Noto Sans JP"', 'sans-serif'],
       },
     },
   },
