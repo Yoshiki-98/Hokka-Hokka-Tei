@@ -28,7 +28,7 @@ import { getDeliveryServiceDataById } from '@/utils/theme/delivery-service-utils
 import SearchByLocationButton from '@/components/svg/button/trigger/search-by-location';
 import LocationRetrievalButton from '@/components/svg/button/trigger/location-retrieval';
 import { formatPhoneNumber } from '@/utils/format-utils';
-import { CustomSelect, StyledLink } from 'src/components/styled/styled-component';
+import { CustomSelect } from 'src/components/styled/styled-component';
 import { MulipleMarkersMap } from 'src/components/map/multiple-markers-map';
 import { MarkerConfig } from '@/types/map-marker';
 import { chunkArray } from '@/utils/array-utils';
@@ -203,7 +203,12 @@ export default function StoreList() {
           <Box
             className="flex justify-center"
             sx={{
-              width: '1280px',
+              '@media (min-width: 1400px)': {
+                width: '1280px',
+              },
+              '@media (max-width: 1400px)': {
+                width: 'unset',
+              },
               paddingRight: {lg: 0},
               margin: '0 auto 27px auto',
             }}
