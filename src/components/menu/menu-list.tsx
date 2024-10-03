@@ -198,6 +198,7 @@ export default function MentList() {
   };
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isLargeWindow = useMediaQuery('(min-width:1400px)');
 
   return (
@@ -518,19 +519,22 @@ export default function MentList() {
                   gap: {xs: '10px', sm: '15px', md: '35px'}
                 }}
               >
-                {menuItems && chunkArray(menuItems, isLargeWindow ? 3 : 2).map((chunk, rowIndex) => (
+                {menuItems && chunkArray(menuItems, isLgUp ? 3 : 2).map((chunk, rowIndex) => (
                   <FadeInSection key={rowIndex} trigger={activeTab} delay={rowIndex * 300}>
                     <Box
                       key={`row_${rowIndex}`}
                       className="flex"
-                      sx={{ marginBottom: {xs: '30px', sm: '100px', md: '120px'} }}
+                      sx={{ marginBottom: {xs: '30px', sm: '100px', md: '140px'} }}
                     >
                       {chunk.map((item, index) => (
                         <Box
                           className="item-container"
                           key={index}
                           sx={{
-                            width: { xs: '170px', sm: '250px', md: '380px' },
+                            width: { xs: '170px', sm: '250px', md: '300px' },
+                            '@media (min-width: 1400px)': {
+                              width: '380px !important'
+                            },
                             maxWidth: '100%',
                             position: 'relative',
                             // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
@@ -545,7 +549,10 @@ export default function MentList() {
                                 sx={{
                                   position: 'absolute',
                                   left: {xs: 5, md: 10},
-                                  top: {xs: '125px', sm: '147.5px', md: '237.5px'},
+                                  top: {xs: '125px', sm: '147.5px', md: '180px'},
+                                  '@media (min-width: 1400px)': {
+                                    top: '237.5px !important',
+                                  },
                                 }}
                               >
                                 <Typography
