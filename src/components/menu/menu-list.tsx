@@ -199,7 +199,6 @@ export default function MentList() {
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
-  const isLargeWindow = useMediaQuery('(min-width:1400px)');
 
   return (
     <ThemeProvider theme={theme}>
@@ -240,8 +239,10 @@ export default function MentList() {
             <FadeInSection>
               <Box
                 className="pref-select-container mx-auto"
-                sx={{marginBottom: { xs: '25px', md: '100px' } }}
-                width={{ xs: '90%', sm: 600, md: 855 }}
+                sx={{
+                  marginBottom: { xs: '25px', md: '100px' },
+                  width: { xs: '90%', sm: 600, md: 855 },
+                }}
               >
                 <Typography
                   sx={{fontSize: '24px'}}
@@ -255,7 +256,7 @@ export default function MentList() {
                     sx={{
                       margin: {xs: '0 auto', md: '0'},
                       width: {xs: '100%', sm: '353px'},
-                      height: '30px',
+                      height: '40px',
                       borderRadius: '10px',
                     }}
                     className="bg-white"

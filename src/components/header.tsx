@@ -6,6 +6,8 @@ import StoreLogo from 'src/components/svg/logo/header/store-logo';
 import MenuLogo from 'src/components/svg/logo/header/menu-logo';
 import { useTheme } from '@mui/material/styles';
 import HamburgerMenu from './menu/hamburger-menu';
+import { HoverIconButton } from 'src/components/hover-icon-button';
+import { NoHoverIconButton } from 'src/components/no-hover-icon-button';
 
 const Header: React.FC = () => {
   const theme = useTheme();
@@ -19,24 +21,24 @@ const Header: React.FC = () => {
       <AppBar position="static" color="transparent" elevation={0}>
         <Toolbar className="justify-between">
           <Box className="grow">
-            <IconButton href='/'>
+            <NoHoverIconButton>
               <HeaderLogo/>
-            </IconButton>
+            </NoHoverIconButton>
           </Box>
           <Box>
             {isMdUp && (
-              <IconButton href='/menu'>
+              <HoverIconButton>
                 <MenuLogo/>
-              </IconButton>
+              </HoverIconButton>
             )}
             {isMdUp && (
-              <IconButton href='/store'>
+              <HoverIconButton>
                 <StoreLogo/>
-              </IconButton>
+              </HoverIconButton>
             )}
-            <IconButton href='#'>
+            <NoHoverIconButton>
               <HamburgerMenu/>
-            </IconButton>
+            </NoHoverIconButton>
           </Box>
         </Toolbar>
       </AppBar>
