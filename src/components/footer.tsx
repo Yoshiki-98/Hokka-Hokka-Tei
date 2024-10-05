@@ -34,7 +34,7 @@ const theme = createTheme({
 const recruitmentLinks = [
   { label: 'フランチャイズオーナー募集'  },
   { label: 'パート・アルバイト募集' },
-  { label: '採用募集' },
+  { label: '採用情報' },
   { label: '店舗造り・維持管理提案募集' },
   { label: '物件募集' },
 ];
@@ -76,142 +76,125 @@ const Footer: React.FC = () => {
           quality={100}
         />
       </Box>
-      <AppBar
-        className="mt-9"
-        position="static"
-        color="transparent"
-        elevation={0}
-      >
-        <Toolbar>
-          <IconButton href='/'>
-            <FooterLogo className="grow"/>
-          </IconButton>
-        </Toolbar>
-      </AppBar>
-      <Container sx={{ minWidth: '100%' }}>
-        <Box
-          className="flex justify-between items-center flex-wrap"
-          sx={{ py: 3 }}
+      <Box sx={{padding: '40px 40px 0 40px'}}>
+        <IconButton
+          href='/'
+          sx={{
+            padding: 0,
+            margin: '0 0 27px 0'
+          }}
         >
-          {
-            isSmUp ? (
+          <FooterLogo className="grow"/>
+        </IconButton>
+        <Box sx={{ minWidth: '100%' }}>
+          <Box
+            className="flex justify-between items-center flex-wrap"
+            sx={{ py: '13px', mb: '15px' }}
+          >
+            {
+              isSmUp ? (
+                <Box
+                  className="flex flex-wrap"
+                  sx={{
+                    gap: '40px',
+                    flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
+                    maxWidth: '80%'   // 最大幅を設定
+                  }}
+                >
+                  {recruitmentLinks.map((item, index) => (
+                    <Link 
+                      key={index} 
+                      href="#"
+                      className="flex items-center"
+                      underline="hover"
+                      sx={{color: theme.palette.secondary.main}}
+                    >
+                      <RightArrowIcon className="mr-[10px] mb-[3px]"/>
+                      {item.label}
+                    </Link>
+                  ))}
+                </Box>
+              ) : (
+                <Box
+                  className="flex flex-wrap"
+                  sx={{
+                    gap: '40px',
+                    flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
+                    maxWidth: '80%'   // 最大幅を設定
+                  }}
+                >
+                  {recruitmentLinks.map((item, index) => (
+                    <Link 
+                      key={index} 
+                      href="#"
+                      className="flex items-center"
+                      underline="hover"
+                      sx={{ 
+                        gap: 0.5,
+                        width: '100%', // 各アイテムが全幅を占めるように設定
+                        color: theme.palette.secondary.main
+                      }}
+                    >
+                      <RightArrowIcon className="mr-[1.71px] mb-2"/>
+                      {item.label}
+                    </Link>
+                  ))}
+                </Box>
+              )
+            }
+          </Box>
+          <Divider
+            className="w-{1431px}"
+            sx={{ mt: '0.25rem' }}
+            color='#323232'
+          />
+          <Box
+            className="flex justify-between items-start"
+            sx={{ pt: '26px', pb: '27px' }}
+          >
+            <Box>
               <Box
                 className="flex flex-wrap"
-                sx={{
-                  gap: '36px',
-                  flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
-                  maxWidth: '80%'   // 最大幅を設定
-                }}
+                sx={{ gap: '30px' }}
               >
-                {recruitmentLinks.map((item, index) => (
+                {companyLinks.map((item, index) => (
                   <Link 
                     key={index} 
                     href="#"
-                    className="flex items-center"
+                    className="flex items-center text-sm"
                     underline="hover"
                     sx={{
                       gap: 0.5,
+                      width: isSmDown ? '100%' : undefined,
+                      fontSize: '14px',
                       color: theme.palette.secondary.main
                     }}
                   >
-                    <RightArrowIcon className="mr-[3px] mb-[3px]"/>
                     {item.label}
                   </Link>
                 ))}
               </Box>
-            ) : (
-              <Box
-                className="flex flex-wrap"
-                sx={{
-                  gap: '36px',
-                  flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
-                  maxWidth: '80%'   // 最大幅を設定
-                }}
-              >
-                {recruitmentLinks.map((item, index) => (
-                  <Link 
-                    key={index} 
-                    href="#"
-                    className="flex items-center"
-                    underline="hover"
-                    sx={{ 
-                      gap: 0.5,
-                      width: '100%', // 各アイテムが全幅を占めるように設定
-                      color: theme.palette.secondary.main
-                    }}
-                  >
-                    <RightArrowIcon className="mr-[1.71px] mb-2"/>
-                    {item.label}
-                  </Link>
-                ))}
-              </Box>
-            )
-          }
-          {
-            isMdUp && (
-              <Box
-                className="flex justify-end items-center"
-                sx={{
-                  flex: '1 1 20%',  // フレックス成長と縮小を許可し、幅の40%を占める
-                  maxWidth: '20%'   // 最大幅を設定
-                }}
-              >
-                <CompanyLogo/>
-              </Box>
-            )
-          }
-        </Box>
-        <Divider
-          className="w-{1431px}"
-          sx={{ my: '1.0rem' }}
-          color='#323232'
-        />
-        <Box
-          className="flex justify-between items-start"
-          sx={{ py: 3 }}
-        >
-          <Box>
-            <Box
-              className="flex flex-wrap"
-              sx={{ gap: '30px' }}
-            >
-              {companyLinks.map((item, index) => (
-                <Link 
-                  key={index} 
-                  href="#"
-                  className="flex items-center text-sm"
-                  underline="hover"
-                  sx={{
-                    gap: 0.5,
-                    width: isSmDown ? '100%' : undefined,
-                    fontSize: '14px',
-                    color: theme.palette.secondary.main
-                  }}
-                >
-                  {item.label}
-                </Link>
-              ))}
             </Box>
+            {isMdUp && (
+              <Typography
+                className="text-xs"
+                variant="body2"
+                color={theme.palette.secondary.main}
+              >
+                Copyright © 2024 Hokka-Hokka Tei Souhombu Corp All Rights Reserved
+              </Typography>
+            )}
           </Box>
-          {isMdUp && (
+          {!isMdUp && (
             <Typography
               className="text-xs"
               variant="body2"
-              color={theme.palette.secondary.main}
             >
-              Copyright © 2024 HURXLEY CORPORATION All Rights Reserved.
+              Copyright © 2024 Hokka-Hokka Tei Souhombu Corp All Rights Reserved
             </Typography>
           )}
         </Box>
-        {!isMdUp && (
-          <Typography
-            className="text-xs"
-            variant="body2"
-          >
-            Copyright © 2024 HURXLEY CORPORATION All Rights Reserved.
-          </Typography>
-        )}
-      </Container>
+      </Box>
     </Box>
   );
 };

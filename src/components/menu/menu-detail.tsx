@@ -15,6 +15,7 @@ import Footer from 'src/components/footer';
 import NutritionInfo from './nutrition-info';
 import MenuContainer from 'src/components/svg/container/menu-container';
 import AllergenInfo from './allergen-info';
+import TopLabel from 'src/components/menu/top-label-container';
 import 'src/app/globals.css';
 
 const theme = createTheme({
@@ -68,6 +69,7 @@ export default function MenuDetail() {
         }}
       >
         <Header/>
+        <TopLabel/>
         <Box
           className="mx-auto"
           sx={{

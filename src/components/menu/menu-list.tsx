@@ -33,6 +33,7 @@ import MenuListContainer from 'src/components/svg/container/menu-list-container'
 import { chunkArray } from '@/utils/array-utils';
 import BannerSlider from './banner-slider';
 import FadeInSection from 'src/components/menu/fade-in-section';
+import TopLabel from 'src/components/menu/top-label-container';
 
 const theme = createTheme({
   palette: {
@@ -207,8 +208,10 @@ export default function MentList() {
           minHeight: '100vh',
           color: theme.palette.secondary.main,
           bgcolor: 'background.default'
-        }}>
+        }}
+      >
         <Header/>
+        <TopLabel/>
         <Box
           className="mx-auto"
           sx={{
@@ -459,7 +462,7 @@ export default function MentList() {
                         justifyContent: 'end',
                       }}
                     >
-                      外国語メニューは<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
+                      英語/中国語メニューは<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       sx={{

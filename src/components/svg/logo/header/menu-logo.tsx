@@ -1,11 +1,10 @@
 import React from 'react';
 import { LogoProps } from '@/types/element-prop';
 
-const MenuLogo: React.FC<LogoProps> = ({ onClick, disabled, className }) => {
+const MenuLogo: React.FC<LogoProps> = ({ onClick, className }) => {
   return (
-    <button
+    <div
       onClick={onClick}
-      disabled={disabled}
       className={`relative inline-block ${className}`}
       style={{ width: '88px', height: '23px' }}
     >
@@ -35,7 +34,7 @@ const MenuLogo: React.FC<LogoProps> = ({ onClick, disabled, className }) => {
         <path d="M77.253 12.381L75.606 10.7593L78.9903 7.50104L82.3069 4.18359L83.8561 5.76086L80.547 9.03388L77.253 12.381Z" fill="#FFA600"/>
         <path d="M84.2319 19.5203L79.7797 19.5425L75.2372 19.6017L75.2222 14.3738L79.7797 14.3516L84.2695 14.4256L84.2319 19.5203Z" fill="#FFA600"/>
       </svg>
-    </button>
+    </div>
   );
 };
 

@@ -1,6 +1,5 @@
 import React from 'react';
-import Image from 'next/image';
-import { AppBar, Box, IconButton, Toolbar, useMediaQuery } from '@mui/material';
+import { AppBar, Box, Toolbar, useMediaQuery } from '@mui/material';
 import HeaderLogo from 'src/components/svg/logo/header/site-logo';
 import StoreLogo from 'src/components/svg/logo/header/store-logo';
 import MenuLogo from 'src/components/svg/logo/header/menu-logo';
@@ -15,11 +14,22 @@ const Header: React.FC = () => {
 
   return (
     <Box 
-      className="bg-white"
-      sx={{ marginBottom: { xs: '50px', md: '100px'} }}
+      sx={{
+        marginBottom: { xs: '50px', md: '100px'},
+        background: '#FFF',
+        width: '100%',
+        position: 'fixed',
+        zIndex: 9999
+      }}
     >
       <AppBar position="static" color="transparent" elevation={0}>
-        <Toolbar className="justify-between">
+        <Toolbar
+          className="justify-between"
+          sx={{
+            minHeight: '60px !important',
+            px: '30px !important'
+          }}
+        >
           <Box className="grow">
             <NoHoverIconButton>
               <HeaderLogo/>
@@ -42,21 +52,6 @@ const Header: React.FC = () => {
           </Box>
         </Toolbar>
       </AppBar>
-      <Box
-        sx={{
-          position: 'relative',
-          width: '100%',
-          height: {xs: '25px', sm: '37.5px', md: '50px'},
-          maxHeight: '100px'
-        }}>
-        <Image
-          src='/images/hokatei-mask.png'
-          alt='ほっかほっか亭のラベル'
-          layout="fill"
-          objectFit="cover"
-          quality={100}
-        />
-      </Box>
     </Box>
   );
 };

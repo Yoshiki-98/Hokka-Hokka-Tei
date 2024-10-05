@@ -41,6 +41,7 @@ import WoltIcon from '@/components/svg/icon/delivery/wolt';
 import { Service } from '@/types/delivery-service';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import SmallStoreCard from './small-store-card';
+import TopLabel from 'src/components/menu/top-label-container';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -181,6 +182,7 @@ export default function StoreList() {
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
         <Header/>
+        <TopLabel/>
         <Container
           sx={{
             width: '100%',

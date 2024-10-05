@@ -32,10 +32,7 @@ const MenuListContainer: React.FC<ThumbnailProp> = ({ item }) => {
   const clipPathId = React.useId();
   const theme = useTheme();
   const isLargeWindow = useMediaQuery('(min-width:1400px)');
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
-  const isMobile = useMediaQuery('(max-width:393px)');
 
   return (
     isLargeWindow ? (
