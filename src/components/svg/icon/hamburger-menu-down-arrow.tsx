@@ -2,7 +2,11 @@ import React from 'react';
 import { LogoProps } from '@/types/element-prop';
 import { useMediaQuery, useTheme } from '@mui/material';
 
-const HokateiMenuDownArrow: React.FC<LogoProps> = ({ onClick, disabled, className }) => {
+interface MenuArrowProps extends LogoProps {
+  isHovered?: boolean;
+}
+
+const HokateiMenuDownArrow: React.FC<MenuArrowProps> = ({ onClick, disabled, className, isHovered }) => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
@@ -24,11 +28,12 @@ const HokateiMenuDownArrow: React.FC<LogoProps> = ({ onClick, disabled, classNam
       xmlns="http://www.w3.org/2000/svg"
       style={{ 
         width: `${width}px`, 
-        height: `${height}px`
+        height: `${height}px`,
+        marginTop: isHovered ? '2px' : 0
       }}
     >
       <g clipPath="url(#clip0_3547_15192)">
-        <path d="M19.5764 0.322522L20.6749 1.55305L18.6628 3.53879L16.6084 5.53509L14.5381 7.51555L12.7161 9.74423L10.6195 11.6719L8.58092 9.70198L6.47899 7.74792L4.64641 5.52981L2.38604 3.73947L0.674927 1.52664L1.66252 0.327803L3.80669 2.75189L6.01424 5.04394L8.26405 7.29374L10.6195 9.32173L12.9749 7.29902L15.0557 4.88022L17.2897 2.61457L19.5764 0.322522Z" fill="#323232"/>
+        <path d="M19.5764 0.322522L20.6749 1.55305L18.6628 3.53879L16.6084 5.53509L14.5381 7.51555L12.7161 9.74423L10.6195 11.6719L8.58092 9.70198L6.47899 7.74792L4.64641 5.52981L2.38604 3.73947L0.674927 1.52664L1.66252 0.327803L3.80669 2.75189L6.01424 5.04394L8.26405 7.29374L10.6195 9.32173L12.9749 7.29902L15.0557 4.88022L17.2897 2.61457L19.5764 0.322522Z" fill={isHovered ? "rgb(238, 0, 38)" : "#323232"}/>
       </g>
       <defs>
         <clipPath id="clip0_3547_15192">

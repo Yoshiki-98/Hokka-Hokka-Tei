@@ -4,11 +4,10 @@ import styled from 'styled-components';
 
 const StyledIconButton = styled(IconButton)`
   position: relative;
-  height: 64px;
+  height: 60px;
   border-radius: 0;
   overflow: hidden;
   padding: 0;
-  margin: 0 8px;
 
   // デフォルトのホバー効果を完全に無効化
   &.MuiIconButton-root {

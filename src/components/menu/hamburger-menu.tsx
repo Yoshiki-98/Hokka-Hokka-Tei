@@ -15,6 +15,7 @@ import HamburgerMenuLogo from '../svg/logo/header/hamburger-menu-logo';
 import Image from "next/image";
 import HokateiMenuRightArrow from '../svg/icon/hamburger-menu-right-arrow';
 import HokateiMenuDownArrow from '../svg/icon/hamburger-menu-down-arrow';
+import HokateiMenuUpArrow from '../svg/icon/hamburger-menu-up-arrow';
 import HeaderCloseButton from '../svg/icon/header-close-button';
 
 interface MenuItem {
@@ -30,6 +31,7 @@ const HamburgerMenu = () => {
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent|React.MouseEvent) => {
     if (
@@ -58,13 +60,13 @@ const HamburgerMenu = () => {
     { text: '会社概要', link: '/', group: 2 },
     // group3
     { 
-      text: 'English Menu', 
+      text: 'English/Chinese Menu', 
       link: '/#', 
       group: 3,
       children: [
-        { text: 'West Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
-        { text: 'East Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
-        { text: 'Kyushu Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
+        { text: 'WestJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
+        { text: 'EastJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
+        { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
       ]
     },
   ] : [
@@ -81,13 +83,13 @@ const HamburgerMenu = () => {
     { text: '会社概要', link: '/', group: 2 },
     // group3
     { 
-      text: 'English Menu', 
+      text: 'English/Chinese Menu', 
       link: '/#', 
       group: 3,
       children: [
-        { text: 'West Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
-        { text: 'East Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
-        { text: 'Kyushu Japan Area Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
+        { text: 'WestJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
+        { text: 'EastJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
+        { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
       ]
     },
   ]
@@ -120,13 +122,38 @@ const HamburgerMenu = () => {
             aria-controls={`panel${index}bh-content`}
             id={`panel${index}bh-header`}
             sx={{
+              minHeight: '10px !important',
               padding: 0,
               '& .MuiAccordionSummary-content': {
                 margin: 0,
               },
             }}
           >
-            <ListItem component="div">
+            <ListItem 
+              key={item.text}
+              component="a" 
+              href={item.link}
+              onMouseEnter={() => {
+                setHoveredIndex(index);
+              }}
+              onMouseLeave={() => setHoveredIndex(null)}
+              sx={{
+                minHeight: '10px !important',
+                position: 'relative',
+                p: 0,
+                overflow: 'hidden',
+
+                '&:hover': {
+                  color: 'rgb(238, 0, 38)',
+                  backgroundColor: 'transparent',
+
+                  // カーソルが乗ったら子コンポーネントの ListItemText を太線にする
+                  '& .MuiListItemText-primary': {
+                    fontWeight: 'bold',
+                  },
+                },
+              }}
+            >
               <ListItemText
                 primary={item.text}
                 primaryTypographyProps={{
@@ -135,9 +162,9 @@ const HamburgerMenu = () => {
               />
               {
                 expanded ? (
-                  <HokateiMenuDownArrow />
+                  <HokateiMenuUpArrow isHovered={hoveredIndex === index} />
                 ) : (
-                  <HokateiMenuRightArrow />
+                  <HokateiMenuDownArrow isHovered={hoveredIndex === index} />
                 )
               }
             </ListItem>
@@ -149,11 +176,42 @@ const HamburgerMenu = () => {
                   key={child.text}
                   component="a"
                   href={child.link}
+                  onMouseEnter={() => {
+                    setHoveredIndex(childIndex);
+                  }}
+                  onMouseLeave={() => setHoveredIndex(null)}
                   sx={{
-                    py: 1,
-                    pl: 4,
+                    position: 'relative',
+                    p: 0,
+                    my: '16px',
+                    pl: '20px',
+                    overflow: 'hidden',
+
+                    '&::after': {
+                      content: '""',
+                      position: 'absolute',
+                      bottom: 0,
+                      left: '0%',
+                      transform: 'translateX(-50%)',
+                      width: 0,
+                      height: '3px',
+                      backgroundColor: 'rgb(238, 0, 38)',
+                      transition: 'width 0.65s ease',
+                    },
+
                     '&:hover': {
-                      backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                      color: 'rgb(238, 0, 38)',
+                      backgroundColor: 'transparent',
+                      textDecorationColor: 'rgb(238, 0, 38)',
+
+                      // カーソルが乗ったら子コンポーネントの ListItemText を太線にする
+                      '& .MuiListItemText-primary': {
+                        fontWeight: 'bold',
+                      },
+
+                      '&::after': {
+                        width: '200%',
+                      },
                     },
                   }}
                 >
@@ -163,7 +221,7 @@ const HamburgerMenu = () => {
                       sx: responsiveTypography
                     }}
                   />
-                  <HokateiMenuRightArrow />
+                  <HokateiMenuRightArrow isHovered={hoveredIndex === childIndex}/>
                 </ListItem>
               ))}
             </List>
@@ -177,10 +235,41 @@ const HamburgerMenu = () => {
         key={item.text}
         component="a" 
         href={item.link}
+        onMouseEnter={() => {
+          setHoveredIndex(index);
+        }}
+        onMouseLeave={() => setHoveredIndex(null)}
         sx={{
-          py: 1,
+          position: 'relative',
+          p: 0,
+          my: '16px',
+          overflow: 'hidden',
+
+          '&::after': {
+            content: '""',
+            position: 'absolute',
+            bottom: 0,
+            left: '0%',
+            transform: 'translateX(-50%)',
+            width: 0,
+            height: '3px',
+            backgroundColor: 'rgb(238, 0, 38)',
+            transition: 'width 0.65s ease',
+          },
+
           '&:hover': {
-            backgroundColor: 'rgba(0, 0, 0, 0.04)',
+            color: 'rgb(238, 0, 38)',
+            backgroundColor: 'transparent',
+            textDecorationColor: 'rgb(238, 0, 38)',
+
+            // カーソルが乗ったら子コンポーネントの ListItemText を太線にする
+            '& .MuiListItemText-primary': {
+              fontWeight: 'bold',
+            },
+
+            '&::after': {
+              width: '200%',
+            },
           },
         }}
       >
@@ -190,7 +279,7 @@ const HamburgerMenu = () => {
             sx: responsiveTypography
           }}
         />
-        <HokateiMenuRightArrow />
+        <HokateiMenuRightArrow isHovered={hoveredIndex === index}/>
       </ListItem>
     );
   };
@@ -199,7 +288,7 @@ const HamburgerMenu = () => {
     <Box>
       <Box
         component="button"
-        onClick={toggleDrawer(true)}
+        onClick={toggleDrawer(!isOpen)}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             toggleDrawer(true)(event);
@@ -210,8 +299,6 @@ const HamburgerMenu = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          padding: 1,
-          margin: isOpen ? '0 5px' : 'unset',
           border: 'none',
           background: 'none',
           cursor: 'pointer',
@@ -246,7 +333,7 @@ const HamburgerMenu = () => {
           sx: {
             width: 500,
             maxWidth: '100%',
-            marginTop: {xs: '56px', sm: '64px'}, // ヘッダーの高さに応じて調整
+            marginTop: {xs: '56px', sm: '60px'}, // ヘッダーの高さに応じて調整
             height: 'calc(100% - 60px)', // ヘッダーの高さを引いた高さ
             backgroundColor: 'transparent',
             boxShadow: 'none',
@@ -265,7 +352,7 @@ const HamburgerMenu = () => {
             sx={{
               position: 'relative',
               width: '100%',
-              height: {xs: '25px', sm: '37.5px', md: '50px'},
+              height: {xs: '25px', md: '30px'},
               maxHeight: '100px',
               flexShrink: 0,
               backgroundColor: '#F7F0E8',
@@ -304,18 +391,21 @@ const HamburgerMenu = () => {
               flexGrow: 1,
               backgroundColor: '#F7F0E8',
               overflowY: 'auto',
-              padding: 2,
+              paddingTop: '70px' // vertical な中央よせにしたい
             }}
           >
             <List
               sx={{
-                width: {xs: '100%', sm: '70%'},
+                height: '500px',
+                width: '100%',
                 margin: '0 auto',
-                paddingTop: '40px'
+                padding: '40px 90px 0px 90px',
               }}
             >
               {menuItems.map((item, index) => (
-                <React.Fragment key={item.text}>
+                <React.Fragment
+                  key={item.text}
+                >
                   {index > 0 && menuItems[index - 1].group !== item.group && (
                     <Box sx={{ my: {xs: 3, md: 6} }}/>
                   )}
@@ -328,7 +418,7 @@ const HamburgerMenu = () => {
             sx={{
               position: 'relative',
               width: '100%',
-              height: {xs: '25px', sm: '37.5px', md: '50px'},
+              height: {xs: '25px', md: '30px'},
               maxHeight: '100px',
               flexShrink: 0,
               backgroundColor: '#F7F0E8',

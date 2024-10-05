@@ -11,13 +11,14 @@ import axios from 'axios';
 import { Store } from '@/types/store';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import { prefsWithCities } from '@/data/prefs-with-cities';
+import Image from 'next/image';
 import Header from 'src/components/header';
 import Footer from 'src/components/footer';
 import { MapComponent } from 'src/components/map/map-component';
 import { MarkerConfig } from '@/types/map-marker';
 import { DeliveryServiceComponent } from './delivery-service-component';
 import { StoreInfoComponent } from './store-info-component';
+import TopLabel from 'src/components/menu/top-label-container';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -79,6 +80,7 @@ export default function StoreDetail() {
     <ThemeProvider theme={theme}>
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
+        <TopLabel/>
         <Container className="w-full text-black mb-[200px]" sx={{ minWidth: '90%'}}>
           <Typography
             sx={{
