@@ -1,4 +1,5 @@
-import React, { FC } from 'react';
+import React from 'react';
+import Link from 'next/link';
 import { IconButton } from '@mui/material';
 import styled from 'styled-components';
 
@@ -25,13 +26,15 @@ const StyledIconButton = styled(IconButton)`
   }
 `;
 
-interface HoverIconProps {
+interface NoHoverIconButtonProps {
   children: React.ReactNode;
+  href: string;
 }
 
-// 新しいコンポーネントを作成
-export const NoHoverIconButton: React.FC<HoverIconProps> = ({ children }) => (
+export const NoHoverIconButton: React.FC<NoHoverIconButtonProps> = ({ children, href }) => (
   <StyledIconButton>
-    {children}
+    <Link href={href}>
+      {children}
+    </Link>
   </StyledIconButton>
 );
