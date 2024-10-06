@@ -9,7 +9,6 @@ import {
   AccordionSummary,
   AccordionDetails,
   useMediaQuery,
-  useTheme,
 } from '@mui/material';
 import HamburgerMenuLogo from '../svg/logo/header/hamburger-menu-logo';
 import Image from "next/image";
@@ -28,9 +27,7 @@ interface MenuItem {
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | false>(false);
-  const theme = useTheme();
   const isMobile = useMediaQuery('(max-width:690px)');
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [listHeight, setListHeight] = useState('auto');
 
@@ -70,7 +67,7 @@ const HamburgerMenu = () => {
       children: [
         { text: 'WestJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
         { text: 'EastJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
-        { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
+        { text: 'KyushuArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
       ]
     },
   ] : [
@@ -119,11 +116,12 @@ const HamburgerMenu = () => {
             aria-controls={`panel${index}bh-content`}
             id={`panel${index}bh-header`}
             sx={{
-              minHeight: '10px !important',
+              minHeight: '0px !important',
               padding: 0,
               '& .MuiAccordionSummary-content': {
                 margin: 0,
               },
+              
             }}
           >
             <ListItem 
@@ -135,7 +133,7 @@ const HamburgerMenu = () => {
               }}
               onMouseLeave={() => setHoveredIndex(null)}
               sx={{
-                minHeight: '10px !important',
+                minHeight: '0px !important',
                 position: 'relative',
                 p: 0,
                 overflow: 'hidden',
@@ -235,16 +233,14 @@ const HamburgerMenu = () => {
         key={item.text}
         component="a" 
         href={item.link}
-        onMouseEnter={() => {
-          setHoveredIndex(index);
-        }}
+        onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
         sx={{
           position: 'relative',
           p: 0,
-          mb: isMobile ? '10px' : '16px',
           overflow: 'hidden',
           color: '#323232',
+          marginBottom: isMobile ? '10px' : '16px',
 
           '&::after': {
             content: '""',
@@ -401,21 +397,19 @@ const HamburgerMenu = () => {
             <List
               sx={{
                 width: '100%',
-                margin: '0 auto',
+                margin: expanded ? isMobile ? '10px auto 0 auto' : '100px auto 0 auto' : '0 auto',
                 padding: isMobile ? '50px 20px 50px 20px' : '0px 90px 0px 90px',
                 height: listHeight,
                 transition: 'height 0.3s ease', // スムーズな高さ変更のためのトランジション
               }}
             >
               {menuItems.map((item, index) => (
-                <React.Fragment
-                  key={item.text}
-                >
-                  {index > 0 && menuItems[index - 1].group !== item.group && (
+                <Box key={item.text}>
+                  {!expanded && index > 0 && menuItems[index - 1].group !== item.group && (
                     <Box sx={{ py: 2}}/>
                   )}
                   {renderMenuItem(item, index)}
-                </React.Fragment>
+                </Box>
               ))}
             </List>
           </Box>

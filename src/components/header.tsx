@@ -31,7 +31,7 @@ const Header: React.FC = () => {
           }}
         >
           <Box className="grow">
-            <NoHoverIconButton>
+            <NoHoverIconButton href='/'>
               <HeaderLogo/>
             </NoHoverIconButton>
           </Box>
@@ -46,7 +46,7 @@ const Header: React.FC = () => {
                 <StoreLogo/>
               </HoverIconButton>
             )}
-            <NoHoverIconButton>
+            <NoHoverIconButton href=''>
               <HamburgerMenu/>
             </NoHoverIconButton>
           </Box>
