@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import {
   Drawer,
   List,
@@ -30,8 +30,8 @@ const HamburgerMenu = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const theme = useTheme();
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
-  const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const [listHeight, setListHeight] = useState('auto');
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent|React.MouseEvent) => {
     if (
@@ -49,14 +49,14 @@ const HamburgerMenu = () => {
       setExpanded(isExpanded ? panel : false);
   };
 
-  const menuItems: MenuItem[] = isLgUp ? [
+  const menuItems: MenuItem[] = isMdUp ? [
     // group2
     { text: '団体予約', link: '/', group: 2 },
     { text: 'よくあるご質問', link: '/', group: 2 },
     { text: 'お問い合わせ', link: '/', group: 2 },
     { text: 'フランチャイズオーナー募集', link: '/', group: 2 },
     { text: '採用情報', link: '/', group: 2 },
-    { text: '社会との関わり', link: '/s', group: 2 },
+    { text: '社会とのかかわり', link: '/s', group: 2 },
     { text: '会社概要', link: '/', group: 2 },
     // group3
     { 
@@ -79,7 +79,7 @@ const HamburgerMenu = () => {
     { text: 'お問い合わせ', link: '/', group: 2 },
     { text: 'フランチャイズオーナー募集', link: '/', group: 2 },
     { text: '採用情報', link: '/', group: 2 },
-    { text: '社会との関わり', link: '/s', group: 2 },
+    { text: '社会とのかかわり', link: '/s', group: 2 },
     { text: '会社概要', link: '/', group: 2 },
     // group3
     { 
@@ -184,7 +184,8 @@ const HamburgerMenu = () => {
                     position: 'relative',
                     p: 0,
                     my: '16px',
-                    pl: '20px',
+                    ml: '10px',
+                    pl: '10px',
                     overflow: 'hidden',
 
                     '&::after': {
@@ -287,7 +288,6 @@ const HamburgerMenu = () => {
   return (
     <Box>
       <Box
-        component="button"
         onClick={toggleDrawer(!isOpen)}
         onKeyDown={(event) => {
           if (event.key === 'Enter' || event.key === ' ') {
@@ -324,11 +324,13 @@ const HamburgerMenu = () => {
         anchor="right"
         open={isOpen}
         onClose={toggleDrawer(false)}
-        // ModalProps={{ // 暗転効果
-        //   BackdropProps: {
-        //     style: { backgroundColor: 'transparent' }
-        //   }
-        // }}
+        ModalProps={{
+          BackdropProps: {
+            style: { backgroundColor: 'rgba(0, 0, 0, 0.6)' } // 透明度を調整
+          },
+          keepMounted: true,
+          disableScrollLock: true
+        }}
         PaperProps={{
           sx: {
             width: 500,
@@ -361,7 +363,7 @@ const HamburgerMenu = () => {
             {
               isMdUp ? (
                 <Image
-                  src='/images/hokatei-hamburger-menu-mask.png'
+                  src='/images/hamburger-mask.webp'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
@@ -369,7 +371,7 @@ const HamburgerMenu = () => {
                 />
               ) : (
                 <Image
-                  src='/images/hokatei-mask.png'
+                  src='/images/hamburger-mask.webp'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
@@ -382,7 +384,6 @@ const HamburgerMenu = () => {
             role="presentation"
             onClick={(event) => {
               if ((event.target as HTMLElement).tagName !== 'A') {
-                // !== 'A' は、タグ名が 'A' （アンカータグ <a）でないかをチェック
                 event.stopPropagation();
               }
             }}
@@ -391,15 +392,19 @@ const HamburgerMenu = () => {
               flexGrow: 1,
               backgroundColor: '#F7F0E8',
               overflowY: 'auto',
-              paddingTop: '70px' // vertical な中央よせにしたい
+              display: 'flex',
+              flexDirection: 'column',
+              justifyContent: expanded ? 'flex-start' : 'center', // アコーディオンが開いているときは上寄せ
+              transition: 'justify-content 0.3s ease',
             }}
           >
             <List
               sx={{
-                height: '500px',
                 width: '100%',
                 margin: '0 auto',
                 padding: '40px 90px 0px 90px',
+                height: listHeight,
+                transition: 'height 0.3s ease', // スムーズな高さ変更のためのトランジション
               }}
             >
               {menuItems.map((item, index) => (
@@ -427,7 +432,7 @@ const HamburgerMenu = () => {
             {
               isMdUp ? (
                 <Image
-                  src='/images/hokatei-hamburger-menu-mask.png'
+                  src='/images/hamburger-mask.webp'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
@@ -435,7 +440,7 @@ const HamburgerMenu = () => {
                 />
               ) : (
                 <Image
-                  src='/images/hokatei-mask.png'
+                  src='/images/hamburger-mask.webp'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"

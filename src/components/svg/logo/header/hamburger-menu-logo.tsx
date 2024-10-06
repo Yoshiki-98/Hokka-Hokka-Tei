@@ -9,7 +9,7 @@ const HamburgerMenuLogo: React.FC<LogoProps> = ({ className }) => {
       className={`relative inline-block ${className || ''}`}
       style={{ 
         width: '30px', 
-        height: '23px',
+        height: '22.8px',
         cursor: 'pointer',
       }}
     >
