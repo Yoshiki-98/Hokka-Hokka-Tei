@@ -339,7 +339,7 @@ const HamburgerMenu = () => {
       >
         <Box
           sx={{
-            height: isMobile ? expanded ? '90%' : '77.5' : expanded ? '95.5%' : '100%',
+            height: isMobile ? expanded ? '100%' : '77.5' : expanded ? '95.5%' : '100%',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
