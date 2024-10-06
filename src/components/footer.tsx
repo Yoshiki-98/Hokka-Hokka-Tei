@@ -69,7 +69,7 @@ const Footer: React.FC = () => {
         }}
       >
         <Image
-          src='/images/hokatei-mask.png'
+          src='/images/hokatei-mask.webp'
           alt='ほっかほっか亭のラベル'
           layout="fill"
           objectFit="cover"

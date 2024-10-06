@@ -8,7 +8,7 @@ const StyledIconButton = styled(IconButton)`
   border-radius: 0;
   overflow: hidden;
   padding: 0;
-  margin: 0 20px 0 0;
+  margin: 0 20px 0 -1px;
 
   // デフォルトのホバー効果を完全に無効化
   &.MuiIconButton-root {
