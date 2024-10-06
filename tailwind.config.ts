@@ -16,6 +16,10 @@ const config: Config = {
         'sans': ['"Noto Sans"', 'sans-serif'],
         'sans-jp': ['"Noto Sans JP"', 'sans-serif'],
       },
+      fontWeight: {
+        'normal': '400',
+        'bold': '700',
+      },
     },
   },
   plugins: [],
