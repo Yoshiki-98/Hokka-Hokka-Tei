@@ -10,7 +10,7 @@ import { NoHoverIconButton } from 'src/components/no-hover-icon-button';
 
 const Header: React.FC = () => {
   const theme = useTheme();
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
+  const isMobile = useMediaQuery('(max-width:690px)');
 
   return (
     <Box 
@@ -36,12 +36,12 @@ const Header: React.FC = () => {
             </NoHoverIconButton>
           </Box>
           <Box>
-            {isMdUp && (
+            {!isMobile && (
               <HoverIconButton>
                 <MenuLogo/>
               </HoverIconButton>
             )}
-            {isMdUp && (
+            {!isMobile && (
               <HoverIconButton>
                 <StoreLogo/>
               </HoverIconButton>

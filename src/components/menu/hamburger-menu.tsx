@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import {
   Drawer,
   List,
@@ -29,6 +29,7 @@ const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | false>(false);
   const theme = useTheme();
+  const isMobile = useMediaQuery('(max-width:690px)');
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [listHeight, setListHeight] = useState('auto');
@@ -49,27 +50,7 @@ const HamburgerMenu = () => {
       setExpanded(isExpanded ? panel : false);
   };
 
-  const menuItems: MenuItem[] = isMdUp ? [
-    // group2
-    { text: '団体予約', link: '/', group: 2 },
-    { text: 'よくあるご質問', link: '/', group: 2 },
-    { text: 'お問い合わせ', link: '/', group: 2 },
-    { text: 'フランチャイズオーナー募集', link: '/', group: 2 },
-    { text: '採用情報', link: '/', group: 2 },
-    { text: '社会とのかかわり', link: '/s', group: 2 },
-    { text: '会社概要', link: '/', group: 2 },
-    // group3
-    { 
-      text: 'English/Chinese Menu', 
-      link: '/#', 
-      group: 3,
-      children: [
-        { text: 'WestJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
-        { text: 'EastJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
-        { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
-      ]
-    },
-  ] : [
+  const menuItems: MenuItem[] = isMobile ? [
     // group1
     { text: 'メニュー', link: '/menu', group: 1 },
     { text: '店舗', link: '/store', group: 1 },
@@ -92,14 +73,30 @@ const HamburgerMenu = () => {
         { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
       ]
     },
-  ]
+  ] : [
+    // group2
+    { text: '団体予約', link: '/', group: 2 },
+    { text: 'よくあるご質問', link: '/', group: 2 },
+    { text: 'お問い合わせ', link: '/', group: 2 },
+    { text: 'フランチャイズオーナー募集', link: '/', group: 2 },
+    { text: '採用情報', link: '/', group: 2 },
+    { text: '社会とのかかわり', link: '/s', group: 2 },
+    { text: '会社概要', link: '/', group: 2 },
+    // group3
+    { 
+      text: 'English/Chinese Menu', 
+      link: '/#', 
+      group: 3,
+      children: [
+        { text: 'WestJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
+        { text: 'EastJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
+        { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
+      ]
+    },
+  ];
 
   const responsiveTypography = {
-    fontSize: {
-      xs: '14px',
-      sm: '16px',
-      md: '18px',
-    },
+    fontSize: isMobile ? '14px' : '18px',
   };
 
   const renderMenuItem = (item: MenuItem, index: number) => {
@@ -142,6 +139,7 @@ const HamburgerMenu = () => {
                 position: 'relative',
                 p: 0,
                 overflow: 'hidden',
+                color: '#323232',
 
                 '&:hover': {
                   color: 'rgb(238, 0, 38)',
@@ -183,10 +181,11 @@ const HamburgerMenu = () => {
                   sx={{
                     position: 'relative',
                     p: 0,
-                    my: '16px',
+                    mb: isMobile ? '10px' : '16px',
                     ml: '10px',
                     pl: '10px',
                     overflow: 'hidden',
+                    color: '#323232',
 
                     '&::after': {
                       content: '""',
@@ -243,8 +242,9 @@ const HamburgerMenu = () => {
         sx={{
           position: 'relative',
           p: 0,
-          my: '16px',
+          mb: isMobile ? '10px' : '16px',
           overflow: 'hidden',
+          color: '#323232',
 
           '&::after': {
             content: '""',
@@ -333,7 +333,7 @@ const HamburgerMenu = () => {
         }}
         PaperProps={{
           sx: {
-            width: 500,
+            width: isMobile ? '100%': 500,
             maxWidth: '100%',
             marginTop: {xs: '56px', sm: '60px'}, // ヘッダーの高さに応じて調整
             height: 'calc(100% - 60px)', // ヘッダーの高さを引いた高さ
@@ -344,7 +344,7 @@ const HamburgerMenu = () => {
       >
         <Box
           sx={{
-            height: '100%',
+            height: isMobile ? '95%' : '100%',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
@@ -361,9 +361,9 @@ const HamburgerMenu = () => {
             }}
           >
             {
-              isMdUp ? (
+              isMobile ? (
                 <Image
-                  src='/images/hamburger-mask.webp'
+                  src='/images/hokatei-mask.webp'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"
@@ -402,7 +402,7 @@ const HamburgerMenu = () => {
               sx={{
                 width: '100%',
                 margin: '0 auto',
-                padding: '40px 90px 0px 90px',
+                padding: isMobile ? '50px 20px 50px 20px' : '0px 90px 0px 90px',
                 height: listHeight,
                 transition: 'height 0.3s ease', // スムーズな高さ変更のためのトランジション
               }}
@@ -412,7 +412,7 @@ const HamburgerMenu = () => {
                   key={item.text}
                 >
                   {index > 0 && menuItems[index - 1].group !== item.group && (
-                    <Box sx={{ my: {xs: 3, md: 6} }}/>
+                    <Box sx={{ py: 2}}/>
                   )}
                   {renderMenuItem(item, index)}
                 </React.Fragment>
@@ -430,9 +430,9 @@ const HamburgerMenu = () => {
             }}
           >
             {
-              isMdUp ? (
+              isMobile ? (
                 <Image
-                  src='/images/hamburger-mask.webp'
+                  src='/images/hokatei-mask.webp'
                   alt='ほっかほっか亭のラベル'
                   layout="fill"
                   objectFit="cover"

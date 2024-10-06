@@ -1,20 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Noto_Sans, Noto_Sans_JP } from 'next/font/google'
-
-const notoSans = Noto_Sans({
-  weight: ['400', '500'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-noto-sans',
-})
-
-const notoSansJP = Noto_Sans_JP({
-  weight: ['400', '500'],
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-noto-sans-jp',
-})
 
 export const metadata: Metadata = {
   title: "ほっかほっか亭",
@@ -27,8 +12,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="ja" className={`${notoSans.variable} ${notoSansJP.variable}`}>
-      <body className="font-sans">
+    <html>
+      <head>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap" rel="stylesheet" />
+      </head>
+      <body>
         {children}
       </body>
     </html>

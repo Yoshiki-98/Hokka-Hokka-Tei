@@ -381,7 +381,7 @@ export default function MentList() {
                               htmlFor={String(allergen.id)} 
                               className="
                                 text-sm
-                                font-medium leading-none
+                                leading-none
                                 peer-disabled:cursor-not-allowed peer-disabled:opacity-70
                                 whitespace-nowrap
                               "
@@ -438,37 +438,45 @@ export default function MentList() {
                     sx={{flexDirection: 'column'}}
                   >
                     <Typography
+                      className="font-weight-regular"
                       sx={{
                         fontSize: '14px',
                         display: 'flex',
                         justifyContent: 'end',
+                        marginBottom: '4px'
                       }}
                     >
                       栄養成分・アレルギー一覧は<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
+                      className="font-weight-regular"
                       sx={{
                         fontSize: '14px',
                         display: 'flex',
                         justifyContent: 'end',
+                        marginBottom: '4px'
                       }}
                     >
                       メニュー表は<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
+                      className="font-weight-regular"
                       sx={{
                         fontSize: '14px',
                         display: 'flex',
                         justifyContent: 'end',
+                        marginBottom: '4px'
                       }}
                     >
                       英語/中国語メニューは<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
+                      className="font-weight-regular"
                       sx={{
                         fontSize: '12px',
                         display: 'flex',
                         justifyContent: 'end',
+                        marginBottom: '4px'
                       }}
                     >
                       ※一部、店舗によりメニューの価格・仕様が異なります。
@@ -505,6 +513,7 @@ export default function MentList() {
                     style={activeTab === index ? activeTabStyle : tabStyle}
                   >
                     <span
+                      className={activeTab === index ? "font-weight-semibold" : "font-weight-regular"}
                       style={activeTab === index ? activeTextStyle : undefined}
                     >
                       {tab.title}
@@ -560,7 +569,7 @@ export default function MentList() {
                                 }}
                               >
                                 <Typography
-                                  className="inline-block text-white font-bold bg-[#EE0026]"
+                                  className="inline-block text-white bg-[#EE0026]"
                                   sx={{
                                     px: 1,
                                     fontSize: {xs: '14px', sm: '18px', md: '24px'}
