@@ -29,7 +29,6 @@ const HamburgerMenu = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const isMobile = useMediaQuery('(max-width:690px)');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [listHeight, setListHeight] = useState('auto');
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent|React.MouseEvent) => {
     if (
@@ -331,8 +330,8 @@ const HamburgerMenu = () => {
           sx: {
             width: isMobile ? '100%': 500,
             maxWidth: '100%',
-            marginTop: {xs: '56px', sm: '60px'}, // ヘッダーの高さに応じて調整
-            height: 'calc(100% - 60px)', // ヘッダーの高さを引いた高さ
+            marginTop: '60px', // ヘッダーの高さに応じて調整
+            height: expanded ? 'calc(100% - 20px)' : 'calc(100% - 60px)', // ヘッダーの高さを引いた高さ
             backgroundColor: 'transparent',
             boxShadow: 'none',
           },
@@ -340,7 +339,7 @@ const HamburgerMenu = () => {
       >
         <Box
           sx={{
-            height: isMobile ? '95%' : '100%',
+            height: isMobile ? expanded ? '90%' : '77.5' : expanded ? '95.5%' : '100%',
             display: 'flex',
             flexDirection: 'column',
             overflow: 'hidden',
@@ -399,14 +398,16 @@ const HamburgerMenu = () => {
                 width: '100%',
                 margin: expanded ? isMobile ? '10px auto 0 auto' : '100px auto 0 auto' : '0 auto',
                 padding: isMobile ? '50px 20px 50px 20px' : '0px 90px 0px 90px',
-                height: listHeight,
                 transition: 'height 0.3s ease', // スムーズな高さ変更のためのトランジション
               }}
             >
               {menuItems.map((item, index) => (
                 <Box key={item.text}>
                   {!expanded && index > 0 && menuItems[index - 1].group !== item.group && (
-                    <Box sx={{ py: 2}}/>
+                    <Box sx={{ py: 2 }}/>
+                  )}
+                  {expanded && index > 0 && menuItems[index - 1].group !== item.group &&  (
+                    <Box sx={{ py: item.group === 3 ? 0.25 : 2 }}/>
                   )}
                   {renderMenuItem(item, index)}
                 </Box>
