@@ -86,7 +86,7 @@ const HamburgerMenu = () => {
       children: [
         { text: 'WestJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_w.html', group: 3 },
         { text: 'EastJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_e.html', group: 3 },
-        { text: 'KyushuJapanArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
+        { text: 'KyushuArea Menu', link: 'https://www.hokkahokka-tei.jp/menu/emenu_s.html', group: 3 },
       ]
     },
   ];
