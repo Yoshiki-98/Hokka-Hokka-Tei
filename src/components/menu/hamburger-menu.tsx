@@ -12,7 +12,7 @@ import {
 } from '@mui/material';
 import HamburgerMenuLogo from '../svg/logo/header/hamburger-menu-logo';
 import Image from "next/image";
-import HokateiMenuRightArrow from '../svg/icon/hamburger-menu-right-arrow';
+import HamburgerMenuRightArrow from '../svg/icon/hamburger-menu-right-arrow';
 import HokateiMenuDownArrow from '../svg/icon/hamburger-menu-down-arrow';
 import HokateiMenuUpArrow from '../svg/icon/hamburger-menu-up-arrow';
 import HeaderCloseButton from '../svg/icon/header-close-button';
@@ -127,9 +127,7 @@ const HamburgerMenu = () => {
               key={item.text}
               component="a" 
               href={item.link}
-              onMouseEnter={() => {
-                setHoveredIndex(index);
-              }}
+              onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
               sx={{
                 minHeight: '0px !important',
@@ -218,7 +216,7 @@ const HamburgerMenu = () => {
                       sx: responsiveTypography
                     }}
                   />
-                  <HokateiMenuRightArrow isHovered={hoveredIndex === childIndex}/>
+                  <HamburgerMenuRightArrow isHovered={hoveredIndex === childIndex}/>
                 </ListItem>
               ))}
             </List>
@@ -275,7 +273,7 @@ const HamburgerMenu = () => {
             sx: responsiveTypography
           }}
         />
-        <HokateiMenuRightArrow isHovered={hoveredIndex === index}/>
+        <HamburgerMenuRightArrow isHovered={hoveredIndex === index}/>
       </ListItem>
     );
   };
