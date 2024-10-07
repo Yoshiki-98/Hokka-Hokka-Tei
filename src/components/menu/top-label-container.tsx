@@ -1,16 +1,19 @@
 import React from 'react';
 import { Box, BoxProps } from '@mui/material';
 import Image from 'next/image';
+import { useMediaQuery } from '@mui/material';
 
 const TopLabel: React.FC<BoxProps> = ({
   ...boxProps
 }) => {
+  const isMobile = useMediaQuery('(max-width:690px)');
+
   return (
     <Box
       className="top-label-container"
       {...boxProps}
       sx={{
-        paddingTop: '10px',
+        paddingTop: isMobile ? '35px' : '10px',
         marginBottom: '100px'
       }}
     >
@@ -18,7 +21,7 @@ const TopLabel: React.FC<BoxProps> = ({
         sx={{
           position: 'relative',
           width: '100%',
-          height: { xs: '25px', sm: '37.5px', md: '100px' },
+          height: isMobile ? '50px' : '100px',
           maxHeight: '100px',
         }}
       >
