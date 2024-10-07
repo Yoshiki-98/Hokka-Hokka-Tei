@@ -27,8 +27,8 @@ interface MenuItem {
 const HamburgerMenu = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [expanded, setExpanded] = useState<string | false>(false);
-  const isMobile = useMediaQuery('(max-width:690px)');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
+  const isMobile = useMediaQuery('(max-width:690px)');
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent|React.MouseEvent) => {
     if (
