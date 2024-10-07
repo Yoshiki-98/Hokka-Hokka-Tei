@@ -34,6 +34,7 @@ import { chunkArray } from '@/utils/array-utils';
 import BannerSlider from './banner-slider';
 import FadeInSection from 'src/components/menu/fade-in-section';
 import TopLabel from 'src/components/menu/top-label-container';
+import { styled } from '@mui/material/styles';
 
 const theme = createTheme({
   palette: {
@@ -200,6 +201,16 @@ export default function MentList() {
 
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
+
+  const HighlightedTypography = styled(Typography)(({ theme }) => ({
+    display: 'inline',
+    backgroundColor: '#EE0026',
+    color: 'white',
+    boxDecorationBreak: 'clone',
+    WebkitBoxDecorationBreak: 'clone',
+    padding: theme.spacing(0, 1),
+    lineHeight: 1.6, // 行間を調整する場合
+  }));
 
   return (
     <ThemeProvider theme={theme}>
@@ -568,16 +579,13 @@ export default function MentList() {
                                   },
                                 }}
                               >
-                                <Typography
-                                  className="inline-block text-white bg-[#EE0026]"
-                                  sx={{
-                                    px: 1,
-                                    fontSize: {xs: '14px', sm: '18px', md: '24px'}
-                                  }}
+                                <HighlightedTypography
+                                  sx={{fontSize: {xs: '14px', sm: '18px', md: '24px'}}}
                                   gutterBottom
                                 >
                                   {item.name}
-                                </Typography>
+
+                                </HighlightedTypography>
                                 <Typography
                                   className="whitespace-nowrap"
                                   color="#323232"
