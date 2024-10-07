@@ -1,19 +1,15 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Image from 'next/image';
 import {
-  AppBar,
   Box,
-  Container,
   Divider,
   IconButton,
   Link,
-  Toolbar,
   Typography,
   useMediaQuery,
   createTheme
 } from '@mui/material';
 import FooterLogo from 'src/components/svg/logo/footer/site-logo';
-import CompanyLogo from 'src/components/svg/logo/footer/company-logo';
 import RightArrowIcon from 'src/components/svg/logo/main/right-arrow-icon';
 import 'src/app/globals.css';
 
@@ -51,6 +47,8 @@ const Footer: React.FC = () => {
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
+  const isMobile = useMediaQuery('(max-width:690px)');
+  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
     <Box
@@ -76,7 +74,9 @@ const Footer: React.FC = () => {
           quality={100}
         />
       </Box>
-      <Box sx={{padding: '40px 40px 0 40px'}}>
+      <Box
+        sx={{padding: isMobile ? '30px 30px 0 30px' : '40px 40px 0 40px'}}
+      >
         <IconButton
           href='/'
           sx={{
@@ -96,7 +96,7 @@ const Footer: React.FC = () => {
                 <Box
                   className="flex flex-wrap"
                   sx={{
-                    gap: '40px',
+                    gap: isMobile ? '20px' : '40px',
                     flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
                     maxWidth: '80%'   // 最大幅を設定
                   }}
@@ -107,9 +107,24 @@ const Footer: React.FC = () => {
                       href="#"
                       className="flex items-center"
                       underline="hover"
-                      sx={{color: theme.palette.secondary.main}}
+                      sx={{
+                        color: theme.palette.secondary.main,
+                        textDecoration: 'none',
+                        '&:hover': {
+                          color: 'rgb(238, 0, 38)',
+                          textDecoration: 'none',
+                          backgroundColor: 'transparent',
+                          fontWeight: 'bold'
+                        },
+                      }}
                     >
-                      <RightArrowIcon className="mr-[10px] mb-[3px]"/>
+                      <RightArrowIcon
+                        isHovered={hoveredIndex === index}
+                        sx={{
+                          marginRight: '10px',
+                          marginBottom: '3px'
+                        }}
+                      />
                       {item.label}
                     </Link>
                   ))}
@@ -118,7 +133,7 @@ const Footer: React.FC = () => {
                 <Box
                   className="flex flex-wrap"
                   sx={{
-                    gap: '40px',
+                    gap: isMobile ? '20px' : '40px',
                     flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
                     maxWidth: '80%'   // 最大幅を設定
                   }}
@@ -129,14 +144,29 @@ const Footer: React.FC = () => {
                       href="#"
                       className="flex items-center"
                       underline="hover"
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}
                       sx={{ 
                         gap: 0.5,
                         width: '100%', // 各アイテムが全幅を占めるように設定
-                        color: theme.palette.secondary.main
+                        color: theme.palette.secondary.main,
+                        textDecoration: 'none',
+                        '&:hover': {
+                          color: 'rgb(238, 0, 38)',
+                          textDecoration: 'none',
+                          backgroundColor: 'transparent',
+                          fontWeight: 'bold'
+                        },
                       }}
                     >
-                      <RightArrowIcon className="mr-[1.71px] mb-2"/>
-                      {item.label}
+                      <RightArrowIcon
+                        isHovered={hoveredIndex === index}
+                        sx={{
+                          marginRight: isMobile ? '1.7px' : 0,
+                          marginBottom: isMobile ? 2 : 0,
+                        }}
+                      />
+                        {item.label}
                     </Link>
                   ))}
                 </Box>
@@ -155,7 +185,7 @@ const Footer: React.FC = () => {
             <Box>
               <Box
                 className="flex flex-wrap"
-                sx={{ gap: '30px' }}
+                sx={{ gap: isMobile ? '20px' : '30px' }}
               >
                 {companyLinks.map((item, index) => (
                   <Link 
@@ -167,7 +197,14 @@ const Footer: React.FC = () => {
                       gap: 0.5,
                       width: isSmDown ? '100%' : undefined,
                       fontSize: '14px',
-                      color: theme.palette.secondary.main
+                      color: theme.palette.secondary.main,
+                      textDecoration: 'none',
+                        '&:hover': {
+                          color: 'rgb(238, 0, 38)',
+                          textDecoration: 'none',
+                          backgroundColor: 'transparent',
+                          fontWeight: 'bold'
+                        },
                     }}
                   >
                     {item.label}
@@ -175,7 +212,7 @@ const Footer: React.FC = () => {
                 ))}
               </Box>
             </Box>
-            {isMdUp && (
+            {!isMobile && (
               <Typography
                 className="text-xs"
                 variant="body2"
@@ -185,7 +222,7 @@ const Footer: React.FC = () => {
               </Typography>
             )}
           </Box>
-          {!isMdUp && (
+          {isMobile && (
             <Typography
               className="text-xs"
               variant="body2"

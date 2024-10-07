@@ -6,7 +6,7 @@ interface MenuArrowProps extends LogoProps {
   isHovered?: boolean;
 }
 
-const HokateiMenuRightArrow: React.FC<MenuArrowProps> = ({ onClick, disabled, className, isHovered }) => {
+const HamburgerMenuRightArrow: React.FC<MenuArrowProps> = ({ isHovered }) => {
   const theme = useTheme();
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
@@ -44,4 +44,4 @@ const HokateiMenuRightArrow: React.FC<MenuArrowProps> = ({ onClick, disabled, cl
   );
 };
 
-export default HokateiMenuRightArrow;
+export default HamburgerMenuRightArrow;

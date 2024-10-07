@@ -9,7 +9,6 @@ import { HoverIconButton } from 'src/components/hover-icon-button';
 import { NoHoverIconButton } from 'src/components/no-hover-icon-button';
 
 const Header: React.FC = () => {
-  const theme = useTheme();
   const isMobile = useMediaQuery('(max-width:690px)');
 
   return (
