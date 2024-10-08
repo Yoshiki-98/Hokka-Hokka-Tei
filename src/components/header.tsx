@@ -26,7 +26,7 @@ const Header: React.FC = () => {
           className="justify-between"
           sx={{
             minHeight: '60px !important',
-            px: '30px !important'
+            px: isMobile ? '15px !important' : '30px !important'
           }}
         >
           <Box className="grow">
