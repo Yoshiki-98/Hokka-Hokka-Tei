@@ -91,7 +91,7 @@ const AllergenInfo: React.FC<AllergenInfoProps> = ({ menuItem }) => {
           ))}
         </Box>
         <Box className="mb-3">
-          <Typography variant="h6" gutterBottom>特定原材料に準ずるもの<span className="font-noto-sans font-weight-regular">20</span>品目（＋魚介類表示※<span className="font-noto-sans font-weight-regular">1</span>）</Typography>
+          <Typography variant="h6" gutterBottom>特定原材料に準ずるもの<span className="font-noto-sans font-weight-regular">18</span>品目（＋魚介類表示※<span className="font-noto-sans font-weight-regular">1</span>）</Typography>
           {menuItem?.secondaryAllergens && menuItem?.secondaryAllergens.map((secondaryAllergen, index, array) => (
             <React.Fragment key={secondaryAllergen}>
               {getSecondaryAllergenById(secondaryAllergen)?.name}
@@ -104,12 +104,13 @@ const AllergenInfo: React.FC<AllergenInfoProps> = ({ menuItem }) => {
         <Box className="mb-[20px]">
           <Typography sx={{ fontSize: '12px'}}>
             ◆アレルギー物質の表示について <br/>
-              ・表示している「アレルギー物質」の項目は、食品衛生法にて表示が義務付けられている特定原材料<span className="font-noto-sans">7</span>品目
-              「小麦、そば、卵、乳、落花生、えび、かに」と、表示が推奨されている特定原材料に準じる<span className="font-noto-sans">20</span>品目
-              「あわび、いか、いくら、オレンジ、カシューナッツ、キウイフルーツ、牛肉、くるみ、ごま、さけ、さば、大豆、鶏肉、バナナ、豚肉、まつたけ、もも、やまいも、りんご、ゼラチン」です。
+              ・表示している「アレルギー物質」の項目は、食品衛生法にて表示が義務付けられている特定原材料品目
+              「小麦、そば、卵、乳、落花生(ビーナッツ)、くるみ、えび、かに」と、表示が推奨されている特定原材料に準じる<span className="font-noto-sans">18</span>品目
+              「あわび、いか、いくら、オレンジ、カシューナッツ、キウイフルーツ、牛肉、ごま、さけ、さば、大豆、鶏肉、バナナ、豚肉、もも、やまいも、りんご、ゼラチン」です。
               このアレルギー情報は商品の原材料を精査、確認したものです。なお、店舗では他のアレルギー物質を含む原材料と共有の設備で調理しております。
-              本来その商品に使用しない食材が付着・混入する可能性があり、絶対的なものではありません。アレルギー物質に対する感受性は個人差がありますので、最終的なご購入につきましては専門医と相談のうえ、お客様ご自身で判断いただきますようお願い致します。
-              ※<span className="font-noto-sans">1</span>　魚介類表示は魚醤や魚介エキスなど無分別に網で捕獲した魚介を使用し、品目が特定できない場合に使用しています。<br/>
+              本来その商品に使用しない食材が付着・混入する可能性があり、絶対的なものではありません。アレルギー物質に対する感受性は個人差がありますので、最終的な
+              ご購入につきましては専門医と相談のうえ、お客様ご自身で判断いただきますようお願い致します。※<span className="font-noto-sans">1</span>　魚介類表示は
+              魚醤や魚介エキスなど無分別に網で捕獲した魚介を使用し、品目が特定できない場合に使用しています。<br/>
           </Typography>
         </Box>
         <Box className="mb-[20px]">
