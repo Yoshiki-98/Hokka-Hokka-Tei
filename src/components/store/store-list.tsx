@@ -593,20 +593,20 @@ export default function StoreList() {
                                               <Box>
                                                 <Box display="flex" alignItems="flex-start">
                                                   <Typography sx={{ fontSize: '14px' }}>
-                                                    <span className="font-bold">営業時間: </span>
+                                                    <span className="font-bold">営業時間： </span>
                                                     {store.businessHours}
                                                   </Typography>
                                                 </Box>
                                                 <Box display="flex" alignItems="flex-start">
                                                   <Typography sx={{ fontSize: '14px' }}>
-                                                    <span className="font-bold">電話番号: </span>
+                                                    <span className="font-bold">電話番号： </span>
                                                     {formatPhoneNumber(store.phone)}
                                                   </Typography>
                                                 </Box>
                                                 {!isLgUp &&
                                                   <Box display="flex" alignItems="flex-start">
                                                     <Typography sx={{ fontSize: '14px' }}>
-                                                      <span className="font-bold">昼の宅配: </span>
+                                                      <span className="font-bold">昼の宅配： </span>
                                                       {store.deliveryHours}
                                                     </Typography>
                                                   </Box>
@@ -615,7 +615,7 @@ export default function StoreList() {
                                               {isLgUp &&
                                                 <Box>
                                                   <Typography sx={{ mt: -2.25, pl: 4, fontSize: '14px' }}>
-                                                    <span className="font-bold">昼の宅配: </span>
+                                                    <span className="font-bold">昼の宅配： </span>
                                                     {store.deliveryHours}
                                                   </Typography>
                                                 </Box>
