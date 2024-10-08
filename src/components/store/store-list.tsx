@@ -26,7 +26,6 @@ import StoreCard from './store-card';
 import { LoadScript } from '@react-google-maps/api';
 import { getDeliveryServiceDataById } from '@/utils/theme/delivery-service-utils';
 import HoverButton from 'src/components/svg/button/trigger/hover-button';
-import LocationRetrievalButton from '@/components/svg/button/trigger/location-retrieval';
 import { formatPhoneNumber } from '@/utils/format-utils';
 import { CustomSelect } from 'src/components/styled/styled-component';
 import { MulipleMarkersMap } from 'src/components/map/multiple-markers-map';
