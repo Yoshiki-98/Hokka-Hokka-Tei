@@ -3,7 +3,6 @@ import { AppBar, Box, Toolbar, useMediaQuery } from '@mui/material';
 import HeaderLogo from 'src/components/svg/logo/header/site-logo';
 import StoreLogo from 'src/components/svg/logo/header/store-logo';
 import MenuLogo from 'src/components/svg/logo/header/menu-logo';
-import { useTheme } from '@mui/material/styles';
 import HamburgerMenu from './menu/hamburger-menu';
 import { HoverIconButton } from 'src/components/hover-icon-button';
 import { NoHoverIconButton } from 'src/components/no-hover-icon-button';
