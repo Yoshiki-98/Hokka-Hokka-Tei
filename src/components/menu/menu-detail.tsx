@@ -57,7 +57,7 @@ export default function MenuDetail() {
   }, []);
 
   const partsOfDesc = menuItem?.desc?.split(/(?:<br\s*\/?>\s*|\n)/);
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
+  const isMobile = useMediaQuery('(max-width:690px)');
 
   return (
     <ThemeProvider theme={theme}>
@@ -83,15 +83,13 @@ export default function MenuDetail() {
                 <Box
                   className="top-container"
                   sx={{
-                    marginBottom: '100px',
+                    marginBottom: isMobile ? '50px' : '100px',
                     width: '100%'
                   }}
                 >
                   <Box
                     className="top-panel-wrapper lg:flex items-center align-center justify-between"
-                    sx={{
-                      margin: isSmUp ? '0 auto': '0 auto 100px auto',
-                    }}
+                    sx={{ margin: isMobile ? '0 auto 100px auto' : '0 auto' }}
                   >
                     <Box
                       className="top-left-wrapper lg:w-1/2"

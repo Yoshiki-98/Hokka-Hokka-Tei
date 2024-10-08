@@ -45,7 +45,6 @@ const companyLinks = [
 
 const Footer: React.FC = () => {
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
-  const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isMobile = useMediaQuery('(max-width:690px)');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
