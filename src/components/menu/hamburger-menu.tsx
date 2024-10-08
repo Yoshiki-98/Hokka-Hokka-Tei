@@ -42,7 +42,8 @@ const HamburgerMenu = () => {
   };
 
   const handleAccordionChange = (panel: string) =>
-    (event: React.SyntheticEvent, isExpanded: boolean) => {
+    (e: React.SyntheticEvent, isExpanded: boolean) => {
+      e.preventDefault();
       setExpanded(isExpanded ? panel : false);
   };
 
@@ -120,7 +121,6 @@ const HamburgerMenu = () => {
               '& .MuiAccordionSummary-content': {
                 margin: 0,
               },
-              
             }}
           >
             <ListItem 
@@ -135,11 +135,9 @@ const HamburgerMenu = () => {
                 p: 0,
                 overflow: 'hidden',
                 color: '#323232',
-
                 '&:hover': {
                   color: 'rgb(238, 0, 38)',
                   backgroundColor: 'transparent',
-
                   // カーソルが乗ったら子コンポーネントの ListItemText を太線にする
                   '& .MuiListItemText-primary': {
                     fontWeight: 'bold',
@@ -163,7 +161,7 @@ const HamburgerMenu = () => {
             </ListItem>
           </AccordionSummary>
           <AccordionDetails sx={{ padding: 0 }}>
-            <List>
+            <List sx={{mr: '10px'}}>
               {item.children.map((child, childIndex) => (
                 <ListItem
                   key={child.text}
