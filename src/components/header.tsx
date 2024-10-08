@@ -36,12 +36,12 @@ const Header: React.FC = () => {
           </Box>
           <Box>
             {!isMobile && (
-              <HoverIconButton>
+              <HoverIconButton href='/menu'>
                 <MenuLogo/>
               </HoverIconButton>
             )}
             {!isMobile && (
-              <HoverIconButton>
+              <HoverIconButton href='/store'>
                 <StoreLogo/>
               </HoverIconButton>
             )}
