@@ -74,7 +74,7 @@ export default function MenuDetail() {
           className="mx-auto"
           sx={{
             width: '90%',
-            marginBottom: { xs: '50px', md: '100px'}
+            marginBottom: {xs: '50px', md: '100px'}
           }}
         >
           <Box className='grow flex justify-center items-center'>
