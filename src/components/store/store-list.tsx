@@ -25,7 +25,7 @@ import Footer from 'src/components/footer';
 import StoreCard from './store-card';
 import { LoadScript } from '@react-google-maps/api';
 import { getDeliveryServiceDataById } from '@/utils/theme/delivery-service-utils';
-import SearchByLocationButton from '@/components/svg/button/trigger/search-by-location';
+import HoverButton from 'src/components/svg/button/trigger/hover-button';
 import LocationRetrievalButton from '@/components/svg/button/trigger/location-retrieval';
 import { formatPhoneNumber } from '@/utils/format-utils';
 import { CustomSelect } from 'src/components/styled/styled-component';
@@ -226,9 +226,10 @@ export default function StoreList() {
                 }}
               />
               <Box sx={{ margin: {lg: '0 auto'} }}>
-                <SearchByLocationButton
-                  className="shrink-0"
+                <HoverButton
+                  className="shrink-0 w-full md:w-auto"
                   onClick={async () => await handleSearchLocation()}
+                  text="現在地から探す"
                 />
               </Box>
             </Box>
@@ -397,13 +398,14 @@ export default function StoreList() {
                       marginLeft: {xs : '0px', md: '30px', lg: '60px'},
                     }}
                   >
-                    <LocationRetrievalButton
-                      className="shrink-0"
+                    <HoverButton
+                      className="shrink-0 w-full md:w-auto"
                       onClick={() => {
                         fetchStores(selectedCityCode);
                         setSearched(true);
                       }}
                       disabled={searched}
+                      text="検索"
                     />
                   </Box>
                 </Box>
