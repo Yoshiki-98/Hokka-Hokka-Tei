@@ -33,6 +33,8 @@ import MenuListContainer from 'src/components/svg/container/menu-list-container'
 import { chunkArray } from '@/utils/array-utils';
 import BannerSlider from './banner-slider';
 import FadeInSection from 'src/components/menu/fade-in-section';
+import FadeInAndRotateSection from 'src/components/menu/fade-in-and-rotate-section';
+import RotateSection from 'src/components/menu/rotate-section';
 import TopLabel from 'src/components/menu/top-label-container';
 import { styled } from '@mui/material/styles';
 
@@ -245,11 +247,7 @@ export default function MentList() {
               height={isSmDown ? 66.83 : 50}
             />
           </Box>
-          <Box
-            sx={{
-              textAlign: { xs: 'start', sm: 'center', md: 'start' }
-            }}
-          >
+          <Box sx={{ textAlign: { xs: 'start', sm: 'center', md: 'start' } }}>
             <FadeInSection>
               <Box
                 className="pref-select-container mx-auto"
@@ -545,77 +543,80 @@ export default function MentList() {
                 }}
               >
                 {menuItems && chunkArray(menuItems, isLgUp ? 3 : 2).map((chunk, rowIndex) => (
-                  <FadeInSection key={rowIndex} trigger={activeTab} delay={rowIndex * 300}>
-                    <Box
-                      key={`row_${rowIndex}`}
-                      className="flex"
-                      sx={{ marginBottom: {xs: '30px', sm: '100px', md: '140px'} }}
-                    >
-                      {chunk.map((item, index) => (
-                        <Box
-                          className="item-container"
-                          key={index}
-                          sx={{
-                            width: { xs: '170px', sm: '250px', md: '300px' },
-                            '@media (min-width: 1400px)': {
-                              width: '380px !important'
-                            },
-                            maxWidth: '100%',
-                            position: 'relative',
-                            // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
-                            margin: {xs: '0 10px', sm: '0 30px'}
-                          }}
-                        >
-                          <StyledLink href={`/menu/${item.id}`}>
-                            <Box className="flex flex-col bg-transparent border-none shadow-none">
-                              { item && <MenuListContainer item={item}/> }
-                              <Box
-                                className="grow"
-                                sx={{
-                                  position: 'absolute',
-                                  left: {xs: 5, md: 10},
-                                  top: {xs: '125px', sm: '147.5px', md: '180px'},
-                                  '@media (min-width: 1400px)': {
-                                    top: '237.5px !important',
-                                  },
-                                }}
-                              >
-                                <HighlightedTypography
-                                  sx={{fontSize: {xs: '14px', sm: '18px', md: '24px'}}}
-                                  gutterBottom
+                  <FadeInAndRotateSection key={rowIndex} trigger={activeTab} delay={rowIndex * 300}>
+                    {(isLanded) => (
+                      <Box
+                        key={`row_${rowIndex}`}
+                        className="flex"
+                        sx={{ marginBottom: {xs: '30px', sm: '100px', md: '140px'} }}
+                      >
+                        {chunk.map((item, index) => (
+                          <Box
+                            className="item-container"
+                            key={index}
+                            sx={{
+                              width: { xs: '170px', sm: '250px', md: '300px' },
+                              '@media (min-width: 1400px)': {
+                                width: '380px !important'
+                              },
+                              maxWidth: '100%',
+                              position: 'relative',
+                              // CardContentのTopからの位置{xs:'75px',sm:'200px'}を考慮した設定
+                              margin: {xs: '0 10px', sm: '0 30px'}
+                            }}
+                          >
+                            <StyledLink href={`/menu/${item.id}`}>
+                              <Box className="flex flex-col bg-transparent border-none shadow-none">
+                                <RotateSection isEnabled={isLanded} rotationDegree={-8} duration={0.5}>
+                                  { item && <MenuListContainer item={item}/> }
+                                </RotateSection>
+                                <Box
+                                  className="grow"
+                                  sx={{
+                                    position: 'absolute',
+                                    left: {xs: 5, md: 10},
+                                    top: {xs: '125px', sm: '147.5px', md: '180px'},
+                                    '@media (min-width: 1400px)': {
+                                      top: '237.5px !important',
+                                    },
+                                  }}
                                 >
-                                  {item.name}
-
-                                </HighlightedTypography>
-                                <Typography
-                                  className="whitespace-nowrap"
-                                  color="#323232"
-                                  gutterBottom
-                                >
-                                  <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className="font-noto-sans font-weight-black"
-                                    sx={{ fontSize: {xs: '24px', sm: '30px', md: '36px'} }}
+                                  <HighlightedTypography
+                                    sx={{fontSize: {xs: '14px', sm: '18px', md: '24px'}}}
+                                    gutterBottom
                                   >
-                                    {item.price}
-                                  </Typography>
+                                    {item.name}
+                                  </HighlightedTypography>
                                   <Typography
-                                    component="span"
-                                    variant="body2"
-                                    className="font-noto-sans"
-                                    sx={{ fontSize: {xs: '14px', sm: '18px', md: '20px'} }}
+                                    className="whitespace-nowrap"
+                                    color="#323232"
+                                    gutterBottom
                                   >
-                                    円 (税込{item.taxIncludedPrice!}円)
+                                    <Typography
+                                      component="span"
+                                      variant="body2"
+                                      className="font-noto-sans font-weight-black"
+                                      sx={{ fontSize: {xs: '24px', sm: '30px', md: '36px'} }}
+                                    >
+                                      {item.price}
+                                    </Typography>
+                                    <Typography
+                                      component="span"
+                                      variant="body2"
+                                      className="font-noto-sans"
+                                      sx={{ fontSize: {xs: '14px', sm: '18px', md: '20px'} }}
+                                    >
+                                      円 (税込{item.taxIncludedPrice!}円)
+                                    </Typography>
                                   </Typography>
-                                </Typography>
+                                </Box>
                               </Box>
-                            </Box>
-                          </StyledLink>
-                        </Box>
-                      ))}
-                    </Box>
-                  </FadeInSection>
+                            </StyledLink>
+                          </Box>
+                        ))}
+                      </Box>
+                    )}
+                  </FadeInAndRotateSection>
                 ))}
               </Box>
             </Box>
