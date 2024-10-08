@@ -14,7 +14,7 @@ const TopLabel: React.FC<BoxProps> = ({
       {...boxProps}
       sx={{
         paddingTop: isMobile ? '35px' : '10px',
-        marginBottom: '100px'
+        marginBottom: isMobile ? '50px' : '100px'
       }}
     >
       <Box
