@@ -11,7 +11,6 @@ import axios from 'axios';
 import { Store } from '@/types/store';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { Wrapper } from "@googlemaps/react-wrapper";
-import Image from 'next/image';
 import Header from 'src/components/header';
 import Footer from 'src/components/footer';
 import { MapComponent } from 'src/components/map/map-component';
