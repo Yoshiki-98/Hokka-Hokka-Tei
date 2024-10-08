@@ -2,7 +2,7 @@ import React from 'react';
 import { TriggerProps } from '@/types/element-prop';
 import styled from 'styled-components';
 
-interface HandleFilterButtonProps extends TriggerProps {
+interface HoverButtonProps extends TriggerProps {
   text: string;
 }
 
@@ -37,6 +37,7 @@ const ButtonText = styled.span`
   z-index: 1000;
   color: white;
   font-size: 16px;
+  font-weight: 700;
   text-align: center;
   width: 100%;
   padding: 0 10px;
@@ -48,7 +49,7 @@ const ButtonText = styled.span`
   text-overflow: ellipsis;
 `;
 
-const HandleFilterButton: React.FC<HandleFilterButtonProps> = ({ onClick, disabled, className, text }) => {
+const HoverButton: React.FC<HoverButtonProps> = ({ onClick, disabled, className, text }) => {
   return (
     <ButtonContainer className={`button sd appear ${className}`} onClick={onClick} disabled={disabled}>
       <img
@@ -64,7 +65,7 @@ const HandleFilterButton: React.FC<HandleFilterButtonProps> = ({ onClick, disabl
           className="sd"
           alt="ボタン2"
           src="https://storage.googleapis.com/studio-design-asset-files/projects/p6ao350gaR/s-852x272_v-fs_webp_4a2a2323-8fbf-4d6b-9527-5e24f33b5d9b_small.webp"
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '99.5%', height: '99.5%' }}
         />
         <ButtonText>{text}</ButtonText>
       </TopButton>
@@ -72,4 +73,4 @@ const HandleFilterButton: React.FC<HandleFilterButtonProps> = ({ onClick, disabl
   );
 };
 
-export default HandleFilterButton;
+export default HoverButton;

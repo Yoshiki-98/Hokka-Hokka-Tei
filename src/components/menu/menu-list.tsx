@@ -27,7 +27,7 @@ import { Menu } from '@/types/menu';
 import Image from 'next/image';
 import Header from 'src/components/header';
 import Footer from 'src/components/footer';
-import HandleFilterButton from 'src/components/svg/button/trigger/handle-filter';
+import HoverButton from 'src/components/svg/button/trigger/hover-button';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import MenuListContainer from 'src/components/svg/container/menu-list-container';
 import { chunkArray } from '@/utils/array-utils';
@@ -408,9 +408,10 @@ export default function MentList() {
                       sx={{margin: { xs: '0 auto', md: '0' }}}
                       className="shrink-0"
                     >
-                      <HandleFilterButton
+                      <HoverButton
                         className="shrink-0 w-full md:w-auto"
                         onClick={async () => await handleFilter()}
+                        text="絞り込む"
                       />
                     </Box>
                   </Box>
