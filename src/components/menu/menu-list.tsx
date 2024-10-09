@@ -275,16 +275,29 @@ export default function MentList() {
                     value={selectedPrefCode}
                     onChange={(e: any) => {
                       setSelectedPrefCode(e.target.value);
-                      tabs[activeTab].fetch(e.target.value);
+                      if (e.target.value === 2 || e.target.value === 3) {
+                        window.open("https://www.hhtmj.com/menu/", "_blank");
+                      } else if (
+                        e.target.value === 36 ||
+                        e.target.value === 37 ||
+                        e.target.value === 38 ||
+                        e.target.value === 39
+                      ) { // e.target.value が整数であることが前提
+                        window.open("http://www.ca.pikara.ne.jp/hokahokafoods/menu.html", "_blank");
+                      } else if (
+                        e.target.value === 25 || e.target.value === 26
+                      ) {
+                        window.open("http://www.hht-kyoto-shiga-co.jp/17127084518558", "_blank");
+                      } else {
+                        tabs[activeTab].fetch(e.target.value);
+                      }
                     }}
                     IconComponent={() => <DownArrowIcon className="mr-4"/>}
                   >
                     <MenuItem
                       sx={{
                         color: selectedPrefCode === 0 ? '#C4C4C6' : 'inherit',
-                        '&.Mui-selected': {
-                          color: '#C4C4C6',
-                        },
+                        '&.Mui-selected': {color: '#C4C4C6'},
                       }} 
                       key='pref_00' 
                       value={0}
@@ -456,7 +469,7 @@ export default function MentList() {
                         marginBottom: '4px'
                       }}
                     >
-                      栄養成分・アレルギー一覧は<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
+                      栄養成分・アレルギー一覧は<Link href="src/components/menu/east-japan/nutrition-and-allergen" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       className="font-weight-regular"
@@ -467,7 +480,7 @@ export default function MentList() {
                         marginBottom: '4px'
                       }}
                     >
-                      メニュー表は<Link href="#" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
+                      メニュー表は<Link href="src/components/menu/east-japan/nutrition-and-allergen" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       className="font-weight-regular"
