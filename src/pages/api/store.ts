@@ -8,7 +8,11 @@ export default async function handler(
 ) {
   if (req.method === 'GET') {
     try {
-      const { id, cityCode } = req.query;
+      const { id, prefCode, cityCode } = req.query;
+
+      console.log(`id: ${id}`);
+      console.log(`prefCode: ${prefCode}`);
+      console.log(`cityCode: ${cityCode}`);
 
       if (id) { // 個別取得
         const storeDocRef = doc(db, 'store', id as string);
@@ -16,11 +20,27 @@ export default async function handler(
         const store = { id: storeDocSnap.id, ...storeDocSnap.data() };
 
         res.status(200).json(store);
-      } else {
+      } else if (cityCode) { // 都道府県の選択がない場合
         // クエリの作成
         const storeQuery = query(
           collection(db, 'store'),
           where('cityCode', '==', Number(cityCode))
+        );
+        // クエリの実行
+        const storeSnapshot = await getDocs(storeQuery);
+
+        const storeList = storeSnapshot.docs
+          .map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }))
+
+        res.status(200).json(storeList);
+      } else {
+        // クエリの作成
+        const storeQuery = query(
+          collection(db, 'store'),
+          where('prefCode', '==', Number(prefCode))
         );
         // クエリの実行
         const storeSnapshot = await getDocs(storeQuery);

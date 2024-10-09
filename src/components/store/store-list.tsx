@@ -107,22 +107,39 @@ export default function StoreList() {
     }
   };
 
-  const fetchStores = async (cityCode: number) => {
+  const fetchStores = async (prefCode: number, cityCode: number) => {
     try {
-      const res = await axios.get('/api/store', { params: { cityCode: cityCode } });
-      const storeData = res.data;
+      if (cityCode === 0) { // 市区町村の選択がない場合
+        const res = await axios.get('/api/store', { params: { prefCode: prefCode } });
+        const storeData = res.data;
 
-      setStores(storeData);
+        setStores(storeData);
 
-      const markersData = storeData.map((store: Store) => ({
-        zoom: 10,
-        position: store.location,
-        title: store.name
-      })) as MarkerConfig[];
+        const markersData = storeData.map((store: Store) => ({
+          zoom: 8,
+          position: store.location,
+          title: store.name
+        })) as MarkerConfig[];
 
-      setMarkers(markersData);
+        setMarkers(markersData);
 
-      return storeData;
+        return storeData;
+      } else {
+        const res = await axios.get('/api/store', { params: { cityCode: cityCode } });
+        const storeData = res.data;
+
+        setStores(storeData);
+
+        const markersData = storeData.map((store: Store) => ({
+          zoom: 10,
+          position: store.location,
+          title: store.name
+        })) as MarkerConfig[];
+
+        setMarkers(markersData);
+
+        return storeData;
+      }
     } catch (error) {
       console.error('店舗のフェッチに失敗しました:', error);
     }
@@ -329,11 +346,16 @@ export default function StoreList() {
                           onChange={(e: any) => {
                             setSelectedPrefCode(e.target.value);
                             setSelectedCityCode(0);
+                            setSearched(false);
 
                             const prefWithCities = prefsWithCities.find((pref) => pref.code === e.target.value);
                             const cities = prefWithCities?.cities;
 
                             setCitiesList(cities!);
+
+                            const prefLocation = prefectures.filter((pref) => pref.code === e.target.value)[0].location;
+
+                            setMapCenter(prefLocation);
                           }}
                           IconComponent={() => <DownArrowIcon className="mr-4"/>}
                         >
@@ -367,7 +389,9 @@ export default function StoreList() {
                             setSearched(false);
 
                             const selectedCity = citiesList?.find((city) => city.code === String(e.target.value));
+                            console.log(selectedCity);
                             const selectedCityCenter = { lat: selectedCity?.lat, lng: selectedCity?.lng };
+                            console.log(selectedCityCenter);
 
                             setMapCenter(selectedCityCenter);
                           }}
@@ -400,7 +424,8 @@ export default function StoreList() {
                     <HoverButton
                       className="shrink-0 w-full md:w-auto"
                       onClick={() => {
-                        fetchStores(selectedCityCode);
+                        fetchStores(selectedPrefCode, selectedCityCode);
+                        // selectedCityCode === 0 の場合は、selectedPrefCode で検索できるようにする
                         setSearched(true);
                       }}
                       disabled={searched}
