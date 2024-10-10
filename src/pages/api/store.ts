@@ -10,10 +10,6 @@ export default async function handler(
     try {
       const { id, prefCode, cityCode } = req.query;
 
-      console.log(`id: ${id}`);
-      console.log(`prefCode: ${prefCode}`);
-      console.log(`cityCode: ${cityCode}`);
-
       if (id) { // 個別取得
         const storeDocRef = doc(db, 'store', id as string);
         const storeDocSnap = await getDoc(storeDocRef);
