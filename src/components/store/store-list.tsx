@@ -238,6 +238,8 @@ export default function StoreList() {
                     await handleSearchLocation();
                     await setSelectedPrefCode(0);
                     await setSelectedCityCode(0);
+                    await setStores([]);
+                    await setMarkers([]);
                     setLoading(false);
                   }}
                   text="現在地から探す"
