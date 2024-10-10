@@ -41,6 +41,7 @@ import { Service } from '@/types/delivery-service';
 import DownArrowIcon from 'src/components/svg/logo/main/down-arrow-icon';
 import SmallStoreCard from './small-store-card';
 import TopLabel from 'src/components/menu/top-label-container';
+import LoadingScreen from 'src/components/map/loading-screen';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -76,15 +77,18 @@ export default function StoreList() {
   const [mapCenter, setMapCenter] = useState<any>(undefined);
   const [searched, setSearched] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [loading, setLoading] = useState(false);
 
   const isLgUp = useMediaQuery(theme.breakpoints.up('lg'));
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isSubMdUp = useMediaQuery('(min-width:768px)');
   const isMobile = useMediaQuery('(max-width:393px)');
 
+
   const handleSearchLocation = async () => {
     try {
       if (navigator.geolocation) {
+        setLoading(true);
         setIsOpen(true);
         await navigator.geolocation.getCurrentPosition(
           (position) => {
@@ -109,37 +113,22 @@ export default function StoreList() {
 
   const fetchStores = async (prefCode: number, cityCode: number) => {
     try {
-      if (cityCode === 0) { // 市区町村の選択がない場合
-        const res = await axios.get('/api/store', { params: { prefCode: prefCode } });
-        const storeData = res.data;
+      const res = await axios.get('/api/store', {
+        params: cityCode === 0 ? { prefCode: prefCode } : { cityCode: cityCode }
+      });
+      const storeData = res.data;
 
-        setStores(storeData);
+      setStores(storeData);
 
-        const markersData = storeData.map((store: Store) => ({
-          zoom: 8,
-          position: store.location,
-          title: store.name
-        })) as MarkerConfig[];
+      const markersData = storeData.map((store: Store) => ({
+        zoom: cityCode === 0 ? 8 : 10,
+        position: store.location,
+        title: store.name
+      })) as MarkerConfig[];
 
-        setMarkers(markersData);
+      setMarkers(markersData);
 
-        return storeData;
-      } else {
-        const res = await axios.get('/api/store', { params: { cityCode: cityCode } });
-        const storeData = res.data;
-
-        setStores(storeData);
-
-        const markersData = storeData.map((store: Store) => ({
-          zoom: 10,
-          position: store.location,
-          title: store.name
-        })) as MarkerConfig[];
-
-        setMarkers(markersData);
-
-        return storeData;
-      }
+      return storeData;
     } catch (error) {
       console.error('店舗のフェッチに失敗しました:', error);
     }
@@ -196,6 +185,7 @@ export default function StoreList() {
 
   return (
     <ThemeProvider theme={theme}>
+      {loading && <LoadingScreen />}
       <Box sx={{ minHeight: '100%', bgcolor: 'background.default' }}>
         <Header/>
         <TopLabel/>
@@ -244,7 +234,12 @@ export default function StoreList() {
               <Box sx={{ margin: {lg: '0 auto'} }}>
                 <HoverButton
                   className="shrink-0 w-full md:w-auto"
-                  onClick={async () => await handleSearchLocation()}
+                  onClick={async () => {
+                    await handleSearchLocation();
+                    await setSelectedPrefCode(0);
+                    await setSelectedCityCode(0);
+                    setLoading(false);
+                  }}
                   text="現在地から探す"
                 />
               </Box>
@@ -350,12 +345,12 @@ export default function StoreList() {
 
                             const prefWithCities = prefsWithCities.find((pref) => pref.code === e.target.value);
                             const cities = prefWithCities?.cities;
-
                             setCitiesList(cities!);
 
-                            const prefLocation = prefectures.filter((pref) => pref.code === e.target.value)[0].location;
-
-                            setMapCenter(prefLocation);
+                            if (e.target.value !== 0) {
+                              const prefLocation = prefectures?.find((pref) => pref.code === e.target.value)?.location;
+                              setMapCenter(prefLocation);
+                            }
                           }}
                           IconComponent={() => <DownArrowIcon className="mr-4"/>}
                         >
@@ -388,12 +383,10 @@ export default function StoreList() {
                             setSelectedCityCode(e.target.value as number);
                             setSearched(false);
 
-                            const selectedCity = citiesList?.find((city) => city.code === String(e.target.value));
-                            console.log(selectedCity);
-                            const selectedCityCenter = { lat: selectedCity?.lat, lng: selectedCity?.lng };
-                            console.log(selectedCityCenter);
-
-                            setMapCenter(selectedCityCenter);
+                            if (e.target.value !== 0) {
+                              const selectedCityCenter = citiesList?.find((city) => city.code === String(e.target.value))?.location;
+                              setMapCenter(selectedCityCenter);
+                            }
                           }}
                           IconComponent={() => <DownArrowIcon className="mr-4"/>}
                         >
@@ -425,8 +418,7 @@ export default function StoreList() {
                       className="shrink-0 w-full md:w-auto"
                       onClick={() => {
                         fetchStores(selectedPrefCode, selectedCityCode);
-                        // selectedCityCode === 0 の場合は、selectedPrefCode で検索できるようにする
-                        setSearched(true);
+                        setSearched(true); // selectedCityCode === 0 の場合は、selectedPrefCode で検索できるようにする
                       }}
                       disabled={searched}
                       text="検索"
@@ -510,6 +502,7 @@ export default function StoreList() {
                           {
                             chunk.map((store, index) => (
                               <Link
+                                key={`card_link_0${index}`}
                                 className="text-decoration-none"
                                 sx={{
                                   marginRight: {xs: 0, lg: '20px'},
