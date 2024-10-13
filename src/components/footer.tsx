@@ -47,6 +47,7 @@ const Footer: React.FC = () => {
   const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
   const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isMobile = useMediaQuery('(max-width:690px)');
+  const isTabletAndUp = useMediaQuery('(min-width:691px)');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   return (
@@ -213,7 +214,7 @@ const Footer: React.FC = () => {
                 ))}
               </Box>
             </Box>
-            {!isMobile && (
+            {isTabletAndUp && (
               <Typography
                 className="text-xs"
                 variant="body2"
