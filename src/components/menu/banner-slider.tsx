@@ -9,7 +9,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade"; // フェードエフェクトのCSSを追加
 import styles from "./index.module.css";
-import HoverButtonArrow from '../svg/button/trigger/hover-button-arrow';
+import HoverArrow from '../svg/button/trigger/hover-button-arrow';
 
 const banners = [
   { id: '1a', url: '/images/banner_00.png'},
@@ -95,7 +95,7 @@ export default function BannerSlider() {
       {
         isLgUp && (
           <Box ref={prevRef} className={styles.navPrev} onClick={handlePrev}>
-            <HoverButtonArrow
+            <HoverArrow
               className="flex justify-center"
               direction='left'
             />
@@ -105,7 +105,7 @@ export default function BannerSlider() {
       {
         isLgUp && (
           <Box ref={nextRef} className={styles.navNext} onClick={handleNext}>
-            <HoverButtonArrow
+            <HoverArrow
               className="flex justify-center"
               direction='right'
             />
