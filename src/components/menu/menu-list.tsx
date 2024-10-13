@@ -469,7 +469,7 @@ export default function MentList() {
                         marginBottom: '4px'
                       }}
                     >
-                      栄養成分・アレルギー一覧は<Link href="src/components/menu/east-japan/nutrition-and-allergen" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
+                      栄養成分・アレルギー一覧は<Link sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       className="font-weight-regular"
@@ -480,7 +480,7 @@ export default function MentList() {
                         marginBottom: '4px'
                       }}
                     >
-                      メニュー表は<Link href="src/components/menu/east-japan/nutrition-and-allergen" sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
+                      メニュー表は<Link sx={{ textDecoration: 'underline', color: theme.palette.secondary.main }}>こちら</Link>
                     </Typography>
                     <Typography
                       className="font-weight-regular"
