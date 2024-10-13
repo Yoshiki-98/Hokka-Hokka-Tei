@@ -422,7 +422,6 @@ export default function StoreList() {
                         fetchStores(selectedPrefCode, selectedCityCode);
                         setSearched(true); // selectedCityCode === 0 の場合は、selectedPrefCode で検索できるようにする
                       }}
-                      disabled={searched}
                       text="検索"
                     />
                   </Box>

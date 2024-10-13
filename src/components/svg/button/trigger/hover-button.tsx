@@ -16,7 +16,7 @@ const ButtonContainer = styled.button`
   cursor: pointer;
 
   &:hover .top-button {
-    transform: translate(3px, 3px);
+    transform: translate(2.75px, 2.75px);
   }
 `;
 

@@ -3,7 +3,7 @@ import { TriggerProps } from '@/types/element-prop';
 import styled from 'styled-components';
 import { SVGMaskStyle } from '@/types/element-prop';
 
-interface HoverButtonSmallProps extends TriggerProps {
+interface SmallHoverButtonProps extends TriggerProps {
   sort?: string;
 }
 
@@ -34,7 +34,7 @@ const TopButton = styled.div`
   align-items: center;
 `;
 
-const WoltIndicator: React.FC<HoverButtonSmallProps> = ({ onClick, disabled, className, sort }) => {
+const WoltIndicator: React.FC<SmallHoverButtonProps> = ({ onClick, disabled, className, sort }) => {
   return (
     <ButtonContainer className={`button sd appear ${className}`} onClick={onClick} disabled={disabled}>
       <svg width="163" height="48" viewBox="0 0 163 48" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -2,7 +2,7 @@ import React from 'react';
 import { TriggerProps } from '@/types/element-prop';
 import styled from 'styled-components';
 
-interface HoverButtonSmallProps extends TriggerProps {
+interface SmallHoverButtonProps extends TriggerProps {
   direction?: string;
 }
 
@@ -16,7 +16,7 @@ const ButtonContainer = styled.button`
   cursor: pointer;
 
   &:hover .top-button {
-    transform: translate(2.75px, 2.75px);
+    transform: translate(2.5px, 2.5px);
   }
 `;
 
@@ -38,7 +38,7 @@ const ArrowIcon = styled.svg`
   pointer-events: none;
 `;
 
-const HoverButtonSmall: React.FC<HoverButtonSmallProps> = ({ onClick, disabled, className, direction }) => {
+const HoverArrow: React.FC<SmallHoverButtonProps> = ({ onClick, disabled, className, direction }) => {
   return (
     <ButtonContainer className={`button sd appear ${className}`} onClick={onClick} disabled={disabled}>
       <svg width="70" height="70" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,4 +78,4 @@ const HoverButtonSmall: React.FC<HoverButtonSmallProps> = ({ onClick, disabled, 
   );
 };
 
-export default HoverButtonSmall;
+export default HoverArrow;
