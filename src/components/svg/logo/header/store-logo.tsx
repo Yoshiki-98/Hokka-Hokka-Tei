@@ -9,7 +9,7 @@ const StoreLogo: React.FC<LogoProps> = ({ onClick, className }) => {
       style={{
         width: '59px',
         height: '30px',
-        marginTop: '5px'
+        marginBottom: '2px'
       }}
     >
       <svg width="59" height="30" viewBox="0 0 59 30" fill="none" xmlns="http://www.w3.org/2000/svg">
