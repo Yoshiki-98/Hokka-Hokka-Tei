@@ -44,8 +44,6 @@ const companyLinks = [
 ];
 
 const Footer: React.FC = () => {
-  const isSmUp = useMediaQuery(theme.breakpoints.up('sm'));
-  const isSmDown = useMediaQuery(theme.breakpoints.down('sm'));
   const isMobile = useMediaQuery('(max-width:690px)');
   const isTabletAndUp = useMediaQuery('(min-width:691px)');
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -92,7 +90,48 @@ const Footer: React.FC = () => {
             sx={{ py: '13px', mb: '15px' }}
           >
             {
-              isSmUp ? (
+              isMobile ? (
+                <Box
+                  className="flex flex-wrap"
+                  sx={{
+                    gap: '20px',
+                    flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
+                    maxWidth: '80%'   // 最大幅を設定
+                  }}
+                >
+                  {recruitmentLinks.map((item, index) => (
+                    <Link 
+                      key={index} 
+                      href="#"
+                      className="flex items-center"
+                      underline="hover"
+                      onMouseEnter={() => setHoveredIndex(index)}
+                      onMouseLeave={() => setHoveredIndex(null)}
+                      sx={{ 
+                        gap: 0.5,
+                        width: '100%', // 各アイテムが全幅を占めるように設定
+                        color: theme.palette.secondary.main,
+                        textDecoration: 'none',
+                        '&:hover': {
+                          color: 'rgb(238, 0, 38)',
+                          textDecoration: 'none',
+                          backgroundColor: 'transparent',
+                          fontWeight: 'bold'
+                        },
+                      }}
+                    >
+                      <RightArrowIcon
+                        isHovered={hoveredIndex === index}
+                        sx={{
+                          marginRight: '1.7px',
+                          marginBottom: 2,
+                        }}
+                      />
+                        {item.label}
+                    </Link>
+                  ))}
+                </Box>
+              ) : (
                 <Box
                   className="flex flex-wrap"
                   sx={{
@@ -131,52 +170,10 @@ const Footer: React.FC = () => {
                     </Link>
                   ))}
                 </Box>
-              ) : (
-                <Box
-                  className="flex flex-wrap"
-                  sx={{
-                    gap: isMobile ? '20px' : '40px',
-                    flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
-                    maxWidth: '80%'   // 最大幅を設定
-                  }}
-                >
-                  {recruitmentLinks.map((item, index) => (
-                    <Link 
-                      key={index} 
-                      href="#"
-                      className="flex items-center"
-                      underline="hover"
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
-                      sx={{ 
-                        gap: 0.5,
-                        width: '100%', // 各アイテムが全幅を占めるように設定
-                        color: theme.palette.secondary.main,
-                        textDecoration: 'none',
-                        '&:hover': {
-                          color: 'rgb(238, 0, 38)',
-                          textDecoration: 'none',
-                          backgroundColor: 'transparent',
-                          fontWeight: 'bold'
-                        },
-                      }}
-                    >
-                      <RightArrowIcon
-                        isHovered={hoveredIndex === index}
-                        sx={{
-                          marginRight: isMobile ? '1.7px' : 0,
-                          marginBottom: isMobile ? 2 : 0,
-                        }}
-                      />
-                        {item.label}
-                    </Link>
-                  ))}
-                </Box>
               )
             }
           </Box>
           <Divider
-            className="w-{1431px}"
             sx={{ mt: '0.25rem' }}
             color='#323232'
           />
@@ -184,36 +181,71 @@ const Footer: React.FC = () => {
             className="flex justify-between items-start"
             sx={{ pt: '26px', pb: '27px' }}
           >
-            <Box>
-              <Box
-                className="flex flex-wrap"
-                sx={{ gap: isMobile ? '20px' : '30px' }}
-              >
-                {companyLinks.map((item, index) => (
-                  <Link 
-                    key={index} 
-                    href="#"
-                    className="flex items-center text-sm"
-                    underline="hover"
-                    sx={{
-                      gap: 0.5,
-                      width: isSmDown ? '100%' : undefined,
-                      fontSize: '14px',
-                      color: theme.palette.secondary.main,
-                      textDecoration: 'none',
-                        '&:hover': {
-                          color: 'rgb(238, 0, 38)',
-                          textDecoration: 'none',
-                          backgroundColor: 'transparent',
-                          fontWeight: 'bold'
-                        },
-                    }}
+            {
+              isMobile ? (
+                <Box>
+                  <Box
+                    className="flex flex-wrap"
+                    sx={{ gap: '20px' }}
                   >
-                    {item.label}
-                  </Link>
-                ))}
-              </Box>
-            </Box>
+                    {companyLinks.map((item, index) => (
+                      <Link 
+                        key={index} 
+                        href="#"
+                        className="flex items-center text-sm"
+                        underline="hover"
+                        sx={{
+                          gap: 0.5,
+                          width: '100%',
+                          fontSize: '14px',
+                          color: theme.palette.secondary.main,
+                          textDecoration: 'none',
+                            '&:hover': {
+                              color: 'rgb(238, 0, 38)',
+                              textDecoration: 'none',
+                              backgroundColor: 'transparent',
+                              fontWeight: 'bold'
+                            },
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </Box>
+                </Box>
+              ) : (
+                <Box>
+                  <Box
+                    className="flex flex-wrap"
+                    sx={{ gap: '30px' }}
+                  >
+                    {companyLinks.map((item, index) => (
+                      <Link 
+                        key={index} 
+                        href="#"
+                        className="flex items-center text-sm"
+                        underline="hover"
+                        sx={{
+                          gap: 0.5,
+                          width: undefined,
+                          fontSize: '14px',
+                          color: theme.palette.secondary.main,
+                          textDecoration: 'none',
+                            '&:hover': {
+                              color: 'rgb(238, 0, 38)',
+                              textDecoration: 'none',
+                              backgroundColor: 'transparent',
+                              fontWeight: 'bold'
+                            },
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </Box>
+                </Box>
+              )
+            }
             {isTabletAndUp && (
               <Typography
                 className="text-xs"
