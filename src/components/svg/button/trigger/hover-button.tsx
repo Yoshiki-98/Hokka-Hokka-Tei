@@ -14,7 +14,6 @@ const ButtonContainer = styled.button`
   border: none;
   padding: 0;
   cursor: pointer;
-
   &:hover .top-button {
     transform: translate(2.75px, 2.75px);
   }
@@ -52,21 +51,13 @@ const ButtonText = styled.span`
 const HoverButton: React.FC<HoverButtonProps> = ({ onClick, disabled, className, text }) => {
   return (
     <ButtonContainer className={`button sd appear ${className}`} onClick={onClick} disabled={disabled}>
-      <img
-        aria-hidden="true"
-        className="sd"
-        alt="ボタン1"
-        src="https://storage.googleapis.com/studio-design-asset-files/projects/p6ao350gaR/s-852x272_v-fs_webp_c2354c44-c64c-4367-93f5-e7034e8c9018_small.webp"
-        style={{ width: '100%', height: '100%' }}
-      />
+      <svg width="213" height="68" viewBox="0 0 213 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M16.6421 1.5H195.972C198.169 1.5 200.28 2.3504 201.864 3.87292L208.891 10.6304C210.558 12.2329 211.5 14.4453 211.5 16.7575V49.8579C211.5 52.1122 210.604 54.2742 209.01 55.8683L200.868 64.0104C199.274 65.6045 197.112 66.5 194.858 66.5H17.3607C14.9971 66.5 12.7403 65.5159 11.132 63.7838L3.77125 55.8569C2.31135 54.2847 1.5 52.2186 1.5 50.0731V16.6421C1.5 14.3878 2.39553 12.2258 3.98959 10.6317L10.6317 3.98959C12.2258 2.39553 14.3878 1.5 16.6421 1.5Z" fill="#DF9100" stroke="#DF9100" stroke-width="3"/>
+      </svg>
       <TopButton className="top-button">
-        <img
-          aria-hidden="true"
-          className="sd"
-          alt="ボタン2"
-          src="https://storage.googleapis.com/studio-design-asset-files/projects/p6ao350gaR/s-852x272_v-fs_webp_4a2a2323-8fbf-4d6b-9527-5e24f33b5d9b_small.webp"
-          style={{ width: '99.5%', height: '99.5%' }}
-        />
+        <svg width="213" height="68" viewBox="0 0 213 68" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M16.6421 1.5H195.972C198.169 1.5 200.28 2.3504 201.864 3.87292L208.891 10.6304C210.558 12.2329 211.5 14.4453 211.5 16.7575V49.8579C211.5 52.1122 210.604 54.2742 209.01 55.8683L200.868 64.0104C199.274 65.6045 197.112 66.5 194.858 66.5H17.3607C14.9971 66.5 12.7403 65.5159 11.132 63.7838L3.77125 55.8569C2.31135 54.2847 1.5 52.2186 1.5 50.0731V16.6421C1.5 14.3878 2.39553 12.2258 3.98959 10.6317L10.6317 3.98959C12.2258 2.39553 14.3878 1.5 16.6421 1.5Z" fill="#EE0026" stroke="#FFA600" stroke-width="3"/>
+        </svg>
         <ButtonText>{text}</ButtonText>
       </TopButton>
     </ButtonContainer>
