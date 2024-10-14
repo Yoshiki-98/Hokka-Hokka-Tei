@@ -163,7 +163,6 @@ const Footer: React.FC = () => {
                         isHovered={hoveredIndex === index}
                         sx={{
                           marginRight: '10px',
-                          marginBottom: '3px'
                         }}
                       />
                       {item.label}
