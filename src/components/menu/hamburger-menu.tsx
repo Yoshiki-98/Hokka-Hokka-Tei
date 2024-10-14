@@ -129,6 +129,8 @@ const HamburgerMenu = () => {
               href={item.link}
               onMouseEnter={() => setHoveredIndex(index)}
               onMouseLeave={() => setHoveredIndex(null)}
+              onTouchStart={() => setHoveredIndex(index)}
+              onTouchEnd={() => setHoveredIndex(null)}
               sx={{
                 minHeight: '0px !important',
                 position: 'relative',
@@ -167,10 +169,10 @@ const HamburgerMenu = () => {
                   key={child.text}
                   component="a"
                   href={child.link}
-                  onMouseEnter={() => {
-                    setHoveredIndex(childIndex);
-                  }}
+                  onMouseEnter={() => setHoveredIndex(childIndex)}
                   onMouseLeave={() => setHoveredIndex(null)}
+                  onTouchStart={() => setHoveredIndex(childIndex)}
+                  onTouchEnd={() => setHoveredIndex(null)}
                   sx={{
                     position: 'relative',
                     p: 0,
@@ -230,6 +232,8 @@ const HamburgerMenu = () => {
         href={item.link}
         onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
+        onTouchStart={() => setHoveredIndex(index)}
+        onTouchEnd={() => setHoveredIndex(null)}
         sx={{
           position: 'relative',
           p: 0,
