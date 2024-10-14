@@ -1,5 +1,5 @@
 import MenuDetail from '@/components/menu/menu-detail';
-import "../../globals.css";
+import "src/app/globals.css";
 
 export default function Home() {
   return (

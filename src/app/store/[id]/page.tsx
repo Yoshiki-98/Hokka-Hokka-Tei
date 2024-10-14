@@ -1,5 +1,5 @@
 import StoreDetail from 'src/components/store/store-detail';
-import "../../globals.css";
+import "src/app/globals.css";
 
 export default function Home() {
   return (
