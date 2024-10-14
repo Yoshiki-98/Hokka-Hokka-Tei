@@ -75,6 +75,7 @@ export default function StoreDetail() {
 
   const isMdUp = useMediaQuery(theme.breakpoints.up('md'));
   const isSubLgUp = useMediaQuery('(min-width:1024px)');
+  const isSubLgDown = useMediaQuery('(max-width:1024px)');
 
   return (
     <ThemeProvider theme={theme}>
@@ -103,11 +104,9 @@ export default function StoreDetail() {
               }}
             >
               <StoreInfoComponent store={store}/>
-              {isSubLgUp &&
-                <DeliveryServiceComponent store={store}/>
-              }
+              {isSubLgUp && <DeliveryServiceComponent store={store}/>}
             </Box>
-            {!isSubLgUp && <DeliveryServiceComponent store={store}/>}
+            {isSubLgDown && <DeliveryServiceComponent store={store}/>}
             <Box className="mx-auto">
               <Box className="mt-10 mb-[20px]">
                 <Typography
