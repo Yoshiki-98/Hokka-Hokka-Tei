@@ -107,6 +107,8 @@ const Footer: React.FC = () => {
                       underline="hover"
                       onMouseEnter={() => setHoveredIndex(index)}
                       onMouseLeave={() => setHoveredIndex(null)}
+                      onTouchStart={() => setHoveredIndex(index)}
+                      onTouchEnd={() => setHoveredIndex(null)}
                       sx={{ 
                         gap: 0.5,
                         width: '100%', // 各アイテムが全幅を占めるように設定
@@ -135,7 +137,7 @@ const Footer: React.FC = () => {
                 <Box
                   className="flex flex-wrap"
                   sx={{
-                    gap: isMobile ? '20px' : '40px',
+                    gap: '40px',
                     flex: '1 1 80%',  // フレックス成長と縮小を許可し、幅の60%を占める
                     maxWidth: '80%'   // 最大幅を設定
                   }}
@@ -161,9 +163,7 @@ const Footer: React.FC = () => {
                     >
                       <RightArrowIcon
                         isHovered={hoveredIndex === index}
-                        sx={{
-                          marginRight: '10px',
-                        }}
+                        sx={{marginRight: '10px'}}
                       />
                       {item.label}
                     </Link>
