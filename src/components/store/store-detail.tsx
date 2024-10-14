@@ -81,7 +81,7 @@ export default function StoreDetail() {
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
         <TopLabel/>
-        <FadeInSection delay={250}>
+        <FadeInSection delay={300}>
           <Container className="w-full text-black mb-[200px]" sx={{ minWidth: '90%'}}>
             <Typography
               sx={{
