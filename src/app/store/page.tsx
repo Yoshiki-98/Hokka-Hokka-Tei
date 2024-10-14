@@ -1,5 +1,5 @@
 import StoreList from 'src/components/store/store-list';
-import "../globals.css";
+import "src/app/globals.css";
 
 export default function Home() {
   return (
