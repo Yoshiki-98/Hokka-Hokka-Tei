@@ -29,6 +29,7 @@ const HamburgerMenu = () => {
   const [expanded, setExpanded] = useState<string | false>(false);
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const isMobile = useMediaQuery('(max-width:690px)');
+  const isTabletAndUp = useMediaQuery('(min-width:691px)');
 
   const toggleDrawer = (open: boolean) => (event: React.KeyboardEvent|React.MouseEvent) => {
     if (
@@ -127,10 +128,10 @@ const HamburgerMenu = () => {
               key={item.text}
               component="a" 
               href={item.link}
-              onMouseEnter={() => setHoveredIndex(index)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              onTouchStart={() => setHoveredIndex(index)}
-              onTouchEnd={() => setHoveredIndex(null)}
+              onMouseEnter={isTabletAndUp ?  () => setHoveredIndex(index) : undefined}
+              onMouseLeave={isTabletAndUp ?  () => setHoveredIndex(null) : undefined}
+              onTouchStart={isMobile ? () => setHoveredIndex(index) : undefined}
+              onTouchEnd={isMobile ? () => setHoveredIndex(null) : undefined}
               sx={{
                 minHeight: '0px !important',
                 position: 'relative',
@@ -171,8 +172,8 @@ const HamburgerMenu = () => {
                   href={child.link}
                   onMouseEnter={() => setHoveredIndex(childIndex)}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  onTouchStart={() => setHoveredIndex(childIndex)}
-                  onTouchEnd={() => setHoveredIndex(null)}
+                  onTouchStart={isMobile ? () => setHoveredIndex(childIndex) : undefined}
+                  onTouchEnd={isMobile ? () => setHoveredIndex(null) : undefined}
                   sx={{
                     position: 'relative',
                     p: 0,
@@ -232,8 +233,8 @@ const HamburgerMenu = () => {
         href={item.link}
         onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
-        onTouchStart={() => setHoveredIndex(index)}
-        onTouchEnd={() => setHoveredIndex(null)}
+        onTouchStart={isMobile ? () => setHoveredIndex(index) : undefined}
+        onTouchEnd={isMobile ? () => setHoveredIndex(null) : undefined}
         sx={{
           position: 'relative',
           p: 0,

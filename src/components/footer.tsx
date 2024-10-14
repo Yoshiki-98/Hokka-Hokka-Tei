@@ -105,8 +105,6 @@ const Footer: React.FC = () => {
                       href="#"
                       className="flex items-center"
                       underline="hover"
-                      onMouseEnter={() => setHoveredIndex(index)}
-                      onMouseLeave={() => setHoveredIndex(null)}
                       onTouchStart={() => setHoveredIndex(index)}
                       onTouchEnd={() => setHoveredIndex(null)}
                       sx={{ 
