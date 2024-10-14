@@ -189,7 +189,7 @@ const HamburgerMenu = () => {
                       width: 0,
                       height: '3px',
                       backgroundColor: 'rgb(238, 0, 38)',
-                      transition: 'width 0.65s ease',
+                      transition: 'width 0.6s ease',
                     },
 
                     '&:hover': {
@@ -246,7 +246,7 @@ const HamburgerMenu = () => {
             width: 0,
             height: '3px',
             backgroundColor: 'rgb(238, 0, 38)',
-            transition: 'width 0.65s ease',
+            transition: 'width 0.6s ease',
           },
 
           '&:hover': {
