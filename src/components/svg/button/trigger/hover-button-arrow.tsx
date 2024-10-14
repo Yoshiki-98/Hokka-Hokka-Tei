@@ -8,8 +8,8 @@ interface SmallHoverButtonProps extends TriggerProps {
 
 const ButtonContainer = styled.button`
   position: relative;
-  width: 216px;
-  height: 71px;
+  width: 213px;
+  height: 68px;
   background: none;
   border: none;
   padding: 0;
