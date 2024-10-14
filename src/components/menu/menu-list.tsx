@@ -233,22 +233,24 @@ export default function MentList() {
             marginBottom: { xs: '50px', md: '100px'}
           }}
         >
-          <Box
-            className="menu-title mx-auto flex justify-center items-center"
-            sx={{
-              width: { sm: '43%', md: 223.95 },
-              marginBottom: '56.17px'
-            }}
-          >
-            <Image
-              src={'/images/menu-title.png'}
-              alt={'Menu Title'}
-              width={isSmDown ? 167.55 : 223.95}
-              height={isSmDown ? 66.83 : 50}
-            />
-          </Box>
+          <FadeInSection>
+            <Box
+              className="menu-title mx-auto flex justify-center items-center"
+              sx={{
+                width: { sm: '43%', md: 223.95 },
+                marginBottom: '56.17px'
+              }}
+            >
+              <Image
+                src={'/images/menu-title.png'}
+                alt={'Menu Title'}
+                width={isSmDown ? 167.55 : 223.95}
+                height={isSmDown ? 66.83 : 50}
+              />
+            </Box>
+          </FadeInSection>
           <Box sx={{ textAlign: { xs: 'start', sm: 'center', md: 'start' } }}>
-            <FadeInSection>
+            <FadeInSection delay={300}>
               <Box
                 className="pref-select-container mx-auto"
                 sx={{

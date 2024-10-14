@@ -49,7 +49,7 @@ const FadeInSection: React.FC<FadeInSectionProps> = ({ children, trigger, delay 
       className={`fade-in-section ${isVisible ? 'is-visible' : ''}`}
       sx={{
         opacity: isVisible ? 1 : 0,
-        transform: isVisible ? 'translateY(0)' : 'translateY(20vh)',
+        transform: isVisible ? 'translateY(0)' : 'translateY(10vh)',
         transition: 'opacity 0.6s ease-out, transform 1.2s ease-out',
         transitionDelay: isVisible ? '0s' : 'initial',
         visibility: isVisible ? 'visible' : 'hidden',
