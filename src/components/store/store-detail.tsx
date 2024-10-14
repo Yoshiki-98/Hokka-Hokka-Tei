@@ -18,6 +18,7 @@ import { MarkerConfig } from '@/types/map-marker';
 import { DeliveryServiceComponent } from './delivery-service-component';
 import { StoreInfoComponent } from './store-info-component';
 import TopLabel from 'src/components/menu/top-label-container';
+import FadeInSection from 'src/components/menu/fade-in-section';
 
 const apiKey = process.env.NEXT_PUBLIC_GOOGLE_CLOUD_API_KEY;
 
@@ -80,58 +81,60 @@ export default function StoreDetail() {
       <Box sx={{ minHeight: '100vh', bgcolor: 'background.default' }}>
         <Header/>
         <TopLabel/>
-        <Container className="w-full text-black mb-[200px]" sx={{ minWidth: '90%'}}>
-          <Typography
-            sx={{
-              mb: 4,
-              textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset',
-              fontWeight: 'bold',
-              fontSize: {xs: '24px', sm: '28px', lg: '36px'},
-            }}
-          >
-            {store?.name}
-          </Typography>
-          <Box
-            sx={{
-              display: 'flex',
-              flexWrap: 'wrap',
-              margin: '0 auto 50px auto',
-              alignItems: 'center',
-              justifyContent: isSubLgUp ? 'space-between' : 'center'
-            }}
-          >
-            <StoreInfoComponent store={store}/>
-            {isSubLgUp &&
-              <DeliveryServiceComponent store={store}/>
-            }
-          </Box>
-          {!isSubLgUp && <DeliveryServiceComponent store={store}/>}
-          <Box className="mx-auto">
-            <Box className="mt-10 mb-[20px]">
-              <Typography
-                sx={{
-                  textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset',
-                  fontWeight: 'bold',
-                  fontSize: '24px'
-                }}>
-                  アクセス
-                </Typography> 
-            </Box>
-            <Box
+        <FadeInSection>
+          <Container className="w-full text-black mb-[200px]" sx={{ minWidth: '90%'}}>
+            <Typography
               sx={{
-                '& > div': {  // Wrapper に直接渡す
-                  minHeight: {xs: '353px !important',lg: '600px !important'},
-                },
+                mb: 4,
+                textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset',
+                fontWeight: 'bold',
+                fontSize: {xs: '24px', sm: '28px', lg: '36px'},
               }}
             >
-              <Wrapper apiKey={apiKey!} version="beta" libraries={["marker"]}>
-                {marker && mapCenter && mapCenter.lat !== undefined && mapCenter.lng !== undefined &&
-                  <MapComponent marker={marker} mapCenter={mapCenter} />
-                }
-              </Wrapper>
+              {store?.name}
+            </Typography>
+            <Box
+              sx={{
+                display: 'flex',
+                flexWrap: 'wrap',
+                margin: '0 auto 50px auto',
+                alignItems: 'center',
+                justifyContent: isSubLgUp ? 'space-between' : 'center'
+              }}
+            >
+              <StoreInfoComponent store={store}/>
+              {isSubLgUp &&
+                <DeliveryServiceComponent store={store}/>
+              }
             </Box>
-          </Box>
-        </Container>
+            {!isSubLgUp && <DeliveryServiceComponent store={store}/>}
+            <Box className="mx-auto">
+              <Box className="mt-10 mb-[20px]">
+                <Typography
+                  sx={{
+                    textAlign: isSubLgUp ? 'unset' : isMdUp ? 'center' : 'unset',
+                    fontWeight: 'bold',
+                    fontSize: '24px'
+                  }}>
+                    アクセス
+                  </Typography> 
+              </Box>
+              <Box
+                sx={{
+                  '& > div': {  // Wrapper に直接渡す
+                    minHeight: {xs: '353px !important',lg: '600px !important'},
+                  },
+                }}
+              >
+                <Wrapper apiKey={apiKey!} version="beta" libraries={["marker"]}>
+                  {marker && mapCenter && mapCenter.lat !== undefined && mapCenter.lng !== undefined &&
+                    <MapComponent marker={marker} mapCenter={mapCenter} />
+                  }
+                </Wrapper>
+              </Box>
+            </Box>
+          </Container>
+        </FadeInSection>
         <Footer/>
       </Box>
     </ThemeProvider>

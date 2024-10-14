@@ -197,18 +197,20 @@ export default function StoreList() {
             minWidth: '90%'
           }}
         >
-          <Box
-            className="title-wrapper flex justify-center items-center"
-            sx={{marginBottom: '50px'}}
-          >
-            <Image
-              src={'/images/store-title.png'}
-              alt={'Menu Title'}
-              width={isMdUp ? 274.95 : 207}
-              height={isMdUp ? 72.98 : 55}
-            />
-          </Box>
           <FadeInSection>
+            <Box
+              className="title-wrapper flex justify-center items-center"
+              sx={{marginBottom: '50px'}}
+            >
+              <Image
+                src={'/images/store-title.png'}
+                alt={'Menu Title'}
+                width={isMdUp ? 274.95 : 207}
+                height={isMdUp ? 72.98 : 55}
+              />
+            </Box>
+          </FadeInSection>
+          <FadeInSection delay={500}>
             <Box
               className="flex justify-center"
               sx={{
