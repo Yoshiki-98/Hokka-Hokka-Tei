@@ -107,7 +107,7 @@
   position: absolute;
   transform: translateX(-50%);
   display: flex;
-  margin-left: 135px;
+  margin-left: 150px;
   align-items: center;
   width: auto !important;
 }
