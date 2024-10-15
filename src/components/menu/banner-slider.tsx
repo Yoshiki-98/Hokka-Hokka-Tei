@@ -12,6 +12,7 @@ import styles from "./index.module.css";
 import HoverArrow from '../svg/button/trigger/hover-button-arrow';
 
 const banners = [
+  { id: '0z1a2b3c4d5e6f7g8h9i', url: '/images/banner_09.png'},
   { id: '1a', url: '/images/banner_00.png'},
   { id: '1a2b', url: '/images/banner_01.png'},
   { id: '1a2b3c', url: '/images/banner_02.png'},
